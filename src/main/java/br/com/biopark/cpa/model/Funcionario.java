@@ -1,4 +1,4 @@
-package br.com.biopark.cpa.entidades;
+package br.com.biopark.cpa.model;
 
 import java.security.Timestamp;
 
