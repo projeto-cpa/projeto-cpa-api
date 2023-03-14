@@ -19,7 +19,7 @@ Para rodar o projeto, siga os passos abaixo:
 ## Como contribuir
 Para contribuir com o projeto, siga os passos abaixo:
 
-## Faça o fork deste repositório
+- Faça o fork deste repositório
 - Clone o repositório forkado: git clone https://github.com/[seu-username]/[seu-repositorio].git
 - Crie um branch para sua contribuição: git checkout -b minha-contribuicao
 - Faça suas modificações e commit: git commit -m "Minha contribuição"
