@@ -10,10 +10,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "Cargo")
+@NoArgsConstructor
 public class Cargo {
     
     @Id
@@ -34,4 +36,10 @@ public class Cargo {
     @Column(name = "updated_at")
     @Getter @Setter
     private Date updatedAt;
+
+    public Cargo(String nome) {
+        this.nome = nome;
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
+    }
 }
