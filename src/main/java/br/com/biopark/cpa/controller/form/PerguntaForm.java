@@ -6,12 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class CargoForm {
+public class PerguntaForm {
 
     @NotBlank(message = "Nome não pode ser vazio")
     @NotNull(message = "Nome não pode ser vazio")
-    private String nome;
     private String descricao;
     private Boolean ativo;
+
+    // private tipo_resposta;
     
 }
