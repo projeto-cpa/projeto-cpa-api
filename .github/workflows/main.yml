@@ -1,5 +1,9 @@
 name: CI/CD Pipeline
 
+env: 
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USER }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_TOKEN }}
+
 on:
   push:
     branches:
@@ -19,8 +23,8 @@ jobs:
         context: .
         push: true
         tags: joaopedrogama/cpa-api:latest
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_TOKEN }}
+        username: ${{ env.DOCKER_USERNAME }}
+        password: ${{ env.DOCKER_PASSWORD }}
 
 #    - name: SSH to EC2 instance
 #     uses: appleboy/ssh-action@master
