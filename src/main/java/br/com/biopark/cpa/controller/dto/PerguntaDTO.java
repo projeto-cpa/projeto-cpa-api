@@ -11,14 +11,14 @@ import lombok.Setter;
 public class PerguntaDTO {
 
     private long id;
-    private String descricao;
+    private String nome;
     private Date criadoEm;
     private Date atualizadoEm;
     private Boolean sucesso;
 
     public PerguntaDTO(Pergunta pergunta) {
         this.id = pergunta.getId();
-        this.descricao = pergunta.getDescricao();
+        this.nome = pergunta.getNome();
         this.sucesso = true;
         this.criadoEm = pergunta.getCriadoEm();
         this.atualizadoEm = pergunta.getAtualizadoEm();
