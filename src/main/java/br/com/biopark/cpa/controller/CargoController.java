@@ -28,7 +28,7 @@ public class CargoController {
 
     @Transactional
     @PostMapping("/cadastro/cargos")
-    @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
+    @CrossOrigin(origins = { "http://localhost:3306", "http://localhost:3005" })
     public ResponseEntity<CargoDTO> cadastrar(@RequestBody @Valid CargoForm form, UriComponentsBuilder uriBuilder) {
         Cargo cargo = new Cargo(form.getNome(), form.getDescricao(), form.getAtivo());
         cargo = cargoService.cadastrar(cargo);
@@ -37,7 +37,7 @@ public class CargoController {
     }
 
     @GetMapping("/listagem/cargos")
-    @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
+    @CrossOrigin(origins = { "http://localhost:3306", "http://localhost:3005" })
     public Iterable<Cargo> listarCargos() {
         return cargoService.listarCargos();
     }

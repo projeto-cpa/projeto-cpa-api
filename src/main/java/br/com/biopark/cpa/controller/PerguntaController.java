@@ -1,4 +1,4 @@
-package br.com.biopark.cpa.controller.form;
+package br.com.biopark.cpa.controller;
 
 import java.net.URI;
 
@@ -29,8 +29,9 @@ public class PerguntaController {
 
     @Transactional
     @PostMapping("/cadastro/perguntas")
-    @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
-    public ResponseEntity<PerguntaDTO> cadastrar(@RequestBody @Valid CargoForm form, UriComponentsBuilder uriBuilder) {
+    @CrossOrigin(origins = { "http://localhost:3306", "http://localhost:3005" })
+    public ResponseEntity<PerguntaDTO> cadastrar(@RequestBody @Valid PerguntaForm form,
+            UriComponentsBuilder uriBuilder) {
         Pergunta pergunta = new Pergunta(form.getDescricao(), form.getAtivo());
         pergunta = perguntaService.cadastrar(pergunta);
         URI uri = uriBuilder.path("pergunta/{id}").buildAndExpand(pergunta.getId()).toUri();
@@ -38,7 +39,7 @@ public class PerguntaController {
     }
 
     @GetMapping("/listagem/perguntas")
-    @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
+    @CrossOrigin(origins = { "http://localhost:3306", "http://localhost:3005" })
     public Iterable<Pergunta> listarPergunta() {
         return perguntaService.listarPergunta();
     }
