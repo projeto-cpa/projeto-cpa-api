@@ -19,19 +19,8 @@ jobs:
         context: .
         push: true
         tags: joaopedrogama/cpa-api:latest
-        
-    - name: Pull Docker image from Docker Hub
-      uses: docker/login-action@v1
-      with:
         Username: ${{ secrets.DOCKER_USER }}
-        Password: ${{ secrets.DOCKER_PASS }}
-        
-    - name: Build and push image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        tags: joaopedrogama/cpa-api:latest
+        Password: ${{ secrets.DOCKER_TOKEN }}
 
 #    - name: SSH to EC2 instance
 #     uses: appleboy/ssh-action@master
