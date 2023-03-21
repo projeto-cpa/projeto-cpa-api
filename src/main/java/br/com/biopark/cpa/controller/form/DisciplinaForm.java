@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CargoForm {
+public class DisciplinaForm {
 
     @NotBlank(message = "Nome não pode ser vazio")
     @NotNull(message = "Nome não pode ser vazio")
