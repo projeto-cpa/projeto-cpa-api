@@ -33,9 +33,9 @@ jobs:
         push: true
         tags: joaopedrogama/cpa-api:latest
 
-    - name: SSH to EC2 instance
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
-        password: ${{ secrets.EC2_PASSWORD }}
+#    - name: SSH to EC2 instance
+#     uses: appleboy/ssh-action@master
+#      with:
+#        host: ${{ secrets.EC2_HOST }}
+#        username: ${{ secrets.EC2_USERNAME }}
+#        password: ${{ secrets.EC2_PASSWORD }}
