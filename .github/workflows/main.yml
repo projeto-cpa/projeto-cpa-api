@@ -19,8 +19,8 @@ jobs:
         context: .
         push: true
         tags: joaopedrogama/cpa-api:latest
-        Username: ${{ secrets.DOCKER_USER }}
-        Password: ${{ secrets.DOCKER_TOKEN }}
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_TOKEN }}
 
 #    - name: SSH to EC2 instance
 #     uses: appleboy/ssh-action@master
