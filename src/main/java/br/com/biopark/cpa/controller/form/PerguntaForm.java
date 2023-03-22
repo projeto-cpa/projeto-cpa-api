@@ -1,8 +1,10 @@
 package br.com.biopark.cpa.controller.form;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
 @Getter @Setter
 public class PerguntaForm {
 
@@ -10,7 +12,6 @@ public class PerguntaForm {
     @NotNull(message = "Nome não pode ser vazio")
     private String nome;
     private Boolean ativo;
-
 
     // private tipo_resposta;
     
