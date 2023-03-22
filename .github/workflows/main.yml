@@ -15,16 +15,23 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
-
+      uses: actions/checkout@v3.4.0
+      
+    - name: Docker login
+      uses: docker/login-action@v2.1.0
+      with:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        
     - name: Build Docker image
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v4.0.0
       with:
         context: .
+        file: .
         push: true
-        tags: joaopedrogama/cpa-api:latest
-        username: ${{ env.DOCKER_USERNAME }}
-        password: ${{ env.DOCKER_PASSWORD }}
+        tags: |
+          joaopedrogama/cpa-api:1.0.0
+          joaopedrogama/cpa-api:latest
 
 #    - name: SSH to EC2 instance
 #     uses: appleboy/ssh-action@master
