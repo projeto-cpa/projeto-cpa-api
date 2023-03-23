@@ -15,10 +15,12 @@ public class CargoDTO {
     private String nome;
     private Date createdAt;
     private Date updatedAt;
+    private boolean cadastrado;
 
     public CargoDTO(Cargo cargo) {
         this.id = cargo.getId();
         this.nome = cargo.getNome();
+        this.cadastrado = true;
         this.createdAt = cargo.getCreatedAt();
         this.updatedAt = cargo.getUpdatedAt();
     }

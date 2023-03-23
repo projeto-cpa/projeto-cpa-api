@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter @Setter
 public class CargoForm {
 
-    @NotBlank
+    @NotBlank(message = "Nome não pode ser vazio")
     @NotNull
     private String nome;
     
