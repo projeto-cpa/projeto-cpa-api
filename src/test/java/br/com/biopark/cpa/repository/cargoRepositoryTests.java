@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.biopark.cpa.models.Cargo;
@@ -22,12 +21,14 @@ public class cargoRepositoryTests {
     private CargoRepository cargoRepository;
 
     @Test
-    public void testeDePersistenciaCargos() throws Exception {
+    public void testePersistenciaCargos() throws Exception {
 
         // cria, persiste e limpa
         Cargo professor = new Cargo("Professor", "Professor", false);
         entityManager.persist(professor);
         entityManager.flush();
+        entityManager.clear();
+
         Cargo persistido = cargoRepository.findByNome(professor.getNome());
 
         // afirmacoes
