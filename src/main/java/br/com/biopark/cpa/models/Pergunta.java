@@ -29,6 +29,10 @@ public class Pergunta {
     @Setter
     private String nome;
 
+    @Column
+    @Getter
+    @Setter
+    private String tipo;
     // Adicionar ID_Eixo, tipo_respostas.
 
     @Column
@@ -46,8 +50,9 @@ public class Pergunta {
     @Setter
     private Date atualizadoEm;
 
-    public Pergunta(String nome, Boolean ativo) {
+    public Pergunta(String nome, String tipo, Boolean ativo) {
         this.nome = nome;
+        this.tipo = tipo;
         this.ativo = ativo;
         this.criadoEm = new Date();
         this.atualizadoEm = new Date();

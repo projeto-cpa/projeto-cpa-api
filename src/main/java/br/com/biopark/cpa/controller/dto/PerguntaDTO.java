@@ -12,6 +12,8 @@ public class PerguntaDTO {
 
     private long id;
     private String nome;
+    private String tipo;
+    private Boolean ativo;
     private Date criadoEm;
     private Date atualizadoEm;
     private Boolean sucesso;
@@ -19,6 +21,8 @@ public class PerguntaDTO {
     public PerguntaDTO(Pergunta pergunta) {
         this.id = pergunta.getId();
         this.nome = pergunta.getNome();
+        this.tipo = pergunta.getTipo();
+        this.ativo = pergunta.getAtivo();
         this.sucesso = true;
         this.criadoEm = pergunta.getCriadoEm();
         this.atualizadoEm = pergunta.getAtualizadoEm();
