@@ -19,7 +19,7 @@ import lombok.Setter;
 public class Cargo {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cargo")
     @Getter @Setter
     private long id;
