@@ -3,10 +3,15 @@ package br.com.biopark.cpa.controller;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -33,5 +38,19 @@ public class CargoController {
 
         URI uri = uriBuilder.path("cargo/{id}").buildAndExpand(cargo.getId()).toUri();
         return ResponseEntity.created(uri).body(new CargoDTO(cargo));
+    }
+
+    @GetMapping
+    public Page<CargoDTO> lista(@RequestParam(required = false) String nomeCargo, @RequestParam int pagina, @RequestParam int qtd) {
+
+        Pageable paginacao = PageRequest.of(pagina, qtd);
+
+        if (nomeCargo == null) {
+            Page<Cargo> cargos = cargoService.listar(paginacao);
+            return CargoDTO.converter(cargos);
+        } else {
+            Page<Cargo> cargos = cargoService.buscaPorNome(nomeCargo, paginacao);
+            return CargoDTO.converter(cargos);
+        }
     }
 }

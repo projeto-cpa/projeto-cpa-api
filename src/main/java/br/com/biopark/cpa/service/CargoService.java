@@ -1,6 +1,8 @@
 package br.com.biopark.cpa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.biopark.cpa.models.Cargo;
@@ -23,6 +25,14 @@ public class CargoService {
         }
 
         return cargoCadastrado;
+    }
+
+    public Page<Cargo> listar(Pageable cargos) {
+        return cargoRepository.findAll(cargos);
+    }
+
+    public Page<Cargo> buscaPorNome(String nomeCargo, Pageable cargos) {
+        return cargoRepository.findByNome(nomeCargo, cargos);
     }
     
 }
