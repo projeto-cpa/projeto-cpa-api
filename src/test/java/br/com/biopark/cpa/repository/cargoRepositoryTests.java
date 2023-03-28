@@ -25,6 +25,7 @@ public class cargoRepositoryTests {
 
         // cria, persiste e limpa
         Cargo professor = new Cargo("Professor", "Professor", false);
+        
         entityManager.persist(professor);
         entityManager.flush();
         entityManager.clear();

@@ -30,7 +30,7 @@ public class DisciplinaController {
     @PostMapping("/cadastro/disciplinas")
     @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
     public ResponseEntity<DisciplinaDTO> cadastrar(@RequestBody @Valid DisciplinaForm form, UriComponentsBuilder uriBuilder) {
-        Disciplina disciplina = new Disciplina(form.getNome(), form.getDescricao(), form.getAtivo());
+        Disciplina disciplina = new Disciplina(form.getAtivo(), form.getNome(), form.getDescricao());
         disciplina = disciplinaService.cadastrar(disciplina);
         URI uri = uriBuilder.path("disciplina/{id}").buildAndExpand(disciplina.getId()).toUri();
         return ResponseEntity.created(uri).body(new DisciplinaDTO(disciplina));

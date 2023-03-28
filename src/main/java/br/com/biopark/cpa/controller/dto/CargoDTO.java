@@ -14,9 +14,9 @@ public class CargoDTO {
     private long id;
     private String nome;
     private String descricao;
-    private boolean ativo;
-    private Date criadoEm;
-    private Date atualizadoEm;
+    private Boolean ativo;
+    private Date dataCriacao;
+    private Date dataAtualizacao;
     private Boolean sucesso;
 
     public CargoDTO(Cargo cargo) {
@@ -25,7 +25,7 @@ public class CargoDTO {
         this.descricao = cargo.getDescricao();
         this.ativo = cargo.getAtivo(); 
         this.sucesso = true;
-        this.criadoEm = cargo.getCriadoEm();
-        this.atualizadoEm = cargo.getAtualizadoEm();
+        this.dataCriacao = cargo.getDataCriacao();
+        this.dataAtualizacao = cargo.getDataAtualizacao();
     }
 }

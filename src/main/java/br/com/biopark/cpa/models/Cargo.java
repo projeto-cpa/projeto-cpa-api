@@ -44,18 +44,18 @@ public class Cargo {
     @Column(name = "criado_em")
     @Getter
     @Setter
-    private Date criadoEm;
+    private Date dataCriacao;
 
     @Column(name = "atualizado_em")
     @Getter
     @Setter
-    private Date atualizadoEm;
+    private Date dataAtualizacao;
 
     public Cargo(String nome, String descricao, Boolean ativo) {
         this.nome = nome;
         this.descricao = descricao;
         this.ativo = ativo;
-        this.criadoEm = new Date();
-        this.atualizadoEm = new Date();
+        this.dataCriacao = new Date();
+        this.dataAtualizacao = new Date();
     }
 }

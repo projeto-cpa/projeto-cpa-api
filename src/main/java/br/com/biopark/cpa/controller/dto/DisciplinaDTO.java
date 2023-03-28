@@ -14,9 +14,9 @@ public class DisciplinaDTO {
     private long id;
     private String nome;
     private String descricao;
-    private boolean ativo;
-    private Date criadoEm;
-    private Date atualizadoEm;
+    private Boolean ativo;
+    private Date dataCriacao;
+    private Date dataAtualizacao;
     private Boolean sucesso;
 
     public DisciplinaDTO(Disciplina disciplina) {
@@ -25,7 +25,7 @@ public class DisciplinaDTO {
         this.descricao = disciplina.getDescricao();
         this.ativo = disciplina.getAtivo(); 
         this.sucesso = true;
-        this.criadoEm = disciplina.getCriadoEm();
-        this.atualizadoEm = disciplina.getAtualizadoEm();
+        this.dataCriacao = disciplina.getDataCriacao();
+        this.dataAtualizacao = disciplina.getDataAtualizacao();
     }
 }
