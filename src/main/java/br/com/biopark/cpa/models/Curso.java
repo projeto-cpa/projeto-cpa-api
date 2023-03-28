@@ -1,8 +1,8 @@
 package br.com.biopark.cpa.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,12 +12,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "curso")
-@NoArgsConstructor
 public class Curso {
 
     @Id
@@ -37,16 +35,16 @@ public class Curso {
     @Getter
     @Setter
     private String descricao;
-
-    @Column
+ 
+    @Column(name = "ativo", nullable = false)
     @Getter
     @Setter
-    private Boolean ativo;
+    private Boolean ativo = false;;
 
-    @OneToMany(mappedBy = "curso")
+    @OneToMany
     @Getter
     @Setter
-    private List<Disciplina> disciplinas;
+    private List<Disciplina> disciplinas = new ArrayList<>();
 
     @Column(name = "data_criacao")
     @Getter
@@ -58,12 +56,18 @@ public class Curso {
     @Setter
     private Date dataAtualizacao;
 
+    public Curso() {
+        
+    }
+
     public Curso(Boolean ativo, String nome, String descricao, List<Disciplina> disciplinas) {
         this.ativo = ativo;
         this.nome = nome;
         this.descricao = descricao;
-        this.disciplinas = disciplinas;
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
+        this.disciplinas = disciplinas;
     }
+
+
 }
