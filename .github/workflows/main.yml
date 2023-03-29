@@ -17,13 +17,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3.4.0
       
-    - name: Configurar o Java 17
+    - name: Configurando o Java 17
       uses: actions/setup-java@v3.11.0
       with:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Instalar dependências do Maven
+    - name: Build e Testes do projeto
       run: mvn package
       
     - name: Docker login
