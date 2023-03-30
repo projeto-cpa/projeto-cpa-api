@@ -27,7 +27,6 @@ jobs:
       uses: cloudposse/github-action-docker-compose-test-run@0.1.2
       with:
         file: docker-compose.yaml
-        command: mvn test
       
     - name: Docker login
       uses: docker/login-action@v2.1.0
