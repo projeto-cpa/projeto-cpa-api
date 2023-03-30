@@ -27,7 +27,6 @@ jobs:
       uses: cloudposse/github-action-docker-compose-test-run@0.1.2
       with:
         file: docker-compose.yaml
-        command: docker-compose up mysql_db
 
     - name: Build e Testes do projeto
       run: mvn test
