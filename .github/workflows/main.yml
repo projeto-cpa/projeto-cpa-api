@@ -22,9 +22,15 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+        
+    - name: Subindo banco de dados
+      uses: cloudposse/github-action-docker-compose-test-run@0.1.2
+      with:
+        file: docker-compose.yaml
+        command: docker-compose up mysql_db
 
     - name: Build e Testes do projeto
-      run: mvn package
+      run: mvn test
       
     - name: Docker login
       uses: docker/login-action@v2.1.0
