@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -14,6 +16,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "disciplina")
+@Getter @Setter
 public class Disciplina {
 
     @Id
@@ -22,6 +25,11 @@ public class Disciplina {
     @Getter
     @Setter
     private long id;
+
+    @Column
+    @Getter
+    @Setter
+    private Boolean ativo;
 
     @NotNull
     @Column
@@ -35,11 +43,6 @@ public class Disciplina {
     @Setter
     private String descricao;
 
-    @Column(name = "ativo", nullable = false)
-    @Getter
-    @Setter
-    private Boolean ativo;
-
     @Column(name = "data_criacao")
     @Getter
     @Setter
@@ -49,6 +52,12 @@ public class Disciplina {
     @Getter
     @Setter
     private Date dataAtualizacao;
+
+    @JoinColumn(name = "id_curso")
+    @ManyToOne
+    @Getter
+    @Setter
+    private Curso curso;
 
     public Disciplina() {
     }

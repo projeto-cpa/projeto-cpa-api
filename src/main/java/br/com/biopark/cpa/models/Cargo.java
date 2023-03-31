@@ -25,6 +25,11 @@ public class Cargo {
     @Setter
     private long id;
 
+    @Column
+    @Getter
+    @Setter
+    private Boolean ativo;
+
     @NotNull
     @Column
     @Getter
@@ -35,11 +40,6 @@ public class Cargo {
     @Getter
     @Setter
     private String descricao;
-
-    @Column
-    @Getter
-    @Setter
-    private Boolean ativo;
 
     @Column(name = "criado_em")
     @Getter

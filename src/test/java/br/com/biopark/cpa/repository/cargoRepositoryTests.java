@@ -1,7 +1,9 @@
 package br.com.biopark.cpa.repository;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,6 +15,9 @@ import br.com.biopark.cpa.models.Cargo;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class cargoRepositoryTests {
+
+    @Rule
+    public ErrorCollector error = new ErrorCollector();
 
     @Autowired
     private TestEntityManager entityManager;

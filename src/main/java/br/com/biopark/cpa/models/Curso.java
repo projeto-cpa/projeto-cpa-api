@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +26,11 @@ public class Curso {
     @Setter
     private long id;
 
+    @Column
+    @Getter
+    @Setter
+    private Boolean ativo;
+
     @NotNull
     @Column
     @Getter
@@ -35,13 +41,9 @@ public class Curso {
     @Getter
     @Setter
     private String descricao;
- 
-    @Column(name = "ativo", nullable = false)
-    @Getter
-    @Setter
-    private Boolean ativo = false;;
 
-    @OneToMany
+    @OneToMany(mappedBy = "curso")
+    @JoinColumn(name = "id_disciplina")
     @Getter
     @Setter
     private List<Disciplina> disciplinas = new ArrayList<>();
@@ -57,7 +59,7 @@ public class Curso {
     private Date dataAtualizacao;
 
     public Curso() {
-        
+
     }
 
     public Curso(Boolean ativo, String nome, String descricao, List<Disciplina> disciplinas) {
@@ -68,6 +70,5 @@ public class Curso {
         this.dataAtualizacao = new Date();
         this.disciplinas = disciplinas;
     }
-
 
 }
