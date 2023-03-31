@@ -8,15 +8,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "cargo")
+@Table(name = "pergunta")
 @NoArgsConstructor
-public class Cargo {
+public class Pergunta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,18 +27,17 @@ public class Cargo {
     @Column
     @Getter
     @Setter
-    private Boolean ativo;
-
-    @NotNull
-    @Column
-    @Getter
-    @Setter
     private String nome;
 
     @Column
     @Getter
     @Setter
-    private String descricao;
+    private String tipo;
+
+    @Column
+    @Getter
+    @Setter
+    private Boolean ativo;
 
     @Column(name = "data_criacao")
     @Getter
@@ -51,11 +49,12 @@ public class Cargo {
     @Setter
     private Date dataAtualizacao;
 
-    public Cargo(String nome, String descricao, Boolean ativo) {
+    public Pergunta(String nome, String tipo, Boolean ativo) {
         this.nome = nome;
-        this.descricao = descricao;
+        this.tipo = tipo;
         this.ativo = ativo;
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
     }
+
 }

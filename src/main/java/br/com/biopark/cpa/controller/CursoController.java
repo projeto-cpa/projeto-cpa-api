@@ -21,6 +21,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/curso")
 @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
+@Transactional
 public class CursoController {
 
     @Autowired

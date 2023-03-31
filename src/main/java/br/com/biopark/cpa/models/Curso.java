@@ -3,6 +3,7 @@ package br.com.biopark.cpa.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,11 +43,17 @@ public class Curso {
     @Setter
     private String descricao;
 
-    @OneToMany(mappedBy = "curso")
-    @JoinColumn(name = "id_disciplina")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_curso")
     @Getter
     @Setter
     private List<Disciplina> disciplinas = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_curso")
+    @Getter
+    @Setter
+    private List<Turma> turmas = new ArrayList<>();
 
     @Column(name = "data_criacao")
     @Getter

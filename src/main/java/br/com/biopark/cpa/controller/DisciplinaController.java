@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import br.com.biopark.cpa.controller.dto.DisciplinaDTO;
 import br.com.biopark.cpa.controller.form.DisciplinaForm;
 import br.com.biopark.cpa.models.Disciplina;
@@ -19,16 +18,17 @@ import br.com.biopark.cpa.service.DisciplinaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
-@RequestMapping
 @RestController
+@RequestMapping("/disciplina")
+@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
+@Transactional
 public class DisciplinaController {
 
     @Autowired
     private DisciplinaService disciplinaService;
 
-    @Transactional
-    @PostMapping("/cadastro/disciplinas")
-    @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
+
+    @PostMapping
     public ResponseEntity<DisciplinaDTO> cadastrar(@RequestBody @Valid DisciplinaForm form, UriComponentsBuilder uriBuilder) {
         Disciplina disciplina = new Disciplina(form.getAtivo(), form.getNome(), form.getDescricao());
         disciplina = disciplinaService.cadastrar(disciplina);
@@ -37,7 +37,6 @@ public class DisciplinaController {
     }
 
     @GetMapping("/listagem/disciplinas")
-    @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
     public Iterable<Disciplina> listarDisciplinas() {
         return disciplinaService.listarDisciplinas();
     }
