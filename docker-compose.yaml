@@ -5,12 +5,7 @@ services:
       image: "mysql:5.7"
       restart: always
       ports:
-        - 3307:3306
-      healthcheck:
-        test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-        interval: 10s
-        timeout: 5s
-        retries: 3
+        - "3307:3306"
       environment:
         MYSQL_DATABASE: ${MYSQLDB_DATABASE}
         MYSQL_USER: ${MYSQLDB_USER}
@@ -24,10 +19,9 @@ services:
     build: .
     restart: always
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
-      mysql_db:
-        condition: service_healthy
+      - mysql_db
     environment:
         SPRING_PROFILES_ACTIVE: docker
     volumes:
