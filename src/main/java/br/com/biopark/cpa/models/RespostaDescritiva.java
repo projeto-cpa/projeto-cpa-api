@@ -40,12 +40,6 @@ public class RespostaDescritiva {
     @Getter @Setter
     private Usuario usuario;
 
-    @NotNull
-    @JoinColumn(name = "id_eixo")
-    @ManyToOne
-    @Getter @Setter
-    private Eixo eixo;
-
     @Column(name = "data_criacao")
     @Getter
     @Setter
@@ -60,11 +54,10 @@ public class RespostaDescritiva {
 
     }
 
-    public RespostaDescritiva(String texto, Pergunta pergunta, Usuario usuario, Eixo eixo, Date dataNascimento) {
+    public RespostaDescritiva(String texto, Pergunta pergunta, Usuario usuario, Date dataNascimento) {
         this.texto = texto;
         this.setPergunta(pergunta);
         this.setUsuario(usuario);
-        this.setEixo(eixo);
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
     }

@@ -13,7 +13,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.biopark.cpa.controller.dto.CursoDTO;
 import br.com.biopark.cpa.controller.form.CursoForm;
 import br.com.biopark.cpa.models.Curso;
-import br.com.biopark.cpa.repository.DisciplinaRepository;
 import br.com.biopark.cpa.service.CursoService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -27,24 +26,20 @@ public class CursoController {
     @Autowired
     private CursoService cursoService;
 
-    @Autowired
-    private DisciplinaRepository disciplinaRepository;
-
     @PostMapping
-    @Transactional
     public ResponseEntity<CursoDTO> cadastrar(@RequestBody @Valid CursoForm form, UriComponentsBuilder uriBuilder)
             throws Exception {
 
-        Curso curso = form.converter(disciplinaRepository);
-        cursoService.cadastrar(curso);
+        Curso curso = new Curso(form.getAtivo(), form.getNome(), form.getDescricao());
+        curso = cursoService.cadastrar(curso);
 
         URI uri = uriBuilder.path("/curso/{id}").buildAndExpand(curso.getId()).toUri();
         return ResponseEntity.created(uri).body(new CursoDTO(curso));
     }
-    
+
     @GetMapping
     public Iterable<Curso> listarCursos() {
         return cursoService.listarCursos();
     }
-    
+
 }

@@ -69,13 +69,12 @@ public class Curso {
 
     }
 
-    public Curso(Boolean ativo, String nome, String descricao, List<Disciplina> disciplinas) {
+    public Curso(Boolean ativo, String nome, String descricao) {
         this.ativo = ativo;
         this.nome = nome;
         this.descricao = descricao;
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
-        this.disciplinas = disciplinas;
     }
 
 }

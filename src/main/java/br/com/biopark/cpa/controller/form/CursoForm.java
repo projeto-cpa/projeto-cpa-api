@@ -20,18 +20,5 @@ public class CursoForm {
     private String nome;
     private Boolean ativo;
     private String descricao;
-    private List<Long> disciplinas;
-
-    public Curso converter(DisciplinaRepository disciplinaRepository) {
-        
-        List<Disciplina> disciplinasList = new ArrayList<Disciplina>();
-        for (Long id : this.disciplinas) {
-            Optional<Disciplina> disciplina = disciplinaRepository.findById(id);
-            if (disciplina.isPresent()) {
-                disciplinasList.add(disciplina.get());
-            }
-        }
-        return new Curso(this.ativo, this.nome, this.descricao, disciplinasList);
-    }
 
 }
