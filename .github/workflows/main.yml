@@ -10,23 +10,24 @@ on:
       - main
 
 jobs:
+
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3.4.0
+
+      - name: Execute tests
+        run: docker-compose -f docker-compose.yml docker-compose.test.yml up --build
+
   build-and-deploy:
+    needs: run-tests
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3.4.0
-      
-#    - name: Configurando o Java 17
-#      uses: actions/setup-java@v3.11.0
-#      with:
-#        java-version: '17'
-#        distribution: 'temurin'
-        
-#    - name: Executando testes
-#      uses: cloudposse/github-action-docker-compose-test-run@0.1.2
-#      with:
-#        file: docker-compose.yaml
       
     - name: Docker login
       uses: docker/login-action@v2.1.0
@@ -42,10 +43,3 @@ jobs:
         tags: |
           joaopedrogama/cpa-api:1.0.0
           joaopedrogama/cpa-api:latest
-
-#    - name: SSH to EC2 instance
-#     uses: appleboy/ssh-action@master
-#      with:
-#        host: ${{ secrets.EC2_HOST }}
-#        username: ${{ secrets.EC2_USERNAME }}
-#        password: ${{ secrets.EC2_PASSWORD }}
