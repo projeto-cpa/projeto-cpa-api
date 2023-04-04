@@ -29,7 +29,6 @@ services:
     networks:
       - cpa-network
 
-
 networks:
   cpa-network:
     driver: bridge
