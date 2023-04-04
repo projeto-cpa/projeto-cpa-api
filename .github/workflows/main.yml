@@ -1,9 +1,5 @@
 name: CI/CD Pipeline
 
-env: 
-  DOCKER_USERNAME: ${{ secrets.DOCKER_USER }}
-  DOCKER_PASSWORD: ${{ secrets.DOCKER_TOKEN }}
-
 on:
   push:
     branches:
@@ -21,7 +17,10 @@ jobs:
       - name: Execute tests
         run: docker-compose -f docker-compose.yml -f docker-compose.test.yml up --build
 
-  build-and-deploy:
+      - name: Down docker compose
+        run: docker-compose down
+
+  build-and-deploy-artifact:
     needs: run-tests
     runs-on: ubuntu-latest
 

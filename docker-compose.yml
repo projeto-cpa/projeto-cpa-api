@@ -3,7 +3,11 @@ services:
 
   mysql_db:
       image: "mysql:5.7"
-      restart: always
+      deploy:
+        restart_policy:
+          condition: on-failure
+          delay: 5s
+          max_attempts: 3
       ports:
         - "3307:3306"
       environment:
@@ -17,7 +21,11 @@ services:
         - cpa-network
   api_service:
     build: .
-    restart: always
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
     ports:
       - "8080:8080"
     depends_on:
