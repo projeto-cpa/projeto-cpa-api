@@ -13,7 +13,8 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "disciplina")
-@Getter @Setter
+@Getter
+@Setter
 public class Disciplina {
 
     @Id
@@ -38,6 +39,12 @@ public class Disciplina {
     @Column
     @Getter
     @Setter
+    private Curso curso;
+
+    @NotNull
+    @Column
+    @Getter
+    @Setter
     private String descricao;
 
     @Column(name = "data_criacao")
@@ -53,7 +60,7 @@ public class Disciplina {
     public Disciplina() {
     }
 
-    public Disciplina(Boolean ativo, String nome, String descricao) {
+    public Disciplina(Boolean ativo, String nome, String descricao, Curso curso) {
         this.ativo = ativo;
         this.nome = nome;
         this.descricao = descricao;

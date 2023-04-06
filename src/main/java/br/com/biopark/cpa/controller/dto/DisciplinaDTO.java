@@ -3,6 +3,7 @@ package br.com.biopark.cpa.controller.dto;
 
 import java.util.Date;
 
+import br.com.biopark.cpa.models.Curso;
 import br.com.biopark.cpa.models.Disciplina;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ public class DisciplinaDTO {
     private String nome;
     private String descricao;
     private Boolean ativo;
+    private Curso curso;
     private Date dataCriacao;
     private Date dataAtualizacao;
     private Boolean sucesso;
@@ -27,5 +29,6 @@ public class DisciplinaDTO {
         this.sucesso = true;
         this.dataCriacao = disciplina.getDataCriacao();
         this.dataAtualizacao = disciplina.getDataAtualizacao();
+        this.curso = disciplina.getCurso();
     }
 }
