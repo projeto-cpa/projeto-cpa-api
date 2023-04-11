@@ -11,33 +11,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-import br.com.biopark.cpa.controller.dto.PerguntaDTO;
-import br.com.biopark.cpa.controller.form.PerguntaForm;
-import br.com.biopark.cpa.models.Pergunta;
-import br.com.biopark.cpa.service.PerguntaService;
+import br.com.biopark.cpa.controller.dto.RespostaDTO;
+import br.com.biopark.cpa.controller.form.RespostaForm;
+import br.com.biopark.cpa.models.Resposta;
+import br.com.biopark.cpa.service.RespostaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/pergunta")
+@RequestMapping("/resposta")
 @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
 @Transactional
-public class PerguntaController {
+public class RespostaController {
 
     @Autowired
-    private PerguntaService perguntaService;
+    private RespostaService respostaService;
 
     @PostMapping
-    public ResponseEntity<PerguntaDTO> cadastrar(@RequestBody @Valid PerguntaForm form,
+    public ResponseEntity<RespostaDTO> cadastrar(@RequestBody @Valid RespostaForm form,
             UriComponentsBuilder uriBuilder) {
-        Pergunta pergunta = form.converter(form);
-        pergunta = perguntaService.cadastrar(pergunta);
-        URI uri = uriBuilder.path("pergunta/{id}").buildAndExpand(pergunta.getId()).toUri();
-        return ResponseEntity.created(uri).body(new PerguntaDTO(pergunta));
+        Resposta resposta = form.converter(form);
+        resposta = respostaService.cadastrar(resposta);
+        URI uri = uriBuilder.path("resposta/{id}").buildAndExpand(resposta.getId()).toUri();
+        return ResponseEntity.created(uri).body(new RespostaDTO(resposta));
     }
 
     @GetMapping
-    public Iterable<Pergunta> listarPergunta() {
-        return perguntaService.listarPergunta();
+    public Iterable<Resposta> listarResposta() {
+        return respostaService.listarResposta();
     }
 }
