@@ -18,7 +18,7 @@ Para executar o projeto, siga os seguintes passos:
 
 1. Clone este repositório em sua máquina local.
 2. Navegue até o diretório raiz do projeto.
-3. Execute o comando `docker-compose up` para criar e executar os contêineres Docker.
+3. Execute o comando `docker-compose up` para criar e executar os contêineres Docker ou `mvn spring-boot:run` para executar localmente
 4. O aplicativo estará disponível em `http://localhost:8080`.
 
 ## Testes
