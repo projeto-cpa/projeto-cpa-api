@@ -1,4 +1,6 @@
-# Projeto Spring Boot usando Java 17 com Docker e Docker Compose
+# CPA API
+
+Esta é a API para o projeto acadêmico do biopark para atender a demanda da CPA (comissão propria de avaliação), onde os alunos da instituição fazem as avaliações referentes aos serviços do Biopark Educação.
 
 Este é um projeto Spring Boot que utiliza a versão 17 do Java e é executado dentro de contêineres Docker usando Docker Compose. Ele também inclui testes automatizados e unitários.
 
