@@ -40,6 +40,7 @@ Este projeto utiliza as seguintes tecnologias:
 - Java 17
 - Docker
 - Docker Compose
+- Banco de dados MySql
 
 ## Contribuição
 
