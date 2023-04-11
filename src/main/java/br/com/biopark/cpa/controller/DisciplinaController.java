@@ -2,7 +2,6 @@ package br.com.biopark.cpa.controller;
 
 import java.net.URI;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,7 +22,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/disciplina")
-@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
 @Transactional
 public class DisciplinaController {
 
@@ -34,6 +32,7 @@ public class DisciplinaController {
     private CursoRepository cursoRepository;
 
     @PostMapping
+    @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
     public ResponseEntity<DisciplinaDTO> cadastrar(@RequestBody @Valid DisciplinaForm form,
             UriComponentsBuilder uriBuilder) {
         Optional<Curso> cursoOptional = cursoRepository.findById(form.getIdCurso());
@@ -50,7 +49,8 @@ public class DisciplinaController {
 
     }
 
-    @GetMapping("/listagem/disciplinas")
+    @GetMapping
+    @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
     public Iterable<Disciplina> listarDisciplinas() {
         return disciplinaService.listarDisciplinas();
     }

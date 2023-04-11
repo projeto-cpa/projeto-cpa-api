@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -46,8 +47,13 @@ public class Turma {
     @Setter
     private String descricao;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_turma")
+    @ManyToOne
+    @JoinColumn(name = "id_curso")
+    @Getter
+    @Setter
+    private Curso curso;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "turma")
     @Getter
     @Setter
     private List<Usuario> usuarios = new ArrayList<>();
