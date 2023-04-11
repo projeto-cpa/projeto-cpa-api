@@ -35,3 +35,6 @@ build/
 
 ### Volume ###
 .data/
+
+*.Identifier
+*.jar
