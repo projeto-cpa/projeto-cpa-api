@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.biopark.cpa.controller.dto.RespostaDTO;
 import br.com.biopark.cpa.controller.form.RespostaForm;
 import br.com.biopark.cpa.models.Resposta;
+import br.com.biopark.cpa.repository.PerguntaRepository;
 import br.com.biopark.cpa.service.RespostaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -27,10 +28,13 @@ public class RespostaController {
     @Autowired
     private RespostaService respostaService;
 
+    @Autowired
+    PerguntaRepository perguntaRepository;
+
     @PostMapping
     public ResponseEntity<RespostaDTO> cadastrar(@RequestBody @Valid RespostaForm form,
             UriComponentsBuilder uriBuilder) {
-        Resposta resposta = form.converter(form);
+        Resposta resposta = form.converter(perguntaRepository);
         resposta = respostaService.cadastrar(resposta);
         URI uri = uriBuilder.path("resposta/{id}").buildAndExpand(resposta.getId()).toUri();
         return ResponseEntity.created(uri).body(new RespostaDTO(resposta));

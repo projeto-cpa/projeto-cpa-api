@@ -35,10 +35,10 @@ public class Resposta {
     private Pergunta pergunta;
 
     @Column
-    private String texto = "";
+    private String texto;
 
     @Column
-    private Long nota = (long) 0;
+    private Long nota;
 
     @Column(name = "data_criacao")
     private Date dataCriacao;
@@ -61,6 +61,7 @@ public class Resposta {
      */
     public Resposta(String texto, Pergunta pergunta) {
         this.texto = texto;
+        this.nota = (long) 0;
         this.setPergunta(pergunta);
         // this.setUsuario(usuario);
         this.setDataCriacao(dataCriacao);
@@ -80,6 +81,7 @@ public class Resposta {
      */
     public Resposta(Long nota, Pergunta pergunta) {
         this.nota = nota;
+        this.texto = null;
         this.setPergunta(pergunta);
         // this.setUsuario(usuario);
         this.setDataCriacao(dataCriacao);

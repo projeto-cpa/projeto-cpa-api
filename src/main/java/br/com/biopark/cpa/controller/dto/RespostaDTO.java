@@ -12,6 +12,7 @@ public class RespostaDTO {
 
     private long id;
     private String texto;
+    private Long nota;
     private Date dataCriacao;
     private Date dataAtualizacao;
     private Boolean sucesso;
@@ -19,6 +20,7 @@ public class RespostaDTO {
     public RespostaDTO(Resposta resposta) {
         this.id = resposta.getId();
         this.texto = resposta.getTexto();
+        this.nota = resposta.getNota();
         this.sucesso = true;
         this.dataCriacao = resposta.getDataCriacao();
         this.dataAtualizacao = resposta.getDataAtualizacao();
