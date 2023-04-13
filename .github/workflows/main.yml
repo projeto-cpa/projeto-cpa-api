@@ -21,7 +21,7 @@ jobs:
           distribution: 'adopt'
       
       - name: Up Mysql for tests
-        run: docker-compose up mysql_db -d
+        run: docker-compose up -d mysql_db
       
       - name: Build
         run: mvn --batch-mode -DskipTests package
