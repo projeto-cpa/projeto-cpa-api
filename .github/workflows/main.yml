@@ -22,12 +22,15 @@ jobs:
       
       - name: Up Mysql for tests
         run: docker-compose up -d mysql_db
+        
+      - name: Wait for MySQL to start
+        run: docker-compose run --rm mysql_db /bin/bash -c 'until mysqladmin ping -h"localhost" --silent; do sleep 1; done;'
       
       - name: Build
         run: mvn --batch-mode -DskipTests package
 
       - name: Test
-        run: mvn --batch-mode -Dspring.profiles.active=docker -Dmaven.test.failure.ignore=true test
+        run: mvn --batch-mode -Dspring.profiles.active=docker -Dmaven.test.failure.ignore=false test
 
       - name: Report
         uses: dorny/test-reporter@v1
