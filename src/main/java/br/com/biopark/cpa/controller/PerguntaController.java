@@ -1,6 +1,7 @@
 package br.com.biopark.cpa.controller;
 
 import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,32 +11,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-import br.com.biopark.cpa.controller.dto.CargoDTO;
-import br.com.biopark.cpa.controller.form.CargoForm;
-import br.com.biopark.cpa.models.Cargo;
-import br.com.biopark.cpa.service.CargoService;
+import br.com.biopark.cpa.controller.dto.PerguntaDTO;
+import br.com.biopark.cpa.controller.form.PerguntaForm;
+import br.com.biopark.cpa.models.Pergunta;
+import br.com.biopark.cpa.service.PerguntaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/cargo")
+@RequestMapping("/pergunta")
 @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
 @Transactional
-public class CargoController {
+public class PerguntaController {
 
     @Autowired
-    private CargoService cargoService;
-    
+    private PerguntaService perguntaService;
+
     @PostMapping
-    public ResponseEntity<CargoDTO> cadastrar(@RequestBody @Valid CargoForm form, UriComponentsBuilder uriBuilder) {
-        Cargo cargo = new Cargo(form.getNome(), form.getDescricao(), form.getAtivo());
-        cargo = cargoService.cadastrar(cargo);
-        URI uri = uriBuilder.path("cargo/{id}").buildAndExpand(cargo.getId()).toUri();
-        return ResponseEntity.created(uri).body(new CargoDTO(cargo));
+    public ResponseEntity<PerguntaDTO> cadastrar(@RequestBody @Valid PerguntaForm form,
+            UriComponentsBuilder uriBuilder) {
+        Pergunta pergunta = form.converter(form);
+        pergunta = perguntaService.cadastrar(pergunta);
+        URI uri = uriBuilder.path("pergunta/{id}").buildAndExpand(pergunta.getId()).toUri();
+        return ResponseEntity.created(uri).body(new PerguntaDTO(pergunta));
     }
 
     @GetMapping
-    public Iterable<Cargo> listarCargos() {
-        return cargoService.listarCargos();
+    public Iterable<Pergunta> listarPergunta() {
+        return perguntaService.listarPergunta();
     }
 }

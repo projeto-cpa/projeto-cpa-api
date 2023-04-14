@@ -25,4 +25,9 @@ public class CargoService {
         return cargoCadastrado;
     }
     
+    // implemente a listagem de cargos
+    public Iterable<Cargo> listarCargos() {
+        return cargoRepository.findAll();
+    }
+    
 }
