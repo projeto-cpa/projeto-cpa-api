@@ -2,9 +2,7 @@ package br.com.biopark.cpa.controller.form;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import br.com.biopark.cpa.enums.TipoPergunta;
+import br.com.biopark.cpa.models.enums.TipoPergunta;
 import br.com.biopark.cpa.models.Pergunta;
 import br.com.biopark.cpa.models.Resposta;
 import br.com.biopark.cpa.repository.PerguntaRepository;
