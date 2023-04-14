@@ -20,9 +20,8 @@ public class Cargo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter @Setter
     @Column(name = "id")
-    @Getter
-    @Setter
     private long id;
 
     @Column
