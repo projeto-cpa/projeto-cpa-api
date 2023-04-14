@@ -24,11 +24,6 @@ public class Resposta {
     @Column(name = "id_resposta")
     private long id;
 
-    // @NotNull
-    // @JoinColumn(name = "id_usuario")
-    // @ManyToOne
-    // private Usuario usuario;
-
     @NotNull
     @JoinColumn(name = "id_pergunta")
     @ManyToOne
@@ -63,7 +58,6 @@ public class Resposta {
         this.texto = texto;
         this.nota = (long) 0;
         this.setPergunta(pergunta);
-        // this.setUsuario(usuario);
         this.setDataCriacao(dataCriacao);
         this.setDataAtualizacao(dataAtualizacao);
         this.dataAtualizacao = new Date();
