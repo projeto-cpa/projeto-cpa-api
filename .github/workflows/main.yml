@@ -1,0 +1,56 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3.4.0
+        
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+      
+      - name: Up Mysql for tests
+        run: docker-compose up -d mysql_db
+      
+      - name: Build
+        run: mvn --batch-mode -DskipTests package
+
+      - name: Test
+        run: mvn --batch-mode -Dspring.profiles.active=docker -Dmaven.test.failure.ignore=false test
+          
+      - name: Down Mysql for tests
+        run: docker-compose down mysql_db
+
+  build-and-deploy-artifact:
+    needs: run-tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3.4.0
+      
+    - name: Docker login
+      uses: docker/login-action@v2.1.0
+      with:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        
+    - name: Build Docker image
+      uses: docker/build-push-action@v4.0.0
+      with:
+        context: .
+        push: true
+        tags: |
+          joaopedrogama/cpa-api:1.0.0
+          joaopedrogama/cpa-api:latest
