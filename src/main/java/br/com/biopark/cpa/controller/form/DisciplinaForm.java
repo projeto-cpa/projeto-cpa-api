@@ -8,11 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DisciplinaForm {
-
     @NotBlank(message = "Nome não pode ser vazio")
     @NotNull(message = "Nome não pode ser vazio")
     private String nome;
     private String descricao;
     private Boolean ativo;
-    
+    private Long idCurso;
 }

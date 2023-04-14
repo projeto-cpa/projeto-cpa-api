@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.biopark.cpa.models.Disciplina;
 import br.com.biopark.cpa.repository.DisciplinaRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class DisciplinaService {
@@ -12,6 +13,7 @@ public class DisciplinaService {
     @Autowired
     private DisciplinaRepository disciplinaRepository;
 
+    @Transactional
     public Disciplina cadastrar(Disciplina disciplina) {
 
         Disciplina disciplinaCadastrado = new Disciplina();

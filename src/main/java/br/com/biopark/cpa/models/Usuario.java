@@ -39,6 +39,12 @@ public class Usuario {
     @Getter @Setter
     private String senha;
 
+    @ManyToOne
+    @JoinColumn(name = "id_turma")
+    @Getter
+    @Setter
+    private Turma turma;
+
     @NotNull
     @Column(name = "data_nascimento")
     @Getter @Setter

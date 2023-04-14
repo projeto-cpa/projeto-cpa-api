@@ -30,7 +30,7 @@ public class PerguntaController {
     @PostMapping
     public ResponseEntity<PerguntaDTO> cadastrar(@RequestBody @Valid PerguntaForm form,
             UriComponentsBuilder uriBuilder) {
-        Pergunta pergunta = new Pergunta(form.getNome(), form.getTipo(), form.getAtivo());
+        Pergunta pergunta = form.converter(form);
         pergunta = perguntaService.cadastrar(pergunta);
         URI uri = uriBuilder.path("pergunta/{id}").buildAndExpand(pergunta.getId()).toUri();
         return ResponseEntity.created(uri).body(new PerguntaDTO(pergunta));
