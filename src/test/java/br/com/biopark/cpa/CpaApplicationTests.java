@@ -1,13 +1,17 @@
 package br.com.biopark.cpa;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CpaApplicationTests {
+public class CpaApplicationTests {
 
 	@Test
-	void contextLoads() {
+	public void contextLoads() {
+	}
+
+	public CpaApplicationTests() {
+		
 	}
 
 }

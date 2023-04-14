@@ -4,6 +4,7 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/usuario")
+@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
+@Transactional
 public class UsuarioController {
 
     @Autowired
@@ -28,9 +31,7 @@ public class UsuarioController {
     @Autowired
     private CargoRepository cargoRepository;
 
-
     @PostMapping
-    @Transactional
     public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder) throws Exception {
 
         Usuario usuario = form.converter(cargoRepository);

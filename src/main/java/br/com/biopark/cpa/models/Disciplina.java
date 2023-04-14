@@ -2,6 +2,8 @@ package br.com.biopark.cpa.models;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,46 +17,39 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "usuario")
-public class Usuario {
+@Table(name = "disciplina")
+public class Disciplina {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_usuario")
-    @Getter @Setter
-    private long id;
-
-    @NotNull
-    @Column
-    @Getter @Setter
-    private String nome;
-
-    @NotNull
-    @Column 
-    @Getter @Setter
-    private String sobrenome;
-
-    @NotNull
-    @Column
-    @Getter @Setter
-    private String senha;
-
-    @ManyToOne
-    @JoinColumn(name = "id_turma")
+    @Column(name = "id_disciplina")
     @Getter
     @Setter
-    private Turma turma;
+    private long id;
+
+    @Column
+    @Getter
+    @Setter
+    private Boolean ativo;
 
     @NotNull
-    @Column(name = "data_nascimento")
-    @Getter @Setter
-    private Date dataNascimento;
+    @Column
+    @Getter
+    @Setter
+    private String nome;
 
-    @NotNull
-    @JoinColumn(name = "id_cargo")
+    @JsonIgnore
     @ManyToOne
-    @Getter @Setter
-    private Cargo cargo;
+    @JoinColumn(name = "id_curso")
+    @Getter
+    @Setter
+    private Curso curso;
+
+    @NotNull
+    @Column
+    @Getter
+    @Setter
+    private String descricao;
 
     @Column(name = "data_criacao")
     @Getter
@@ -66,17 +61,16 @@ public class Usuario {
     @Setter
     private Date dataAtualizacao;
 
-    public Usuario() {
-
+    public Disciplina() {
     }
 
-    public Usuario(String nome, String sobrenome, String senha, Cargo cargo, Date dataNascimento) {
+    public Disciplina(Boolean ativo, String nome, String descricao, Curso curso) {
+        this.ativo = ativo;
         this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.senha = senha;
-        this.setCargo(cargo);
+        this.descricao = descricao;
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
-        this.dataNascimento = dataNascimento;
+        this.curso = curso;
     }
+    
 }
