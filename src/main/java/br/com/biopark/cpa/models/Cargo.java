@@ -20,7 +20,7 @@ public class Cargo {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_cargo")
+    @Column(name = "id")
     @Getter @Setter
     private long id;
 
