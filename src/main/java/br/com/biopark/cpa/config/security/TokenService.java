@@ -1,4 +1,4 @@
-package br.com.biopark.cpa.service;
+package br.com.biopark.cpa.config.security;
 
 import br.com.biopark.cpa.models.Usuario;
 import com.auth0.jwt.JWT;

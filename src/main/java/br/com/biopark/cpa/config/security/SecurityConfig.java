@@ -1,4 +1,4 @@
-package br.com.biopark.cpa.config;
+package br.com.biopark.cpa.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -3,7 +3,7 @@ package br.com.biopark.cpa.controller;
 import java.net.URI;
 
 import br.com.biopark.cpa.controller.dto.LoginDTO;
-import br.com.biopark.cpa.service.TokenService;
+import br.com.biopark.cpa.config.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
