@@ -21,7 +21,7 @@ public class EixoDTO {
         this.id = eixo.getId();
         this.nome = eixo.getNome();
         this.descricao = eixo.getDescricao();
-        this.createdAt = eixo.getCreatedAt();
-        this.updatedAt = eixo.getUpdatedAt();
+        this.createdAt = eixo.getDataCriacao();
+        this.updatedAt = eixo.getDataAtualizacao();
     }
 }

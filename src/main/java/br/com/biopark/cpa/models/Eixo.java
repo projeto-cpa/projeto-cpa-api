@@ -72,4 +72,12 @@ public class Eixo {
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
     }
+
+    public Eixo(EixoForm form) {
+        this.nome = form.getNome();
+        this.descricao = form.getDescricao();
+        this.ativo = form.isAtivo();
+        this.dataCriacao = new Date();
+        this.dataAtualizacao = new Date();
+    }
 }

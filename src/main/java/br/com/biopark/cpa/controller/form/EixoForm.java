@@ -17,4 +17,8 @@ public class EixoForm {
     @NotBlank
     @NotNull
     private String descricao;
+
+    @NotNull
+    private boolean ativo;
+
 }
