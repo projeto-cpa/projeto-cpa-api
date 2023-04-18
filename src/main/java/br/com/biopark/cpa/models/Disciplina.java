@@ -18,47 +18,35 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "disciplina")
+@Getter
+@Setter
 public class Disciplina {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_disciplina")
-    @Getter
-    @Setter
     private long id;
 
     @Column
-    @Getter
-    @Setter
     private Boolean ativo;
 
     @NotNull
     @Column
-    @Getter
-    @Setter
     private String nome;
+
+    @NotNull
+    @Column
+    private String descricao;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_curso")
-    @Getter
-    @Setter
     private Curso curso;
 
-    @NotNull
-    @Column
-    @Getter
-    @Setter
-    private String descricao;
-
     @Column(name = "data_criacao")
-    @Getter
-    @Setter
     private Date dataCriacao;
 
     @Column(name = "data_atualizacao")
-    @Getter
-    @Setter
     private Date dataAtualizacao;
 
     public Disciplina() {
@@ -72,5 +60,5 @@ public class Disciplina {
         this.dataAtualizacao = new Date();
         this.curso = curso;
     }
-    
+
 }

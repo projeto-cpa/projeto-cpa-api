@@ -26,14 +26,14 @@ public class Pergunta {
     private long id;
 
     @Column
+    private Boolean ativo;
+
+    @Column
     private String texto;
 
     @Column
     @Enumerated(EnumType.STRING)
     private TipoPergunta tipo;
-
-    @Column
-    private Boolean ativo;
 
     @Column(name = "data_criacao")
     private Date dataCriacao;

@@ -24,6 +24,10 @@ public class Resposta {
     @Column(name = "id_resposta")
     private long id;
 
+    @Column
+    private String texto;
+
+    // TODO: fazer a relação com o usuario
     // @NotNull
     // @JoinColumn(name = "id_usuario")
     // @ManyToOne
@@ -33,9 +37,6 @@ public class Resposta {
     @JoinColumn(name = "id_pergunta")
     @ManyToOne
     private Pergunta pergunta;
-
-    @Column
-    private String texto;
 
     @Column
     private Long nota;

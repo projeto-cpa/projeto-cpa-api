@@ -6,7 +6,8 @@ import br.com.biopark.cpa.models.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class UsuarioDTO {
     
     private String nome;

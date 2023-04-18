@@ -8,5 +8,7 @@ import br.com.biopark.cpa.models.Pergunta;
 public interface PerguntaRepository extends JpaRepository<Pergunta, Long> {
 
     public Optional<Pergunta> findById(Long id);
-    
+
+    public Pergunta findByAtivo(boolean ativo);
+
 }

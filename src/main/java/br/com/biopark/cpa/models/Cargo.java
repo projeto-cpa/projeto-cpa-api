@@ -10,46 +10,38 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "cargo")
-@NoArgsConstructor
+@Getter
+@Setter
 public class Cargo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @Getter
-    @Setter
     private long id;
 
     @Column
-    @Getter
-    @Setter
     private Boolean ativo;
 
     @NotNull
     @Column
-    @Getter
-    @Setter
     private String nome;
 
     @Column
-    @Getter
-    @Setter
     private String descricao;
 
     @Column(name = "data_criacao")
-    @Getter
-    @Setter
     private Date dataCriacao;
 
     @Column(name = "data_atualizacao")
-    @Getter
-    @Setter
     private Date dataAtualizacao;
+
+    public Cargo() {
+        
+    }
 
     public Cargo(String nome, String descricao, Boolean ativo) {
         this.nome = nome;

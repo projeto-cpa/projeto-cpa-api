@@ -15,52 +15,42 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "eixo")
-@NoArgsConstructor
+@Getter
+@Setter
 public class Eixo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @Getter
-    @Setter
     private long id;
 
     @Column
-    @Getter
-    @Setter
     private Boolean ativo;
 
     @NotNull
     @Column
-    @Getter
-    @Setter
     private String nome;
 
     @Column
-    @Getter
-    @Setter
     private String descricao;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_eixo")
-    @Getter
-    @Setter
     private List<Pergunta> turmas = new ArrayList<>();
 
     @Column(name = "data_criacao")
-    @Getter
-    @Setter
     private Date dataCriacao;
 
     @Column(name = "data_atualizacao")
-    @Getter
-    @Setter
     private Date dataAtualizacao;
+
+    public Eixo() {
+        
+    }
 
     public Eixo(String nome, String descricao, Boolean ativo) {
         this.nome = nome;

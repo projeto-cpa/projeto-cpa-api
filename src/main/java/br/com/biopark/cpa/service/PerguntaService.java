@@ -24,7 +24,6 @@ public class PerguntaService {
         return perguntaCadastrada;
     }
 
-    // implemente a listagem de cargos
     public Iterable<Pergunta> listarPergunta() {
         return perguntaRepository.findAll();
     }
