@@ -35,7 +35,10 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         var tokenJWT = recuperarToken(request);
 
-        tokenService.getSubject(tokenJWT);
+        // Só verifica o token se não for nulo pois o login não enviar nada no cabeçalho da requisição
+        if (tokenJWT != null) {
+            tokenService.getSubject(tokenJWT);
+        }
 
         filterChain.doFilter(request, response);
     }
@@ -50,10 +53,10 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         var authorizationHeader = request.getHeader("Authorization");
 
-        if (authorizationHeader == null) {
-            throw new RuntimeException("Token não enviado");
+        if (authorizationHeader != null) {
+            return authorizationHeader.replace("Bearer", "");
         }
 
-        return authorizationHeader.replace("Bearer", "");
+        return null;
     }
 }
