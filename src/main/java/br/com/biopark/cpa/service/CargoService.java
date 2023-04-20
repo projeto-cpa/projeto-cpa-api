@@ -35,4 +35,9 @@ public class CargoService {
         return cargoRepository.findByNome(nomeCargo, cargos);
     }
     
+    // implemente a listagem de cargos
+    public Iterable<Cargo> listarCargos() {
+        return cargoRepository.findAll();
+    }
+    
 }
