@@ -15,11 +15,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Usuario")
+@Table(name = "usuario")
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     @Getter @Setter
     private long id;
@@ -39,6 +39,12 @@ public class Usuario {
     @Getter @Setter
     private String senha;
 
+    @ManyToOne
+    @JoinColumn(name = "id_turma")
+    @Getter
+    @Setter
+    private Turma turma;
+
     @NotNull
     @Column(name = "data_nascimento")
     @Getter @Setter
@@ -50,13 +56,15 @@ public class Usuario {
     @Getter @Setter
     private Cargo cargo;
 
-    @Column(name = "created_at")
-    @Getter @Setter
-    private Date createdAt;
+    @Column(name = "data_criacao")
+    @Getter
+    @Setter
+    private Date dataCriacao;
 
-    @Column(name = "updated_at") 
-    @Getter @Setter
-    private Date updatedAt;
+    @Column(name = "data_atualizacao")
+    @Getter
+    @Setter
+    private Date dataAtualizacao;
 
     public Usuario() {
 
@@ -67,8 +75,8 @@ public class Usuario {
         this.sobrenome = sobrenome;
         this.senha = senha;
         this.setCargo(cargo);
-        this.createdAt = new Date();
-        this.updatedAt = new Date();
+        this.dataCriacao = new Date();
+        this.dataAtualizacao = new Date();
         this.dataNascimento = dataNascimento;
     }
 }

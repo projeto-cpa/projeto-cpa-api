@@ -3,16 +3,22 @@ package br.com.biopark.cpa.controller.form;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-public class CargoForm {
+@Getter @Setter
+@NoArgsConstructor
+public class EixoForm {
 
-    @NotBlank(message = "Nome não pode ser vazio")
-    @NotNull(message = "Nome não pode ser vazio")
+    @NotBlank
+    @NotNull
     private String nome;
+
+    @NotBlank
+    @NotNull
     private String descricao;
-    private Boolean ativo;
-    
+
+    @NotNull
+    private boolean ativo;
+
 }
