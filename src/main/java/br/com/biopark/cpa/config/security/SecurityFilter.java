@@ -1,10 +1,13 @@
 package br.com.biopark.cpa.config.security;
 
+import br.com.biopark.cpa.service.UsuarioService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -19,6 +22,9 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     /**
      * Faz o filtro da requisição para ver se o usuario possui autorização
@@ -37,7 +43,15 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         // Só verifica o token se não for nulo pois o login não enviar nada no cabeçalho da requisição
         if (tokenJWT != null) {
-            tokenService.getSubject(tokenJWT);
+            var loginUsuario = tokenService.getSubject(tokenJWT);
+            // Informa para o Spring que o usuario está logado
+            try {
+                var usuario = usuarioService.buscarUsuario(loginUsuario);
+                var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
         filterChain.doFilter(request, response);
@@ -50,13 +64,10 @@ public class SecurityFilter extends OncePerRequestFilter {
      * @return
      */
     private String recuperarToken(HttpServletRequest request) {
-
         var authorizationHeader = request.getHeader("Authorization");
-
         if (authorizationHeader != null) {
             return authorizationHeader.replace("Bearer", "");
         }
-
         return null;
     }
 }
