@@ -28,11 +28,11 @@ public class EixoController {
     @PostMapping
     public ResponseEntity<EixoDTO> cadastrar(@RequestBody @Valid EixoForm form, UriComponentsBuilder uriBuilder) throws Exception{
 
-        Eixo eixo = new Eixo(form);
+        Eixo eixo = new Eixo(form.getNome(), form.getDescricao(), true);
         eixoService.cadastrar(eixo);
 
         URI uri = uriBuilder.path("/eixo/{id}").buildAndExpand(eixo.getId()).toUri();
-		return ResponseEntity.created(uri).body(new EixoDTO(eixo));
+        return ResponseEntity.created(uri).body(new EixoDTO(eixo));
     }
     
 }
