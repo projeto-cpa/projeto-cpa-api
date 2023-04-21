@@ -31,10 +31,15 @@ public class disciplinaRepositoryTests {
 
         // cria, persiste e limpa
         Curso ads = new Curso(false, "Analise e Desenvolvimento de Sistemas", "Formata meu pc");
+        
+        entityManager.persist(ads);
+        entityManager.flush();
+        entityManager.clear();
+
         Disciplina banco = new Disciplina(false, "Banco de dados", "Nao removendo o banco", ads);
         
         entityManager.persist(banco);
-        //entityManager.flush();
+        entityManager.flush();
         entityManager.clear();
 
         Disciplina persistido = disciplinaRepository.findByNome(banco.getNome());
