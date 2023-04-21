@@ -51,3 +51,4 @@ public class CargoController {
             return CargoDTO.converter(cargos);
         }
 }
+}
