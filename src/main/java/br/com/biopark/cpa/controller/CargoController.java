@@ -50,4 +50,5 @@ public class CargoController {
             Page<Cargo> cargos = cargoService.buscaPorNome(nomeCargo, paginacao);
             return CargoDTO.converter(cargos);
         }
+    }
 }
