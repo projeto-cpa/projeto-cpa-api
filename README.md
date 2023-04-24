@@ -4,7 +4,7 @@ Esta é a API para o projeto acadêmico do biopark para atender a demanda da CPA
 
 Este é um projeto Spring Boot que utiliza a versão 17 do Java e é executado dentro de contêineres Docker usando Docker Compose. Ele também inclui testes automatizados e unitários.
 
-## Requisitos
+## Requisitos :rocket:
 
 Antes de começar, certifique-se de ter instalado:
 
