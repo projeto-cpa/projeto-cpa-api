@@ -51,10 +51,6 @@ public class Eixo {
     @Column(name = "data_atualizacao")
     private Date dataAtualizacao;
 
-    public Eixo() {
-        
-    }
-
     public Eixo(String nome, String descricao, Boolean ativo) {
         this.nome = nome;
         this.descricao = descricao;

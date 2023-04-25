@@ -35,7 +35,6 @@ public class CargoService {
         return cargoRepository.findByNome(nomeCargo, cargos);
     }
 
-    // implemente o motodo de ativar ou desativar um cargo pelo id
     public Cargo ativarDesativarCargo(Long id) {
         Cargo cargo = cargoRepository.findById(id).get();
         Boolean ativo = cargo.getAtivo().equals(true) ? false : true;
@@ -43,4 +42,11 @@ public class CargoService {
         cargoRepository.save(cargo);
         return cargo;
     }
+
+    public Cargo excluirCargo(Long id) {
+        Cargo cargo = cargoRepository.findById(id).get();
+        cargoRepository.delete(cargo);
+        return cargo;
+    }
+    
 }
