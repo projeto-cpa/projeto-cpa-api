@@ -17,51 +17,37 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "curso")
+@Getter
+@Setter
 public class Curso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_curso")
-    @Getter
-    @Setter
     private long id;
 
     @Column
-    @Getter
-    @Setter
     private Boolean ativo;
 
     @NotNull
     @Column
-    @Getter
-    @Setter
     private String nome;
 
     @Column
-    @Getter
-    @Setter
     private String descricao;
 
     @NotNull
     @OneToMany(mappedBy = "curso", fetch = FetchType.LAZY)
-    @Getter
-    @Setter
     private List<Disciplina> disciplinas = new ArrayList<>();
 
     @NotNull
     @OneToMany(mappedBy = "curso", fetch = FetchType.LAZY)
-    @Getter
-    @Setter
     private List<Turma> turmas = new ArrayList<>();
 
     @Column(name = "data_criacao")
-    @Getter
-    @Setter
     private Date dataCriacao;
 
     @Column(name = "data_atualizacao")
-    @Getter
-    @Setter
     private Date dataAtualizacao;
 
     public Curso() {

@@ -24,10 +24,9 @@ public class CursoService {
 
         return cursoCadastrado;
     }
-    
-    // implemente a listagem de cursos
+
     public Iterable<Curso> listarCursos() {
         return cursoRepository.findAll();
     }
-    
+
 }
