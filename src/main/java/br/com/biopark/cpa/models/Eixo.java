@@ -43,15 +43,14 @@ public class Eixo {
     @Column
     private String descricao;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_eixo")
-    private List<Pergunta> turmas = new ArrayList<>();
-
     @Column(name = "data_criacao")
     private Date dataCriacao;
 
     @Column(name = "data_atualizacao")
     private Date dataAtualizacao;
+
+    @OneToMany(mappedBy = "eixo")
+    private List<Pergunta> perguntaList;
 
     public Eixo(String nome, String descricao, Boolean ativo) {
         this.nome = nome;

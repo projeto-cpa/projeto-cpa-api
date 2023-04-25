@@ -41,7 +41,6 @@ public class Usuario {
 
     @ManyToOne
     @JoinColumn(name = "id_turma")
-
     private Turma turma;
 
     @NotNull
