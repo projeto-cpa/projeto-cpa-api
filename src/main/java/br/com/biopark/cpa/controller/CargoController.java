@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import br.com.biopark.cpa.controller.dto.CargoDTO;
 import br.com.biopark.cpa.controller.form.CargoForm;
+import br.com.biopark.cpa.controller.form.ativacao.ativacaoCargoForm;
 import br.com.biopark.cpa.models.Cargo;
 import br.com.biopark.cpa.service.CargoService;
 import jakarta.transaction.Transactional;
@@ -39,7 +40,8 @@ public class CargoController {
     }
 
     @GetMapping
-    public Page<CargoDTO> lista(@RequestParam(required = false) String nomeCargo, @RequestParam int pagina, @RequestParam int qtd) {
+    public Page<CargoDTO> lista(@RequestParam(required = false) String nomeCargo, @RequestParam int pagina,
+            @RequestParam int qtd) {
 
         Pageable paginacao = PageRequest.of(pagina, qtd);
 
@@ -50,5 +52,13 @@ public class CargoController {
             Page<Cargo> cargos = cargoService.buscaPorNome(nomeCargo, paginacao);
             return CargoDTO.converter(cargos);
         }
+    }
+    
+    // implemente a rota para ativar e desativar o cargo
+    @PostMapping("/ativacao")
+    public ResponseEntity<CargoDTO> ativarDesativarCargo(@RequestBody @Valid ativacaoCargoForm form, UriComponentsBuilder uriBuilder) {
+        Cargo cargo = cargoService.ativarDesativarCargo(form.getIdCargo());
+        URI uri = uriBuilder.path("cargo/{id}").buildAndExpand(cargo.getId()).toUri();
+        return ResponseEntity.created(uri).body(new CargoDTO(cargo));
     }
 }
