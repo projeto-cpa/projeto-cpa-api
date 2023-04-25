@@ -2,7 +2,7 @@ package br.com.biopark.cpa.controller.dto;
 
 import java.util.Date;
 
-import br.com.biopark.cpa.enums.TipoPergunta;
+import br.com.biopark.cpa.models.enums.TipoPergunta;
 import br.com.biopark.cpa.models.Pergunta;
 import lombok.Getter;
 import lombok.Setter;

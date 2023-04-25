@@ -1,5 +1,7 @@
 package br.com.biopark.cpa.models;
 
+
+import br.com.biopark.cpa.controller.form.EixoForm;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -19,12 +22,12 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "eixo")
+@NoArgsConstructor
 @Getter
 @Setter
 public class Eixo {
-
+        
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
@@ -56,6 +59,14 @@ public class Eixo {
         this.nome = nome;
         this.descricao = descricao;
         this.ativo = ativo;
+        this.dataCriacao = new Date();
+        this.dataAtualizacao = new Date();
+    }
+
+    public Eixo(EixoForm form) {
+        this.nome = form.getNome();
+        this.descricao = form.getDescricao();
+        this.ativo = form.isAtivo();
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
     }

@@ -20,6 +20,7 @@ public class Cargo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter @Setter
     @Column(name = "id")
     private long id;
 

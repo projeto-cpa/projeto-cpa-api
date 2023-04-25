@@ -2,7 +2,7 @@ package br.com.biopark.cpa.models;
 
 import java.util.Date;
 
-import br.com.biopark.cpa.enums.TipoPergunta;
+import br.com.biopark.cpa.models.enums.TipoPergunta;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

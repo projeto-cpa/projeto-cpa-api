@@ -1,6 +1,8 @@
 package br.com.biopark.cpa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.biopark.cpa.models.Cargo;
@@ -25,8 +27,20 @@ public class CargoService {
         return cargoCadastrado;
     }
 
-    public Iterable<Cargo> listarCargos() {
-        return cargoRepository.findAll();
+    public Page<Cargo> listar(Pageable cargos) {
+        return cargoRepository.findAll(cargos);
     }
 
+    public Page<Cargo> buscaPorNome(String nomeCargo, Pageable cargos) {
+        return cargoRepository.findByNome(nomeCargo, cargos);
+    }
+
+    // implemente o motodo de ativar ou desativar um cargo pelo id
+    public Cargo ativarDesativarCargo(Long id) {
+        Cargo cargo = cargoRepository.findById(id).get();
+        Boolean ativo = cargo.getAtivo().equals(true) ? false : true;
+        cargo.setAtivo(ativo);
+        cargoRepository.save(cargo);
+        return cargo;
+    }
 }

@@ -1,4 +1,4 @@
-package br.com.biopark.cpa.enums;
+package br.com.biopark.cpa.models.enums;
 
 public enum TipoPergunta {
     DESCRITIVA("descritiva"), AVALIATIVA("avaliativa");

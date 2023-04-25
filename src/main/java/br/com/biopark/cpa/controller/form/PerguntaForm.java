@@ -1,6 +1,6 @@
 package br.com.biopark.cpa.controller.form;
 
-import br.com.biopark.cpa.enums.TipoPergunta;
+import br.com.biopark.cpa.models.enums.TipoPergunta;
 import br.com.biopark.cpa.models.Pergunta;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -64,7 +64,6 @@ public class Resposta {
         this.texto = texto;
         this.nota = (long) 0;
         this.setPergunta(pergunta);
-        // this.setUsuario(usuario);
         this.setDataCriacao(dataCriacao);
         this.setDataAtualizacao(dataAtualizacao);
         this.dataAtualizacao = new Date();
