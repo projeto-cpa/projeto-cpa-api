@@ -18,6 +18,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -28,6 +29,7 @@ import lombok.Setter;
 public class Eixo {
         
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
@@ -50,10 +52,6 @@ public class Eixo {
 
     @Column(name = "data_atualizacao")
     private Date dataAtualizacao;
-
-    public Eixo() {
-        
-    }
 
     public Eixo(String nome, String descricao, Boolean ativo) {
         this.nome = nome;
