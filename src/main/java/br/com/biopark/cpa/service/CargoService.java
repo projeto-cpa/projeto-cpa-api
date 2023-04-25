@@ -35,11 +35,6 @@ public class CargoService {
         return cargoRepository.findByNome(nomeCargo, cargos);
     }
 
-    // implemente a listagem de cargos
-    public Iterable<Cargo> listarCargos() {
-        return cargoRepository.findAll();
-    }
-
     // implemente o motodo de ativar ou desativar um cargo pelo id
     public Cargo ativarDesativarCargo(Long id) {
         Cargo cargo = cargoRepository.findById(id).get();
@@ -48,5 +43,4 @@ public class CargoService {
         cargoRepository.save(cargo);
         return cargo;
     }
-
 }

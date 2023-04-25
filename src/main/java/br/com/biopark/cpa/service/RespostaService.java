@@ -24,7 +24,6 @@ public class RespostaService {
         return respostaCadastrada;
     }
 
-    // implemente a listagem de cargos
     public Iterable<Resposta> listarResposta() {
         return respostaRepository.findAll();
     }
