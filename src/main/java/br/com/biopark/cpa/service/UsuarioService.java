@@ -11,9 +11,8 @@ public class UsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
-    
 
-    public Usuario cadastrar(Usuario usuario) throws Exception{
+    public Usuario cadastrar(Usuario usuario) throws Exception {
 
         Usuario usuarioCadastrado = new Usuario();
 
@@ -26,5 +25,9 @@ public class UsuarioService {
         return usuarioCadastrado;
 
     }
-    
+
+    public Iterable<Usuario> listarUsuario() {
+        return usuarioRepository.findAll();
+    }
+
 }

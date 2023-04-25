@@ -26,10 +26,9 @@ public class DisciplinaService {
 
         return disciplinaCadastrado;
     }
-    
-    // implemente a listagem de disciplinas
+
     public Iterable<Disciplina> listarDisciplinas() {
         return disciplinaRepository.findAll();
     }
-    
+
 }
