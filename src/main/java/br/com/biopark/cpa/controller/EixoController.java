@@ -3,18 +3,17 @@ package br.com.biopark.cpa.controller;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.biopark.cpa.controller.dto.EixoDTO;
 import br.com.biopark.cpa.controller.form.EixoForm;
 import br.com.biopark.cpa.models.Eixo;
 import br.com.biopark.cpa.service.EixoService;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RequestMapping("/eixo")
@@ -24,7 +23,6 @@ public class EixoController {
     @Autowired
     private EixoService eixoService;
 
-    @Transactional
     @PostMapping
     public ResponseEntity<EixoDTO> cadastrar(@RequestBody @Valid EixoForm form, UriComponentsBuilder uriBuilder) throws Exception{
 
@@ -33,6 +31,21 @@ public class EixoController {
 
         URI uri = uriBuilder.path("/eixo/{id}").buildAndExpand(eixo.getId()).toUri();
 		return ResponseEntity.created(uri).body(new EixoDTO(eixo));
+    }
+
+    @GetMapping
+     public Page<EixoDTO> listar(@RequestParam(required = false) String nomeEixo, @RequestParam int pagina,
+                                 @RequestParam int qtd) {
+
+        Pageable pageable = PageRequest.of(pagina, qtd);
+
+        if (nomeEixo == null) {
+            Page<Eixo> eixos = eixoService.listar(pageable);
+            return EixoDTO.converter(eixos);
+        } else {
+            Page<Eixo> eixos = eixoService.buscarPorNome(nomeEixo, pageable);
+            return EixoDTO.converter(eixos);
+        }
     }
     
 }
