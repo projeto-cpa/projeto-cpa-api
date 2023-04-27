@@ -25,28 +25,34 @@ public class respostaRepositoryTests {
     private TestEntityManager entityManager;
 
     @Autowired
-    private PerguntaRepository respostaRepository;
+    private PerguntaRepository perguntaRepository;
+
+    @Autowired
+    private RespostaRepository respostaRepository;
 
     @Test
     public void testePersistenciaRespostas() throws Exception {
         Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true);
-
         entityManager.persist(perguntaUm);
-        entityManager.flush();
-        entityManager.clear();
+        Pergunta persistidoPergunta = perguntaRepository.findByTexto(perguntaUm.getTexto());
 
-        // cria, persiste e limpa
         Resposta respostaUm = new Resposta("Resposta padrão...", perguntaUm);
-
         entityManager.persist(respostaUm);
+        Resposta persistidoResposta = respostaRepository.findByTexto(respostaUm.getTexto());
+
+        // afirmacoes da perguntaUm
+        Assert.assertNotNull(persistidoPergunta);
+        Assert.assertEquals(persistidoPergunta.getTexto(), perguntaUm.getTexto());
+        Assert.assertEquals(persistidoPergunta.getTipo(), perguntaUm.getTipo());
+        Assert.assertEquals(persistidoPergunta.getAtivo(), perguntaUm.getAtivo());
+
+        // afirmacoes da respostaUm
+        Assert.assertNotNull(persistidoResposta);
+        Assert.assertEquals(persistidoResposta.getTexto(), respostaUm.getTexto());
+        Assert.assertEquals(persistidoResposta.getPergunta(), respostaUm.getPergunta());
+
         entityManager.flush();
         entityManager.clear();
-
-        Pergunta persistido = respostaRepository.findByTexto(respostaUm.getTexto());
-
-        // afirmacoes
-        Assert.assertEquals(persistido.getTexto(), respostaUm.getTexto());
-        Assert.assertEquals(persistido.getTipo(), respostaUm.getPergunta());
 
     }
 }
