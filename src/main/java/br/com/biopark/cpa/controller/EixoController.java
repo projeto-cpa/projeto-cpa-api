@@ -25,7 +25,6 @@ public class EixoController {
 
     @PostMapping
     public ResponseEntity<EixoDTO> cadastrar(@RequestBody @Valid EixoForm form, UriComponentsBuilder uriBuilder) throws Exception{
-
         Eixo eixo = new Eixo(form);
         eixoService.cadastrar(eixo);
 
@@ -46,6 +45,15 @@ public class EixoController {
             Page<Eixo> eixos = eixoService.buscarPorNome(nomeEixo, pageable);
             return EixoDTO.converter(eixos);
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EixoDTO> atualizar(@PathVariable long id, @RequestBody @Valid EixoForm form) throws Exception {
+        Eixo eixo = eixoService.buscarPorId(id);
+
+        eixo = eixoService.atualizar(form.converterParaAtuaizacao(eixo));
+
+        return ResponseEntity.ok(new EixoDTO(eixo));
     }
     
 }
