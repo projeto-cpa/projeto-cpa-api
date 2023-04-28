@@ -19,8 +19,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.biopark.cpa.controller.dto.CargoDTO;
 import br.com.biopark.cpa.controller.form.CargoForm;
 import br.com.biopark.cpa.controller.form.alteracao.alteracaoCargoForm;
-import br.com.biopark.cpa.controller.form.ativacao.ativacaoCargoForm;
-import br.com.biopark.cpa.controller.form.exclusao.exclusaoCargoForm;
+import br.com.biopark.cpa.controller.form.ativacao.AtivacaoCargoForm;
+import br.com.biopark.cpa.controller.form.exclusao.ExclusaoCargoForm;
 import br.com.biopark.cpa.models.Cargo;
 import br.com.biopark.cpa.service.CargoService;
 import jakarta.transaction.Transactional;
@@ -67,7 +67,7 @@ public class CargoController {
     }
     
     @PutMapping("/ativacao")
-    public ResponseEntity<CargoDTO> ativarDesativarCargo(@RequestBody @Valid ativacaoCargoForm form,
+    public ResponseEntity<CargoDTO> ativarDesativarCargo(@RequestBody @Valid AtivacaoCargoForm form,
             UriComponentsBuilder uriBuilder) {
         Cargo cargo = cargoService.ativarDesativarCargo(form.getIdCargo());
         URI uri = uriBuilder.path("cargo/{id}").buildAndExpand(cargo.getId()).toUri();
@@ -75,7 +75,7 @@ public class CargoController {
     }
 
     @DeleteMapping("/exclusao")
-    public ResponseEntity<CargoDTO> excluirCargo(@RequestBody @Valid exclusaoCargoForm form,
+    public ResponseEntity<CargoDTO> excluirCargo(@RequestBody @Valid ExclusaoCargoForm form,
             UriComponentsBuilder uriBuilder) {
         Cargo cargo = cargoService.excluirCargo(form.getIdCargo());
         URI uri = uriBuilder.path("cargo/{id}").buildAndExpand(cargo.getId()).toUri();
