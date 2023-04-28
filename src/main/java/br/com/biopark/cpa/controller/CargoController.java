@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import br.com.biopark.cpa.controller.dto.CargoDTO;
 import br.com.biopark.cpa.controller.form.CargoForm;
-import br.com.biopark.cpa.controller.form.alteracao.AlteracaoCargoForm;
-import br.com.biopark.cpa.controller.form.ativacao.AtivacaoCargoForm;
+import br.com.biopark.cpa.controller.form.alteracao.AlterarCargoForm;
+import br.com.biopark.cpa.controller.form.ativacao.AtivarCargoForm;
 import br.com.biopark.cpa.controller.form.exclusao.ExclusaoCargoForm;
 import br.com.biopark.cpa.models.Cargo;
 import br.com.biopark.cpa.service.CargoService;
@@ -45,7 +45,7 @@ public class CargoController {
 
     // implemente a rota de atualizar o cargo
     @PutMapping
-    public ResponseEntity<CargoDTO> atualizar(@RequestBody @Valid AlteracaoCargoForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<CargoDTO> atualizar(@RequestBody @Valid AlterarCargoForm form, UriComponentsBuilder uriBuilder) {
         Cargo cargo = cargoService.atualizar(form.getIdCargo(), form.getNome(), form.getDescricao(), form.getAtivo());
         URI uri = uriBuilder.path("cargo/{id}").buildAndExpand(cargo.getId()).toUri();
         return ResponseEntity.created(uri).body(new CargoDTO(cargo));
@@ -67,7 +67,7 @@ public class CargoController {
     }
     
     @PutMapping("/ativacao")
-    public ResponseEntity<CargoDTO> ativarDesativarCargo(@RequestBody @Valid AtivacaoCargoForm form,
+    public ResponseEntity<CargoDTO> ativarDesativarCargo(@RequestBody @Valid AtivarCargoForm form,
             UriComponentsBuilder uriBuilder) {
         Cargo cargo = cargoService.ativarDesativarCargo(form.getIdCargo());
         URI uri = uriBuilder.path("cargo/{id}").buildAndExpand(cargo.getId()).toUri();
