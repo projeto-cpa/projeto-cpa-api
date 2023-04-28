@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import br.com.biopark.cpa.controller.dto.CargoDTO;
 import br.com.biopark.cpa.controller.form.CargoForm;
-import br.com.biopark.cpa.controller.form.alteracao.alteracaoCargoForm;
+import br.com.biopark.cpa.controller.form.alteracao.AlteracaoCargoForm;
 import br.com.biopark.cpa.controller.form.ativacao.AtivacaoCargoForm;
 import br.com.biopark.cpa.controller.form.exclusao.ExclusaoCargoForm;
 import br.com.biopark.cpa.models.Cargo;
@@ -45,7 +45,7 @@ public class CargoController {
 
     // implemente a rota de atualizar o cargo
     @PutMapping
-    public ResponseEntity<CargoDTO> atualizar(@RequestBody @Valid alteracaoCargoForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<CargoDTO> atualizar(@RequestBody @Valid AlteracaoCargoForm form, UriComponentsBuilder uriBuilder) {
         Cargo cargo = cargoService.atualizar(form.getIdCargo(), form.getNome(), form.getDescricao(), form.getAtivo());
         URI uri = uriBuilder.path("cargo/{id}").buildAndExpand(cargo.getId()).toUri();
         return ResponseEntity.created(uri).body(new CargoDTO(cargo));
