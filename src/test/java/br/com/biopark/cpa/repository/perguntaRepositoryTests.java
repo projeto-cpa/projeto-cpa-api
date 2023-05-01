@@ -8,15 +8,15 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.junit4.SpringRunner;
+import br.com.biopark.cpa.models.Pergunta;
+import br.com.biopark.cpa.models.enums.TipoPergunta;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import br.com.biopark.cpa.models.Cargo;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class cargoRepositoryTests {
+public class perguntaRepositoryTests {
 
     @Rule
     public ErrorCollector error = new ErrorCollector();
@@ -25,24 +25,23 @@ public class cargoRepositoryTests {
     private TestEntityManager entityManager;
 
     @Autowired
-    private CargoRepository cargoRepository;
+    private PerguntaRepository perguntaRepository;
 
     @Test
-    public void testePersistenciaCargos() throws Exception {
-
+    public void testePersistenciaPerguntas() throws Exception {
         // cria, persiste e limpa
-        Cargo professor = new Cargo("Professor", "Professor", false);
-        
-        entityManager.persist(professor);
+        Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true);
+
+        entityManager.persist(perguntaUm);
         entityManager.flush();
         entityManager.clear();
 
         Pageable pageable = PageRequest.of(0, 5);
-        Cargo persistido = cargoRepository.findByNome(professor.getNome(), pageable).getContent().get(0);
-
+        Pergunta persistido = perguntaRepository.findByTexto(perguntaUm.getTexto(), pageable).getContent().get(0);
+        
         // afirmacoes
-        Assert.assertEquals(persistido.getNome(), professor.getNome());
-        Assert.assertEquals(persistido.getDescricao(), professor.getDescricao());
-        Assert.assertEquals(persistido.getAtivo(), professor.getAtivo());
+        Assert.assertEquals(persistido.getTexto(), perguntaUm.getTexto());
+        Assert.assertEquals(persistido.getTipo(), perguntaUm.getTipo());
+        Assert.assertEquals(persistido.getAtivo(), perguntaUm.getAtivo());
     }
 }
