@@ -24,8 +24,12 @@ public class UsuarioForm {
     @NotNull
     @NotBlank
     private String senha;
-    
+
     @NotNull
+    @NotBlank
+    private String email;
+    
+   @NotNull
     private long cargoId;
 
     @NotNull
