@@ -4,24 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "turma")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Turma {
 
     @Id
@@ -46,15 +39,14 @@ public class Turma {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "turma")
     private List<Usuario> usuarios = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "turmaList")
+    private List<Avaliacao> avaliacaoList = new ArrayList<>();
+
     @Column(name = "data_criacao")
     private Date dataCriacao;
 
     @Column(name = "data_atualizacao")
     private Date dataAtualizacao;
-
-    public Turma() {
-        
-    }
 
     public Turma(String nome, String descricao, Boolean ativo) {
         this.nome = nome;

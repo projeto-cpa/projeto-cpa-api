@@ -1,6 +1,8 @@
 package br.com.biopark.cpa.models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import br.com.biopark.cpa.models.enums.TipoPergunta;
 import jakarta.persistence.*;
@@ -31,6 +33,13 @@ public class Pergunta {
     @Column
     @Enumerated(EnumType.STRING)
     private TipoPergunta tipo;
+
+    @ManyToMany(mappedBy = "perguntaList")
+    private List<Avaliacao> avaliacaoList = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "resposta_id")
+    private Resposta resposta;
 
     @Column(name = "data_criacao")
     private Date dataCriacao;

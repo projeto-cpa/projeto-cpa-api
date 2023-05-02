@@ -27,11 +27,9 @@ public class Resposta {
     @Column
     private String texto;
 
-    // TODO: fazer a relação com o usuario
-    // @NotNull
-    // @JoinColumn(name = "id_usuario")
-    // @ManyToOne
-    // private Usuario usuario;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     @NotNull
     @JoinColumn(name = "id_pergunta")
