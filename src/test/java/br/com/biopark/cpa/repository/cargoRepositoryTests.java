@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.biopark.cpa.models.Cargo;
@@ -30,12 +32,13 @@ public class cargoRepositoryTests {
 
         // cria, persiste e limpa
         Cargo professor = new Cargo("Professor", "Professor", false);
-        
+
         entityManager.persist(professor);
         entityManager.flush();
         entityManager.clear();
 
-        Cargo persistido = cargoRepository.findByNome(professor.getNome());
+        Pageable pageable = PageRequest.of(0, 5);
+        Cargo persistido = cargoRepository.findByNome(professor.getNome(), pageable).getContent().get(0);
 
         // afirmacoes
         Assert.assertEquals(persistido.getNome(), professor.getNome());

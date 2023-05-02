@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import br.com.biopark.cpa.models.Pergunta;
 import br.com.biopark.cpa.models.Resposta;
 import br.com.biopark.cpa.models.enums.TipoPergunta;
@@ -34,11 +35,14 @@ public class respostaRepositoryTests {
     public void testePersistenciaRespostas() throws Exception {
         Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true);
         entityManager.persist(perguntaUm);
-        Pergunta persistidoPergunta = perguntaRepository.findByTexto(perguntaUm.getTexto());
+        Pageable pageable = PageRequest.of(0, 5);
+        Pergunta persistidoPergunta = perguntaRepository.findByTexto(perguntaUm.getTexto(), pageable).getContent()
+                .get(0);
 
         Resposta respostaUm = new Resposta("Resposta padrão...", perguntaUm);
         entityManager.persist(respostaUm);
-        Resposta persistidoResposta = respostaRepository.findByTexto(respostaUm.getTexto());
+        Resposta persistidoResposta = respostaRepository.findByTexto(respostaUm.getTexto(), pageable).getContent()
+                .get(0);
 
         // afirmacoes da perguntaUm
         Assert.assertNotNull(persistidoPergunta);
