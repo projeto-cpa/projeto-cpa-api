@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.biopark.cpa.models.Pergunta;
@@ -25,34 +26,31 @@ public class respostaRepositoryTests {
     private TestEntityManager entityManager;
 
     @Autowired
-    private PerguntaRepository perguntaRepository;
-
-    @Autowired
     private RespostaRepository respostaRepository;
 
     @Test
     public void testePersistenciaRespostas() throws Exception {
         Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true);
+
         entityManager.persist(perguntaUm);
-        Pergunta persistidoPergunta = perguntaRepository.findByTexto(perguntaUm.getTexto());
-
-        Resposta respostaUm = new Resposta("Resposta padrão...", perguntaUm);
-        entityManager.persist(respostaUm);
-        Resposta persistidoResposta = respostaRepository.findByTexto(respostaUm.getTexto());
-
-        // afirmacoes da perguntaUm
-        Assert.assertNotNull(persistidoPergunta);
-        Assert.assertEquals(persistidoPergunta.getTexto(), perguntaUm.getTexto());
-        Assert.assertEquals(persistidoPergunta.getTipo(), perguntaUm.getTipo());
-        Assert.assertEquals(persistidoPergunta.getAtivo(), perguntaUm.getAtivo());
-
-        // afirmacoes da respostaUm
-        Assert.assertNotNull(persistidoResposta);
-        Assert.assertEquals(persistidoResposta.getTexto(), respostaUm.getTexto());
-        Assert.assertEquals(persistidoResposta.getPergunta(), respostaUm.getPergunta());
-
         entityManager.flush();
         entityManager.clear();
+
+        // cria, persiste e limpa
+        Resposta respostaUm = new Resposta("Resposta padrão...", perguntaUm);
+
+        entityManager.persist(respostaUm);
+        entityManager.flush();
+        entityManager.clear();
+
+        PageRequest pageable = PageRequest.of(0, 5);
+        Resposta persistido = respostaRepository
+                .findByTexto(respostaUm.getTexto(), (org.springframework.data.domain.Pageable) pageable).getContent()
+                .get(0);
+
+        // afirmacoes
+        Assert.assertEquals(persistido.getTexto(), respostaUm.getTexto());
+        Assert.assertEquals(persistido.getNota(), respostaUm.getNota());
 
     }
 }
