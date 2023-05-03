@@ -37,15 +37,14 @@ public class Pergunta {
     @ManyToMany(mappedBy = "perguntaList")
     private List<Avaliacao> avaliacaoList = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "resposta_id")
-    private Resposta resposta;
-
     @Column(name = "data_criacao")
     private Date dataCriacao;
 
     @Column(name = "data_atualizacao")
     private Date dataAtualizacao;
+
+    @OneToMany(mappedBy = "pergunta")
+    private List<Resposta> respostaList = new ArrayList<>();
 
     public Pergunta() {
         

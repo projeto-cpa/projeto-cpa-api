@@ -31,9 +31,8 @@ public class Resposta {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @NotNull
-    @JoinColumn(name = "id_pergunta")
     @ManyToOne
+    @JoinColumn(name = "id_pergunta")
     private Pergunta pergunta;
 
     @Column
