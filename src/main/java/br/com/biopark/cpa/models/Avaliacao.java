@@ -27,6 +27,7 @@ public class Avaliacao {
     @JoinTable(
             name = "avaliacao_pergunta",
             joinColumns = @JoinColumn(name = "avaliacao_id"),
+            foreignKey = @ForeignKey(name = "avaliacao_pergunta_fk"),
             inverseJoinColumns = @JoinColumn(name = "pergunta_id")
     )
     private List<Pergunta> perguntaList = new ArrayList<>();
@@ -35,6 +36,7 @@ public class Avaliacao {
     @JoinTable(
             name = "avaliacao_turma",
             joinColumns = @JoinColumn(name = "avaliacao_id"),
+            foreignKey = @ForeignKey(name = "avaliacao_turma_fk"),
             inverseJoinColumns = @JoinColumn(name = "turma_id")
     )
     private List<Turma> turmaList = new ArrayList<>();
