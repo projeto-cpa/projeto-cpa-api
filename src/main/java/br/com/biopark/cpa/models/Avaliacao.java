@@ -41,6 +41,10 @@ public class Avaliacao {
     )
     private List<Turma> turmaList = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "respondente_id")
+    private Usuario usuarioRespondente;
+
     @Column(name = "data_criacao")
     private Date dataCriacao;
 
