@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ *
+ * @author joao gama
+ */
 @Entity
 @Table(name = "avaliacao")
 @AllArgsConstructor

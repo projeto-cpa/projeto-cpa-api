@@ -1,17 +1,12 @@
 package br.com.biopark.cpa.controller.form;
 
-import br.com.biopark.cpa.models.Eixo;
 import br.com.biopark.cpa.models.enums.TipoPergunta;
 import br.com.biopark.cpa.models.Pergunta;
-import br.com.biopark.cpa.repository.EixoRepository;
 import br.com.biopark.cpa.service.EixoService;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Date;
 
 @Getter
 @Setter
