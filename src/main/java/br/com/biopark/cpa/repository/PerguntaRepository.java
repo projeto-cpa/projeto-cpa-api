@@ -11,4 +11,6 @@ public interface PerguntaRepository extends JpaRepository<Pergunta, Long> {
 
     public Pergunta findByAtivo(boolean ativo);
 
+    public Pergunta findByTexto(String texto);
+
 }
