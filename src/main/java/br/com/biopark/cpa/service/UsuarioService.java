@@ -6,24 +6,29 @@ import org.springframework.stereotype.Service;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.UsuarioRepository;
 
+import java.util.List;
+
 @Service
 public class UsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    public Usuario cadastrar(Usuario usuario) throws Exception {
 
-        Usuario usuarioCadastrado = new Usuario();
-
+    public Usuario cadastrar(Usuario usuario) throws Exception{
         try {
-            usuarioCadastrado = usuarioRepository.save(usuario);
+            return usuarioRepository.save(usuario);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new Exception("Erro ao cadastrar usuario " + e.getCause());
         }
+    }
 
-        return usuarioCadastrado;
-
+    public Usuario buscarUsuario(String login) throws Exception {
+        try {
+            return usuarioRepository.findByNome(login);
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar usuário");
+        }
     }
 
     public Iterable<Usuario> listarUsuario() {
