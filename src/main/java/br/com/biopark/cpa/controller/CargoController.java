@@ -62,3 +62,4 @@ public class CargoController {
         return ResponseEntity.created(uri).body(new CargoDTO(cargo));
     }
 }
+}
