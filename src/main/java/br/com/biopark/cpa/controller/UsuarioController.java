@@ -3,6 +3,7 @@ package br.com.biopark.cpa.controller;
 import java.net.URI;
 
 import br.com.biopark.cpa.controller.dto.LoginDTO;
+import br.com.biopark.cpa.controller.dto.TokenDTO;
 import br.com.biopark.cpa.config.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -55,15 +56,21 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody @Valid LoginDTO login) {
+    @Transactional
+    public ResponseEntity<TokenDTO> login(@RequestBody @Valid LoginDTO login, UriComponentsBuilder uriBuilder) {
 
-         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(login.login(), login.senha());
+         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(login.email(), login.senha());
 
          Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
          var usuario = (Usuario) authentication.getPrincipal();
+         var tokenDTO = new TokenDTO(tokenService.gerarToken(usuario));
 
-         return tokenService.gerarToken(usuario);
+         URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+
+         return ResponseEntity.created(uri).body(tokenDTO);
+
+         //return tokenService.gerarToken(usuario);
     }
 
 }

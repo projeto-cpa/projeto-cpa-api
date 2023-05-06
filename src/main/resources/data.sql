@@ -1,4 +1,5 @@
-USE cpa;
+-- USE cpa;
+-- Popula o banco de dados
 
 -- cargo
 INSERT INTO cargo (
