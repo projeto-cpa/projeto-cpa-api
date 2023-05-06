@@ -30,7 +30,12 @@ public class Usuario implements UserDetails {
     @Column(name = "id_usuario")
     private long id;
 
-    // TODO: Colocar o campo ativo
+    @Column
+    private Boolean ativo;
+
+    @NotNull
+    @Column
+    private String email;
 
     @NotNull
     @Column
@@ -67,7 +72,8 @@ public class Usuario implements UserDetails {
 
     }
 
-    public Usuario(String nome, String sobrenome, String senha, Cargo cargo, Date dataNascimento) {
+    public Usuario(String nome, String sobrenome, String senha, Cargo cargo, Date dataNascimento, String email) {
+        this.email = email;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.senha = senha;
@@ -93,7 +99,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.nome;
+        return this.email;
     }
 
     @Override

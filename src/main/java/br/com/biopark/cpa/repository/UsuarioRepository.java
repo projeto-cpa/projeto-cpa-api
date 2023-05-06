@@ -6,5 +6,8 @@ import br.com.biopark.cpa.models.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
     Usuario findByNome(String nome);
+
     Usuario findById(long id);
+
+    Usuario findByEmail(String email);
 }

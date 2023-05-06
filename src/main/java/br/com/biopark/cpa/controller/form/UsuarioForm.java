@@ -36,7 +36,7 @@ public class UsuarioForm {
     private Date dataNascimento;
 
     public Usuario converter(CargoRepository cargoRepository){
-        return new Usuario(this.nome, this.sobrenome, senha, cargoRepository.findById(cargoId), dataNascimento);
+        return new Usuario(this.nome, this.sobrenome, senha, cargoRepository.findById(cargoId), dataNascimento, this.email);
     }
 
 }
