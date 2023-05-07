@@ -59,7 +59,6 @@ public class SecurityFilter extends OncePerRequestFilter {
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS, HEAD");
         response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
 
-
         filterChain.doFilter(request, response);
     }
 

@@ -59,18 +59,14 @@ public class UsuarioController {
     @Transactional
     public ResponseEntity<TokenDTO> login(@RequestBody @Valid LoginDTO login, UriComponentsBuilder uriBuilder)
             throws Exception {
-
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                login.email(), login.senha());
-
-        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
-        if (authentication.isAuthenticated()) {
+        try {
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(login.email(), login.senha());
+            Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
             var usuario = (Usuario) authentication.getPrincipal();
             var tokenDTO = new TokenDTO(tokenService.gerarToken(usuario), true);
             URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
             return ResponseEntity.created(uri).body(tokenDTO);
-        } else {
+        } catch (Exception err) {
             var usuario = usuarioService.buscarUsuarioPeloEmail(login.email());
             var tokenDTO = new TokenDTO(null, false);
             URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
