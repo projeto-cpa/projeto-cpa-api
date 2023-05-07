@@ -31,7 +31,7 @@ public class TokenService {
                 .withIssuer("cpa")
                 .withSubject(usuario.getUsername())
                 .withClaim("id", usuario.getId())
-                .withExpiresAt(LocalDateTime.now().plusMinutes(10).toInstant(
+                .withExpiresAt(LocalDateTime.now().plusHours(2).toInstant(
                         ZoneOffset.of("-03:00")
                 )).sign(Algorithm.HMAC256(secret));
     }

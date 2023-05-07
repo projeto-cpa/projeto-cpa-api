@@ -41,10 +41,10 @@ public class UsuarioController {
     @Autowired
     private TokenService tokenService;
 
-
     @PostMapping
     @Transactional
-    public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder) throws Exception {
+    public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder)
+            throws Exception {
 
         Usuario usuario = form.converter(cargoRepository);
 
@@ -52,25 +52,31 @@ public class UsuarioController {
 
         URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
 
-		return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
+        return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
 
     @PostMapping("/login")
     @Transactional
-    public ResponseEntity<TokenDTO> login(@RequestBody @Valid LoginDTO login, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<TokenDTO> login(@RequestBody @Valid LoginDTO login, UriComponentsBuilder uriBuilder)
+            throws Exception {
 
-         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(login.email(), login.senha());
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                login.email(), login.senha());
 
-         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
-         var usuario = (Usuario) authentication.getPrincipal();
-         var tokenDTO = new TokenDTO(tokenService.gerarToken(usuario));
+        if (authentication.isAuthenticated()) {
+            var usuario = (Usuario) authentication.getPrincipal();
+            var tokenDTO = new TokenDTO(tokenService.gerarToken(usuario), true);
+            URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+            return ResponseEntity.created(uri).body(tokenDTO);
+        } else {
+            var usuario = usuarioService.buscarUsuarioPeloEmail(login.email());
+            var tokenDTO = new TokenDTO(null, false);
+            URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+            return ResponseEntity.created(uri).body(tokenDTO);
+        }
 
-         URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
-
-         return ResponseEntity.created(uri).body(tokenDTO);
-
-         //return tokenService.gerarToken(usuario);
     }
 
 }

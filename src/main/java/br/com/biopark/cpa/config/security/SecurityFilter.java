@@ -33,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
      * @param request
      * @param response
      * @param filterChain
-     * @throws ServletException
+     * @thro ws ServletException
      * @throws IOException
      */
     @Override
@@ -53,6 +53,12 @@ public class SecurityFilter extends OncePerRequestFilter {
                 throw new RuntimeException(e);
             }
         }
+
+        // set headers for the response
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3005");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS, HEAD");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
+
 
         filterChain.doFilter(request, response);
     }

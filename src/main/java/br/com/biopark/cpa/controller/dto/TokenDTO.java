@@ -10,9 +10,9 @@ public class TokenDTO {
     private String token;
     private Boolean sucesso;
 
-    public TokenDTO(String token) {
+    public TokenDTO(String token, Boolean sucesso) {
         this.token = token;
-        this.sucesso = true;
+        this.sucesso = sucesso;
     }
 
 }

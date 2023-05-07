@@ -31,6 +31,14 @@ public class UsuarioService {
         }
     }
 
+    public Usuario buscarUsuarioPeloEmail(String email) throws Exception {
+        try {
+            return usuarioRepository.findByEmail(email);
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar usuário");
+        }
+    }
+
     public Iterable<Usuario> listarUsuario() {
         return usuarioRepository.findAll();
     }
