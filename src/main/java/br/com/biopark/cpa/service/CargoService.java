@@ -1,5 +1,7 @@
 package br.com.biopark.cpa.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +41,23 @@ public class CargoService {
     public Cargo ativarDesativarCargo(Long id) {
         Cargo cargo = cargoRepository.findById(id).get();
         Boolean ativo = cargo.getAtivo().equals(true) ? false : true;
+        cargo.setAtivo(ativo);
+        cargoRepository.save(cargo);
+        return cargo;
+    }
+
+    public Cargo excluirCargo(Long id) {
+        Cargo cargo = cargoRepository.findById(id).get();
+        cargoRepository.delete(cargo);
+        return cargo;
+    }
+
+    // implemente o metodo para atualizar o cargo
+    public Cargo atualizar(Long id, String nome, String descricao, Boolean ativo) {
+        Cargo cargo = cargoRepository.findById(id).get();
+        cargo.setDataAtualizacao(new Date());
+        cargo.setNome(nome);
+        cargo.setDescricao(descricao);
         cargo.setAtivo(ativo);
         cargoRepository.save(cargo);
         return cargo;

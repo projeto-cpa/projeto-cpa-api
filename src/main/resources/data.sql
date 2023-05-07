@@ -200,6 +200,7 @@ INSERT INTO turma (
 );
 
 -- usuario
+-- admins
 INSERT INTO usuario (
 	id_cargo,
     id_turma,
@@ -218,8 +219,104 @@ INSERT INTO usuario (
     current_date(),
     current_date(),
     current_date(),
-    'luka.pc.pc@gmail.com',
+    'lucas@email.com',
     'Lucas',
-    'de Oliveira Neitzke',
+    '',
+    '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
+);
+
+INSERT INTO usuario (
+	id_cargo,
+    id_turma,
+	ativo,
+    data_criacao,
+    data_atualizacao,
+    data_nascimento,
+    email,
+    nome,
+    sobrenome,
+    senha
+) VALUES (
+	1,
+	1,
+	0,
+    current_date(),
+    current_date(),
+    current_date(),
+    'joao@email.com',
+    'João',
+    '',
+    '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
+);
+
+INSERT INTO usuario (
+	id_cargo,
+    id_turma,
+	ativo,
+    data_criacao,
+    data_atualizacao,
+    data_nascimento,
+    email,
+    nome,
+    sobrenome,
+    senha
+) VALUES (
+	1,
+	1,
+	0,
+    current_date(),
+    current_date(),
+    current_date(),
+    'juliano@email.com',
+    'Juliano',
+    '',
+    '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
+);
+
+INSERT INTO usuario (
+	id_cargo,
+    id_turma,
+	ativo,
+    data_criacao,
+    data_atualizacao,
+    data_nascimento,
+    email,
+    nome,
+    sobrenome,
+    senha
+) VALUES (
+	1,
+	1,
+	0,
+    current_date(),
+    current_date(),
+    current_date(),
+    'jorge@email.com',
+    'Jorge',
+    '',
+    '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
+);
+
+INSERT INTO usuario (
+	id_cargo,
+    id_turma,
+	ativo,
+    data_criacao,
+    data_atualizacao,
+    data_nascimento,
+    email,
+    nome,
+    sobrenome,
+    senha
+) VALUES (
+	1,
+	1,
+	0,
+    current_date(),
+    current_date(),
+    current_date(),
+    'matheus@email.com',
+    'Matheus',
+    '',
     '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
 );
