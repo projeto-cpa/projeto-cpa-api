@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import br.com.biopark.cpa.models.Pergunta;
 import br.com.biopark.cpa.models.enums.TipoPergunta;
 
@@ -30,16 +31,18 @@ public class perguntaRepositoryTests {
     public void testePersistenciaPerguntas() throws Exception {
         // cria, persiste e limpa
         Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true);
-
         entityManager.persist(perguntaUm);
+        Pageable pageable = PageRequest.of(0, 5);
+        Pergunta persistidoPergunta = perguntaRepository.findByTexto(perguntaUm.getTexto(), pageable).getContent()
+                .get(0);
+
         entityManager.flush();
         entityManager.clear();
 
-        Pergunta persistido = perguntaRepository.findByTexto(perguntaUm.getTexto());
-
         // afirmacoes
-        Assert.assertEquals(persistido.getTexto(), perguntaUm.getTexto());
-        Assert.assertEquals(persistido.getTipo(), perguntaUm.getTipo());
-        Assert.assertEquals(persistido.getAtivo(), perguntaUm.getAtivo());
+        Assert.assertNotNull(persistidoPergunta);
+        Assert.assertEquals(persistidoPergunta.getTexto(), perguntaUm.getTexto());
+        Assert.assertEquals(persistidoPergunta.getTipo(), perguntaUm.getTipo());
+        Assert.assertEquals(persistidoPergunta.getAtivo(), perguntaUm.getAtivo());
     }
 }

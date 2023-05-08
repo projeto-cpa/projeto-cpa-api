@@ -2,7 +2,6 @@ package br.com.biopark.cpa.repository;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Rule;
