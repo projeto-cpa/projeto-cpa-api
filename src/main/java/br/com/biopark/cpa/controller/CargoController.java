@@ -19,8 +19,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.biopark.cpa.controller.dto.CargoDTO;
 import br.com.biopark.cpa.controller.form.CargoForm;
 import br.com.biopark.cpa.controller.form.alteracao.AlterarCargoForm;
-import br.com.biopark.cpa.controller.form.ativacao.AtivacaoCargoForm;
-import br.com.biopark.cpa.controller.form.exclusao.ExclusaoCargoForm;
+import br.com.biopark.cpa.controller.form.ativacao.AtivarCargoForm;
+import br.com.biopark.cpa.controller.form.exclusao.excluirCargoForm;
 import br.com.biopark.cpa.models.Cargo;
 import br.com.biopark.cpa.service.CargoService;
 import jakarta.transaction.Transactional;
@@ -52,7 +52,7 @@ public class CargoController {
     }
 
     @GetMapping
-    public Page<CargoDTO> lista(@RequestParam(required = false) String nomeCargo, @RequestParam int pagina,
+    public Page<CargoDTO> listar(@RequestParam(required = false) String nomeCargo, @RequestParam int pagina,
             @RequestParam int qtd) {
         Pageable paginacao = PageRequest.of(pagina, qtd);
         if (nomeCargo == null) {
@@ -64,20 +64,20 @@ public class CargoController {
         }
     }
 
-    // implemente a rota para ativar e desativar o cargo
+    @DeleteMapping
+    public ResponseEntity<CargoDTO> excluirCargo(@RequestBody @Valid excluirCargoForm form,
+            UriComponentsBuilder uriBuilder) {
+        Cargo cargo = cargoService.excluirCargo(form.getIdCargo());
+        URI uri = uriBuilder.path("cargo/{id}").buildAndExpand(cargo.getId()).toUri();
+        return ResponseEntity.created(uri).body(new CargoDTO(cargo));
+    }
+
     @PutMapping("/ativacao")
-    public ResponseEntity<CargoDTO> ativarDesativarCargo(@RequestBody @Valid AtivacaoCargoForm form,
+    public ResponseEntity<CargoDTO> ativarDesativarCargo(@RequestBody @Valid AtivarCargoForm form,
             UriComponentsBuilder uriBuilder) {
         Cargo cargo = cargoService.ativarDesativarCargo(form.getIdCargo());
         URI uri = uriBuilder.path("cargo/{id}").buildAndExpand(cargo.getId()).toUri();
         return ResponseEntity.created(uri).body(new CargoDTO(cargo));
     }
 
-    @DeleteMapping("/exclusao")
-    public ResponseEntity<CargoDTO> excluirCargo(@RequestBody @Valid ExclusaoCargoForm form,
-            UriComponentsBuilder uriBuilder) {
-        Cargo cargo = cargoService.excluirCargo(form.getIdCargo());
-        URI uri = uriBuilder.path("cargo/{id}").buildAndExpand(cargo.getId()).toUri();
-        return ResponseEntity.created(uri).body(new CargoDTO(cargo));
-    }
 }

@@ -38,11 +38,13 @@ public class SecurityFilter extends OncePerRequestFilter {
      * @throws IOException
      */
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
         var tokenJWT = recuperarToken(request);
 
-        // Só verifica o token se não for nulo pois o login não enviar nada no cabeçalho da requisição
+        // Só verifica o token se não for nulo pois o login não enviar nada no cabeçalho
+        // da requisição
         if (tokenJWT != null) {
             var loginUsuario = tokenService.getSubject(tokenJWT);
             // Informa para o Spring que o usuario está logado
@@ -58,7 +60,8 @@ public class SecurityFilter extends OncePerRequestFilter {
         // set headers for the response
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:3005");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS, HEAD");
-        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
+        response.setHeader("Access-Control-Allow-Credentials, Access-Control-Allow-Headers",
+                "Authorization, Content-Type, Accept");
 
         filterChain.doFilter(request, response);
     }
