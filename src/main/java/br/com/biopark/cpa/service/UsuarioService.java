@@ -1,12 +1,13 @@
 package br.com.biopark.cpa.service;
 
+import java.util.Optional;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.UsuarioRepository;
-
-import java.util.List;
+import jakarta.persistence.Id;
 
 @Service
 public class UsuarioService {
@@ -14,33 +15,39 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
+    public Usuario cadastrar(Usuario usuario) throws Exception {
 
-    public Usuario cadastrar(Usuario usuario) throws Exception{
-        try {
-            return usuarioRepository.save(usuario);
-        } catch (Exception e) {
-            throw new Exception("Erro ao cadastrar usuario " + e.getCause());
-        }
-    }
+        Usuario usuarioCadastrado = new Usuario();
 
-    public Usuario buscarUsuario(String login) throws Exception {
         try {
-            return usuarioRepository.findByEmail(login);
+            usuarioCadastrado = usuarioRepository.save(usuario);
         } catch (Exception e) {
-            throw new Exception("Erro ao buscar usuário");
+            System.out.println(e.getMessage());
         }
-    }
 
-    public Usuario buscarUsuarioPeloEmail(String email) throws Exception {
-        try {
-            return usuarioRepository.findByEmail(email);
-        } catch (Exception e) {
-            throw new Exception("Erro ao buscar usuário");
-        }
+        return usuarioCadastrado;
+
     }
 
     public Iterable<Usuario> listarUsuario() {
         return usuarioRepository.findAll();
     }
 
-}
+    public Usuario pegarUsuario(Long id) {
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+
+        if (usuario.isPresent())
+            return usuario.get();
+
+        return null;
+    }
+
+    public Usuario atualizar(Long id, String senha) {
+        Usuario usuario = usuarioRepository.findById(id).get();
+        usuario.setSenha(senha);
+        usuarioRepository.save(usuario);
+        return usuario;
+    }
+
+    }
+
