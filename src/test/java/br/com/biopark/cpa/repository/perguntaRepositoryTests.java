@@ -32,6 +32,7 @@ public class perguntaRepositoryTests {
         // cria, persiste e limpa
         Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true);
         entityManager.persist(perguntaUm);
+
         Pageable pageable = PageRequest.of(0, 5);
         Pergunta persistidoPergunta = perguntaRepository.findByTexto(perguntaUm.getTexto(), pageable).getContent()
                 .get(0);
@@ -39,7 +40,6 @@ public class perguntaRepositoryTests {
         entityManager.flush();
         entityManager.clear();
 
-        // afirmacoes
         Assert.assertNotNull(persistidoPergunta);
         Assert.assertEquals(persistidoPergunta.getTexto(), perguntaUm.getTexto());
         Assert.assertEquals(persistidoPergunta.getTipo(), perguntaUm.getTipo());
