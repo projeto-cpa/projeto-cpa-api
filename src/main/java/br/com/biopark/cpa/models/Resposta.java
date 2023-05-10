@@ -38,6 +38,10 @@ public class Resposta {
     @Column
     private Long nota;
 
+    @ManyToOne
+    @JoinColumn(name = "avaliacao_id")
+    private Avaliacao avaliacao;
+
     @Column(name = "data_criacao")
     private Date dataCriacao;
 

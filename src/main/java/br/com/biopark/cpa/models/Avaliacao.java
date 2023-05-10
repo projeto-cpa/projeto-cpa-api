@@ -45,9 +45,18 @@ public class Avaliacao {
     )
     private List<Turma> turmaList = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "respondente_id")
-    private Usuario usuarioRespondente;
+    @ManyToMany
+    @JoinTable(
+            name = "avaliacao_usuario",
+            joinColumns = @JoinColumn(name = "avaliacao_id"),
+            foreignKey = @ForeignKey(name = "avaliacao_usuario_fk"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id"),
+            inverseForeignKey = @ForeignKey(name = "usuario_avaliacao_fk")
+    )
+    private List<Usuario> usuarioList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "avaliacao")
+    private List<Resposta> respostaList = new ArrayList<>();
 
     @Column(name = "data_criacao")
     private Date dataCriacao;
