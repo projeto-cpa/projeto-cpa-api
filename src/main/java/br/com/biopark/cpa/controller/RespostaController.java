@@ -22,7 +22,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/resposta")
 @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
-@Transactional
+
 public class RespostaController {
 
     @Autowired

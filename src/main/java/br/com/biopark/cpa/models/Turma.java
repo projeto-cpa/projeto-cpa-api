@@ -6,15 +6,13 @@ import java.util.List;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "turma")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Turma {
 
     @Id
@@ -52,6 +50,15 @@ public class Turma {
         this.nome = nome;
         this.descricao = descricao;
         this.ativo = ativo;
+        this.dataCriacao = new Date();
+        this.dataAtualizacao = new Date();
+    }
+
+    public Turma(String nome, String descricao, Curso curso) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.curso = curso;
+        this.ativo = true;
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
     }
