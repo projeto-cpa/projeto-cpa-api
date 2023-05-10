@@ -26,14 +26,17 @@ public class cursoRepositoryTests {
 
     @Test
     public void testePersistenciaCursos() throws Exception {
+
+        // cria, persiste e limpa
         Curso banco = new Curso(false, "Banco de dados", "delete sem where");
+        
         entityManager.persist(banco);
-
-        Curso persistido = cursoRepository.findByNome(banco.getNome());
-
         entityManager.flush();
         entityManager.clear();
 
+        Curso persistido = cursoRepository.findByNome(banco.getNome());
+
+        // afirmacoes
         Assert.assertEquals(persistido.getNome(), banco.getNome());
         Assert.assertEquals(persistido.getDescricao(), banco.getDescricao());
         Assert.assertEquals(persistido.getAtivo(), banco.getAtivo());

@@ -28,16 +28,23 @@ public class disciplinaRepositoryTests {
 
     @Test
     public void testePersistenciaDisciplinas() throws Exception {
-        Curso ads = new Curso(false, "Analise e Desenvolvimento de Sistemas", "Formata meu pc");
-        entityManager.persist(ads);
 
-        Disciplina banco = new Disciplina(false, "Banco de dados", "Nao removendo o banco", ads);
-        entityManager.persist(banco);
-       
-        Disciplina persistido = disciplinaRepository.findByNome(banco.getNome());
+        // cria, persiste e limpa
+        Curso ads = new Curso(false, "Analise e Desenvolvimento de Sistemas", "Formata meu pc");
+        
+        entityManager.persist(ads);
         entityManager.flush();
         entityManager.clear();
 
+        Disciplina banco = new Disciplina(false, "Banco de dados", "Nao removendo o banco", ads);
+        
+        entityManager.persist(banco);
+        entityManager.flush();
+        entityManager.clear();
+
+        Disciplina persistido = disciplinaRepository.findByNome(banco.getNome());
+
+        // afirmacoes
         Assert.assertEquals(persistido.getNome(), banco.getNome());
         Assert.assertEquals(persistido.getDescricao(), banco.getDescricao());
         Assert.assertEquals(persistido.getAtivo(), banco.getAtivo());

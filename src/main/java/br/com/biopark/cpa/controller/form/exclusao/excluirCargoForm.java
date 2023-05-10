@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ExcluirCargoForm {
+public class excluirCargoForm {
 
     @NotNull
     private Long idCargo;

@@ -29,15 +29,19 @@ public class cargoRepositoryTests {
 
     @Test
     public void testePersistenciaCargos() throws Exception {
-        Cargo professor = new Cargo("Professor de testes", "Professor de testes", false);
+
+        // cria, persiste e limpa
+        Cargo professor = new Cargo("Professor", "Professor", false);
+        
         entityManager.persist(professor);
-
-        Pageable pageable = PageRequest.of(0, 5);
-        Cargo persistido = cargoRepository.findByNome(professor.getNome(), pageable).getContent().get(0);
-
         entityManager.flush();
         entityManager.clear();
 
+        Pageable pageable = PageRequest.of(1, 5);
+
+        Cargo persistido = (Cargo) cargoRepository.findByNome(professor.getNome(), pageable);
+
+        // afirmacoes
         Assert.assertEquals(persistido.getNome(), professor.getNome());
         Assert.assertEquals(persistido.getDescricao(), professor.getDescricao());
         Assert.assertEquals(persistido.getAtivo(), professor.getAtivo());
