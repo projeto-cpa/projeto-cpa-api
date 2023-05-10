@@ -1,6 +1,8 @@
 package br.com.biopark.cpa.models;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,70 +15,110 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "Usuario")
-public class Usuario {
+@Getter
+@Setter
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    @Getter
-    @Setter
+    @Column(name = "id_usuario")
     private long id;
+
+    @Column
+    private Boolean ativo;
 
     @NotNull
     @Column
-    @Getter
-    @Setter
+    private String email;
+
+    @NotNull
+    @Column
     private String nome;
 
     @NotNull
-    @Column 
-    @Getter
-    @Setter
+    @Column
     private String sobrenome;
 
     @NotNull
     @Column
-    @Getter
-    @Setter
     private String senha;
+
+    @ManyToOne
+    @JoinColumn(name = "id_turma")
+    private Turma turma;
 
     @NotNull
     @Column(name = "data_nascimento")
-    @Getter
-    @Setter
     private Date dataNascimento;
 
     @NotNull
     @JoinColumn(name = "id_cargo")
     @ManyToOne
-    @Getter
-    @Setter
     private Cargo cargo;
 
-    @Column(name = "created_at")
-    @Getter
-    @Setter
-    private Date createdAt;
+    @Column(name = "data_criacao")
+    private Date dataCriacao;
 
-    @Column(name = "updated_at") 
-    @Getter
-    @Setter
-    private Date updatedAt;
+    @Column(name = "data_atualizacao")
+    private Date dataAtualizacao;
 
     public Usuario() {
 
     }
 
-    public Usuario(String nome, String sobrenome, String senha, Cargo cargo, Date dataNascimento) {
+    public Usuario(String nome, String sobrenome, String senha, Cargo cargo, Date dataNascimento, String email) {
+        this.email = email;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.senha = senha;
         this.setCargo(cargo);
-        this.createdAt = new Date();
-        this.updatedAt = new Date();
+        this.dataCriacao = new Date();
+        this.dataAtualizacao = new Date();
         this.dataNascimento = dataNascimento;
+    }
+
+
+    /**
+     * @return - Lista de regras de usuario
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getPassword() {
+        return this.senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

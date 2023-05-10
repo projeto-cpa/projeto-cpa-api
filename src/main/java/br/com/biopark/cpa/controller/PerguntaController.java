@@ -11,35 +11,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import br.com.biopark.cpa.controller.dto.PerguntaDTO;
 import br.com.biopark.cpa.controller.form.PerguntaForm;
 import br.com.biopark.cpa.models.Pergunta;
-
 import br.com.biopark.cpa.service.PerguntaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
-@RequestMapping
 @RestController
+@RequestMapping("/pergunta")
+@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
+@Transactional
 public class PerguntaController {
 
     @Autowired
     private PerguntaService perguntaService;
 
-    @Transactional
-    @PostMapping("/cadastro/perguntas")
-    @CrossOrigin(origins = { "http://localhost:3306", "http://localhost:3005" })
+    @PostMapping
     public ResponseEntity<PerguntaDTO> cadastrar(@RequestBody @Valid PerguntaForm form,
             UriComponentsBuilder uriBuilder) {
-        Pergunta pergunta = new Pergunta(form.getNome(), form.getTipo(), form.getAtivo());
+        Pergunta pergunta = form.converter(form);
         pergunta = perguntaService.cadastrar(pergunta);
         URI uri = uriBuilder.path("pergunta/{id}").buildAndExpand(pergunta.getId()).toUri();
         return ResponseEntity.created(uri).body(new PerguntaDTO(pergunta));
     }
 
-    @GetMapping("/listagem/perguntas")
-    @CrossOrigin(origins = { "http://localhost:3306", "http://localhost:3005" })
+    @GetMapping
     public Iterable<Pergunta> listarPergunta() {
         return perguntaService.listarPergunta();
     }
