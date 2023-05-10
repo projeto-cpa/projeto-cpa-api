@@ -20,7 +20,7 @@ import br.com.biopark.cpa.controller.dto.CargoDTO;
 import br.com.biopark.cpa.controller.form.CargoForm;
 import br.com.biopark.cpa.controller.form.alteracao.AlterarCargoForm;
 import br.com.biopark.cpa.controller.form.ativacao.AtivarCargoForm;
-import br.com.biopark.cpa.controller.form.exclusao.excluirCargoForm;
+import br.com.biopark.cpa.controller.form.exclusao.ExcluirCargoForm;
 import br.com.biopark.cpa.models.Cargo;
 import br.com.biopark.cpa.service.CargoService;
 import jakarta.transaction.Transactional;
@@ -65,7 +65,7 @@ public class CargoController {
     }
 
     @DeleteMapping
-    public ResponseEntity<CargoDTO> excluirCargo(@RequestBody @Valid excluirCargoForm form,
+    public ResponseEntity<CargoDTO> excluirCargo(@RequestBody @Valid ExcluirCargoForm form,
             UriComponentsBuilder uriBuilder) {
         Cargo cargo = cargoService.excluirCargo(form.getIdCargo());
         URI uri = uriBuilder.path("cargo/{id}").buildAndExpand(cargo.getId()).toUri();
