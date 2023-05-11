@@ -13,6 +13,6 @@ public interface PerguntaRepository extends JpaRepository<Pergunta, Long> {
 
     public Pergunta findByAtivo(boolean ativo);
 
-    public Page<Pergunta> findByTexto(String nomeCargo, Pageable paginacao);
+    public Page<Pergunta> findByTexto(String textoPergunta, Pageable paginacao);
 
 }
