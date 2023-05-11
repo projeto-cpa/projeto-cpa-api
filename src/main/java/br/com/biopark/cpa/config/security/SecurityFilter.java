@@ -60,8 +60,8 @@ public class SecurityFilter extends OncePerRequestFilter {
         // set headers for the response
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:3005");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS, HEAD");
-        response.setHeader("Access-Control-Allow-Credentials, Access-Control-Allow-Headers",
-                "Authorization, Content-Type, Accept");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
 
         filterChain.doFilter(request, response);
     }
