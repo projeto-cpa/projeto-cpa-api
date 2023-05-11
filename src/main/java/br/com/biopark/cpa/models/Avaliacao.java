@@ -1,6 +1,7 @@
 package br.com.biopark.cpa.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class Avaliacao {
     @Column
     private String titulo;
 
+    @NotNull
     @ManyToMany
     @JoinTable(
             name = "avaliacao_pergunta",
@@ -36,6 +38,7 @@ public class Avaliacao {
     )
     private List<Pergunta> perguntaList = new ArrayList<>();
 
+    @NotNull
     @ManyToMany
     @JoinTable(
             name = "avaliacao_turma",
@@ -64,6 +67,16 @@ public class Avaliacao {
     @Column(name = "data_atualizacao")
     private Date dataAtualizacao;
 
+    @NotNull
     @Column(name = "data_expiracao")
     private Date dataExpiracao;
+
+    public Avaliacao(String titulo, List<Pergunta> perguntaList, List<Turma> turmaList, Date dataExpiracao) {
+        this.titulo = titulo;
+        this.perguntaList = perguntaList;
+        this.turmaList = turmaList;
+        this.dataExpiracao = dataExpiracao;
+        this.dataCriacao = new Date();
+        this.dataAtualizacao = new Date();
+    }
 }

@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class TurmaService {
@@ -19,5 +21,12 @@ public class TurmaService {
         } catch (RuntimeException e)  {
             throw new RuntimeException("Erro ao cadastrar turma: " + e.getMessage());
         }
+    }
+
+    public List<Turma> buscarTurmasPorIds(List<Long> listaTurmas) {
+
+        List<Turma> turmaList = turmaRepository.findAllByIdIn(listaTurmas);
+
+        return turmaList;
     }
 }

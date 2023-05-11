@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.com.biopark.cpa.models.enums.TipoPergunta;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +28,7 @@ public class Pergunta {
     private String texto;
 
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "eixo_id")
     private Eixo eixo;
 

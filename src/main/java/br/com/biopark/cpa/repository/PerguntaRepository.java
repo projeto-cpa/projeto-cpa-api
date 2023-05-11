@@ -1,5 +1,6 @@
 package br.com.biopark.cpa.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -16,4 +17,6 @@ public interface PerguntaRepository extends JpaRepository<Pergunta, Long> {
     Page<Pergunta> findByEixo(String nomeEixo, Pageable pageable);
 
     Page<Pergunta> findByEixoNome(String nomeEixo, Pageable pageable);
+
+    List<Pergunta> findAllByIdIn(List<Long> listaPerguntas);
 }

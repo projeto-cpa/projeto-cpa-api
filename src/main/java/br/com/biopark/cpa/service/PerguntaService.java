@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import br.com.biopark.cpa.models.Pergunta;
 import br.com.biopark.cpa.repository.PerguntaRepository;
 
+import java.util.List;
+
 @Service
 public class PerguntaService {
 
@@ -46,5 +48,12 @@ public class PerguntaService {
         } catch (RuntimeException e) {
             throw new RuntimeException("Nenhuma pergunta encontrada");
         }
+    }
+
+    public List<Pergunta> buscaPerguntasPorIds(List<Long> listaPerguntas) {
+
+        List<Pergunta> perguntaList = perguntaRepository.findAllByIdIn(listaPerguntas);
+
+        return perguntaList;
     }
 }
