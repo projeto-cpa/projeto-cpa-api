@@ -1,6 +1,6 @@
 package br.com.biopark.cpa.repository;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import br.com.biopark.cpa.models.Avaliacao;
 import br.com.biopark.cpa.models.Pergunta;
+import br.com.biopark.cpa.models.Turma;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -31,21 +30,36 @@ public class avaliacaoRepositoryTests {
 
     @Autowired
     private AvaliacaoRepository avaliacaoRepository;
+    private PerguntaRepository perguntaRepository;
+    private TurmaRepository turmaRepository;
 
     @Test
     public void testePersistenciaAvaliacao() throws Exception {
         // cria, persiste e limpa
-        Pergunta pergunta = new Pergunta("Pergunta 1", null, null, null);
 
-        List<Pergunta> listaPergunta = new ArrayList<>();
+        //cria os atributos com os valores que o construtor da classe avaliação espera
+        String titulo = "Avaliacao 1";
 
-        pergunta.add(listaPergunta);
+        List<Long> listaIDPergunta = new ArrayList<>();
+        listaIDPergunta.add(1L);
+        listaIDPergunta.add(2L);
+        listaIDPergunta.add(3L);
 
-        Avaliacao avaliacao = new Avaliacao("Avaliacao 1", "Acertei quantas perguntas?", "ADS", );
+        List<Long> ListaIDTurma = new ArrayList<>();
+        ListaIDTurma.add(1l);
+        ListaIDTurma.add(2l);
+        ListaIDTurma.add(3l);
+
+        Date data = new Date();
+
+        List<Pergunta> listaPerguntas = perguntaRepository.findAllByIdIn(listaIDPergunta);
+        List<Turma> listaTurmas = turmaRepository.findAllByIdIn(ListaIDTurma);
+
+        Avaliacao avaliacao = new Avaliacao(titulo, listaPerguntas, listaTurmas, data);
         entityManager.persist(avaliacao);
-        Pageable pageable = PageRequest.of(0, 5);
-        Avaliacao persistidoAvaliacao = avaliacaoRepository.findByTitulo(avaliacao.getTitulo(), pageable).getContent().get(0);
 
+        Avaliacao persistidoAvaliacao = avaliacaoRepository.findByTitulo(avaliacao.getTitulo());
+        
         entityManager.flush();
         entityManager.clear();
 
