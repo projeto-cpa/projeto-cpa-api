@@ -8,16 +8,21 @@ import br.com.biopark.cpa.config.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import br.com.biopark.cpa.controller.dto.UsuarioDTO;
+import br.com.biopark.cpa.controller.dto.alterar.AlterarSenhaDTO;
 import br.com.biopark.cpa.controller.form.UsuarioForm;
+import br.com.biopark.cpa.controller.form.alteracao.AlterarUsuarioForm;
+import br.com.biopark.cpa.controller.form.detalhar.DetalharUsuarioForm;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.CargoRepository;
 import br.com.biopark.cpa.service.UsuarioService;
@@ -73,6 +78,49 @@ public class UsuarioController {
             return ResponseEntity.created(uri).body(tokenDTO);
         }
 
+    }
+
+    // @GetMapping("/detalhar")
+    // public Usuario detalhar(@Valid @RequestBody UsuarioDTO usuarioDTO) throws
+    // Exception {
+    // Usuario usuario = usuarioService.pegarUsuario(usuarioDTO.getNome(),
+    // usuarioDTO.getSenha());
+    // URI uri =
+    // uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+    // return ResponseEntity.created(uri).body(new AlterarSenhaDTO(usuario));
+    // }
+
+    @GetMapping("/detalhar")
+    public ResponseEntity<UsuarioDTO> detalhar(@RequestBody @Valid DetalharUsuarioForm form,
+            UriComponentsBuilder uriBuilder) throws Exception {
+        Usuario usuario = usuarioService.pegarUsuario(form.getIdUsuario());
+
+        URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(form.getIdUsuario()).toUri();
+        return ResponseEntity.created(uri).body(new UsuarioDTO(
+                usuario.getEmail(),
+                usuario.getNome(),
+                usuario.getSobrenome(),
+                usuario.getCargo().getNome(),
+                usuario.getDataNascimento()));
+    }
+
+    // @PutMapping
+    // public ResponseEntity<DetalharUsuarioDTO> atualizar(@RequestBody @Valid,
+    // AlterarUsuarioForm form,
+    // UriComponentsBuilder uriBuilder) {
+    // Usuario usuario = usuarioService.atualizar(form.getIdUsuario(),
+    // form.getSenha());
+    // URI uri =
+    // uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+    // return ResponseEntity.created(uri).body(new DetalharUsuarioDTO(usuario));
+    // }
+
+    @PutMapping
+    public ResponseEntity<AlterarSenhaDTO> atualizar(@RequestBody @Valid AlterarUsuarioForm form,
+            UriComponentsBuilder uriBuilder) {
+        Usuario usuario = usuarioService.atualizar(form.getIdUsuario(), form.getSenha());
+        URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+        return ResponseEntity.created(uri).body(new AlterarSenhaDTO(usuario));
     }
 
 }
