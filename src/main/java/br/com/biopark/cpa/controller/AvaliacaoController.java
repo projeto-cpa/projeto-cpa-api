@@ -1,12 +1,17 @@
 package br.com.biopark.cpa.controller;
 
 import br.com.biopark.cpa.controller.dto.AvaliacaoDTO;
+import br.com.biopark.cpa.controller.dto.EixoDTO;
 import br.com.biopark.cpa.controller.form.AvaliacaoForm;
 import br.com.biopark.cpa.models.Avaliacao;
+import br.com.biopark.cpa.models.Eixo;
 import br.com.biopark.cpa.service.AvaliacaoService;
 import br.com.biopark.cpa.service.PerguntaService;
 import br.com.biopark.cpa.service.TurmaService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -41,4 +46,13 @@ public class AvaliacaoController {
         return ResponseEntity.created(uri).body(new AvaliacaoDTO(avaliacao));
     }
 
+    @GetMapping
+    public Page<AvaliacaoDTO> listar(@RequestParam int pagina, @RequestParam int qtd) {
+
+        Pageable pageable = PageRequest.of(pagina, qtd);
+
+        Page<Avaliacao> avaliacaoPage = avaliacaoService.listar(pageable);
+
+        return AvaliacaoDTO.converter(avaliacaoPage);
+    }
 }

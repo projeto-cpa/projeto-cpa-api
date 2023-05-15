@@ -4,6 +4,9 @@ import br.com.biopark.cpa.models.Avaliacao;
 import br.com.biopark.cpa.repository.AvaliacaoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,5 +26,9 @@ public class AvaliacaoService {
         } catch (RuntimeException e) {
             throw new RuntimeException("Não foi possível cadastrar a avaliação: " + e.getMessage());
         }
+    }
+
+    public Page<Avaliacao> listar(Pageable pageable) {
+        return avaliacaoRepository.findAll(pageable);
     }
 }
