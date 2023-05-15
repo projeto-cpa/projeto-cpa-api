@@ -47,9 +47,7 @@ public class AvaliacaoController {
     }
 
     @GetMapping
-    public Page<AvaliacaoDTO> listar(@RequestParam int pagina, @RequestParam int qtd) {
-
-        Pageable pageable = PageRequest.of(pagina, qtd);
+    public Page<AvaliacaoDTO> listar(@RequestParam int page, @RequestParam int size, @RequestParam(required = false) String sort, Pageable pageable) {
 
         Page<Avaliacao> avaliacaoPage = avaliacaoService.listar(pageable);
 
