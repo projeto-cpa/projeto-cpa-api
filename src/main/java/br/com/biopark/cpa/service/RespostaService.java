@@ -17,6 +17,8 @@ public class RespostaService {
 
         Resposta respostaCadastrada = new Resposta();
 
+        perguntaEstaNaAvaliacao(resposta);
+
         try {
             respostaCadastrada = respostaRepository.save(resposta);
         } catch (Exception e) {
@@ -24,6 +26,12 @@ public class RespostaService {
         }
 
         return respostaCadastrada;
+    }
+
+    private void perguntaEstaNaAvaliacao(Resposta resposta) {
+        if (resposta.getAvaliacao().getPerguntaList().contains(resposta.getPergunta())) {
+
+        }
     }
 
     public Iterable<Resposta> listarResposta() {

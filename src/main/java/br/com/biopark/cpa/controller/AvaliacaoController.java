@@ -1,16 +1,14 @@
 package br.com.biopark.cpa.controller;
 
 import br.com.biopark.cpa.controller.dto.AvaliacaoDTO;
-import br.com.biopark.cpa.controller.dto.EixoDTO;
 import br.com.biopark.cpa.controller.form.AvaliacaoForm;
+import br.com.biopark.cpa.controller.form.AvaliacaoRespostaForm;
 import br.com.biopark.cpa.models.Avaliacao;
-import br.com.biopark.cpa.models.Eixo;
 import br.com.biopark.cpa.service.AvaliacaoService;
 import br.com.biopark.cpa.service.PerguntaService;
 import br.com.biopark.cpa.service.TurmaService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,5 +50,11 @@ public class AvaliacaoController {
         Page<Avaliacao> avaliacaoPage = avaliacaoService.listar(pageable);
 
         return AvaliacaoDTO.converter(avaliacaoPage);
+    }
+
+    public AvaliacaoDTO responderAvaliacao(@RequestBody AvaliacaoRespostaForm form) {
+
+
+        return null;
     }
 }
