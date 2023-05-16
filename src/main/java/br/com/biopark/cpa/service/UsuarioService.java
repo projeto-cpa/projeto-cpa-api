@@ -1,10 +1,13 @@
 package br.com.biopark.cpa.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.UsuarioRepository;
+
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -19,7 +22,7 @@ public class UsuarioService {
         try {
             usuarioCadastrado = usuarioRepository.save(usuario);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new Exception(e.getMessage());
         }
 
         return usuarioCadastrado;
@@ -30,4 +33,13 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
+    public Usuario buscarPorId(Long usuarioRespondenteId) {
+        Optional<Usuario> usuario = usuarioRepository.findById((usuarioRespondenteId));
+
+            if (usuario.isPresent())
+                return usuario.get();
+            else
+                throw new EntityNotFoundException("Usuário não encontrado");
+
+    }
 }
