@@ -20,13 +20,12 @@ public class UsuarioDTO {
 
     }
 
-    public UsuarioDTO(String email, String nome, String sobrenome, String nomeCargo,
-            Date dataNascimento) {
+    public UsuarioDTO(String email, String nome, String sobrenome, String nomeCargo) {
         this.email = email;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.nomeCargo = nomeCargo;
-        this.dataNascimento = dataNascimento;
+
     }
 
     public UsuarioDTO(Usuario usuario) {

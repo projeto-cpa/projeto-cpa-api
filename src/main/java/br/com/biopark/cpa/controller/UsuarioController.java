@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import br.com.biopark.cpa.controller.dto.UsuarioDTO;
@@ -91,17 +92,17 @@ public class UsuarioController {
     // }
 
     @GetMapping("/detalhar")
-    public ResponseEntity<UsuarioDTO> detalhar(@RequestBody @Valid DetalharUsuarioForm form,
+    public ResponseEntity<UsuarioDTO> detalhar(@RequestBody @Valid @RequestParam Long id,
             UriComponentsBuilder uriBuilder) throws Exception {
-        Usuario usuario = usuarioService.pegarUsuario(form.getIdUsuario());
+        Usuario usuario = usuarioService.pegarUsuario(id);
 
-        URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(form.getIdUsuario()).toUri();
+        URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDTO(
                 usuario.getEmail(),
                 usuario.getNome(),
                 usuario.getSobrenome(),
-                usuario.getCargo().getNome(),
-                usuario.getDataNascimento()));
+                usuario.getCargo().getNome()));
+
     }
 
     // @PutMapping
@@ -115,7 +116,7 @@ public class UsuarioController {
     // return ResponseEntity.created(uri).body(new DetalharUsuarioDTO(usuario));
     // }
 
-    @PutMapping
+    @PutMapping("/editar")
     public ResponseEntity<AlterarSenhaDTO> atualizar(@RequestBody @Valid AlterarUsuarioForm form,
             UriComponentsBuilder uriBuilder) {
         Usuario usuario = usuarioService.atualizar(form.getIdUsuario(), form.getSenha());
