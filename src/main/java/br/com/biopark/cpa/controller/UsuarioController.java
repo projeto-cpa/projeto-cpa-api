@@ -23,7 +23,6 @@ import br.com.biopark.cpa.controller.dto.UsuarioDTO;
 import br.com.biopark.cpa.controller.dto.alterar.AlterarSenhaDTO;
 import br.com.biopark.cpa.controller.form.UsuarioForm;
 import br.com.biopark.cpa.controller.form.alteracao.AlterarUsuarioForm;
-import br.com.biopark.cpa.controller.form.detalhar.DetalharUsuarioForm;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.CargoRepository;
 import br.com.biopark.cpa.service.UsuarioService;
@@ -117,7 +116,7 @@ public class UsuarioController {
     // return ResponseEntity.created(uri).body(new DetalharUsuarioDTO(usuario));
     // }
 
-    @PutMapping("/editar")
+    @PutMapping
     @Transactional
     public ResponseEntity<AlterarSenhaDTO> atualizar(@RequestBody @Valid AlterarUsuarioForm form,
             UriComponentsBuilder uriBuilder) {
