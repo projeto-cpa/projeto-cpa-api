@@ -68,12 +68,12 @@ public class UsuarioController {
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(login.email(), login.senha());
             Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
             var usuario = (Usuario) authentication.getPrincipal();
-            var tokenDTO = new TokenDTO(tokenService.gerarToken(usuario), true);
+            var tokenDTO = new TokenDTO(tokenService.gerarToken(usuario), true, usuario.getId());
             URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
             return ResponseEntity.created(uri).body(tokenDTO);
         } catch (Exception err) {
             var usuario = usuarioService.buscarUsuarioPeloEmail(login.email());
-            var tokenDTO = new TokenDTO(null, false);
+            var tokenDTO = new TokenDTO(null, false, null);
             URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
             return ResponseEntity.created(uri).body(tokenDTO);
         }
