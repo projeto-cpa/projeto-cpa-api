@@ -92,6 +92,7 @@ public class UsuarioController {
     // }
 
     @GetMapping("/detalhar")
+    @Transactional
     public ResponseEntity<UsuarioDTO> detalhar(@RequestBody @Valid @RequestParam Long id,
             UriComponentsBuilder uriBuilder) throws Exception {
         Usuario usuario = usuarioService.pegarUsuario(id);
@@ -117,6 +118,7 @@ public class UsuarioController {
     // }
 
     @PutMapping("/editar")
+    @Transactional
     public ResponseEntity<AlterarSenhaDTO> atualizar(@RequestBody @Valid AlterarUsuarioForm form,
             UriComponentsBuilder uriBuilder) {
         Usuario usuario = usuarioService.atualizar(form.getIdUsuario(), form.getSenha());
