@@ -6,6 +6,7 @@ import br.com.biopark.cpa.models.enums.TipoPergunta;
 import br.com.biopark.cpa.models.Pergunta;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 
 @Getter
 @Setter
@@ -27,5 +28,9 @@ public class PerguntaDTO {
         this.sucesso = true;
         this.dataCriacao = pergunta.getDataCriacao();
         this.dataAtualizacao = pergunta.getDataAtualizacao();
+    }
+
+    public static Page<PerguntaDTO> converter(Page<Pergunta> pergunta) {
+        return pergunta.map(PerguntaDTO::new);
     }
 }
