@@ -8,15 +8,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import br.com.biopark.cpa.models.Cargo;
+import br.com.biopark.cpa.models.Curso;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class cargoRepositoryTests {
+public class cursoRepositoryTests {
 
     @Rule
     public ErrorCollector error = new ErrorCollector();
@@ -25,24 +22,23 @@ public class cargoRepositoryTests {
     private TestEntityManager entityManager;
 
     @Autowired
-    private CargoRepository cargoRepository;
+    private CursoRepository cursoRepository;
 
     @Test
-    public void testePersistenciaCargos() throws Exception {
+    public void testePersistenciaCursos() throws Exception {
 
         // cria, persiste e limpa
-        Cargo professor = new Cargo("Professor", "Professor", false);
+        Curso banco = new Curso(false, "Banco de dados", "delete sem where");
         
-        entityManager.persist(professor);
+        entityManager.persist(banco);
         entityManager.flush();
         entityManager.clear();
 
-        Pageable pageable = PageRequest.of(0, 5);
-        Cargo persistido = cargoRepository.findByNome(professor.getNome(), pageable).getContent().get(0);
+        Curso persistido = cursoRepository.findByNome(banco.getNome());
 
         // afirmacoes
-        Assert.assertEquals(persistido.getNome(), professor.getNome());
-        Assert.assertEquals(persistido.getDescricao(), professor.getDescricao());
-        Assert.assertEquals(persistido.getAtivo(), professor.getAtivo());
+        Assert.assertEquals(persistido.getNome(), banco.getNome());
+        Assert.assertEquals(persistido.getDescricao(), banco.getDescricao());
+        Assert.assertEquals(persistido.getAtivo(), banco.getAtivo());
     }
 }

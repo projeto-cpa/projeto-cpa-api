@@ -2,6 +2,7 @@ package br.com.biopark.cpa.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.biopark.cpa.models.Usuario;
@@ -15,18 +16,34 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    public Usuario cadastrar(Usuario usuario) throws Exception {
-
-        Usuario usuarioCadastrado = new Usuario();
-
+    public Usuario cadastrar(Usuario usuario) throws Exception{
         try {
-            usuarioCadastrado = usuarioRepository.save(usuario);
+
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+            usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
+
+            return usuarioRepository.save(usuario);
+
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+            throw new Exception("Erro ao cadastrar usuario " + e.getCause());
         }
+    }
 
-        return usuarioCadastrado;
+    public Usuario buscarUsuario(String login) throws Exception {
+        try {
+            return usuarioRepository.findByEmail(login);
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar usuário");
+        }
+    }
 
+    public Usuario buscarUsuarioPeloEmail(String email) throws Exception {
+        try {
+            return usuarioRepository.findByEmail(email);
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar usuário");
+        }
     }
 
     public Iterable<Usuario> listarUsuario() {
@@ -42,4 +59,13 @@ public class UsuarioService {
                 throw new EntityNotFoundException("Usuário não encontrado");
 
     }
+
+    public Usuario atualizar(Long idUsuario, String senha) {
+        Usuario usuario = usuarioRepository.findById(idUsuario).get();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        usuario.setSenha(bCryptPasswordEncoder.encode(senha));
+        return usuarioRepository.save(usuario);
+
+    }
+
 }
