@@ -1,8 +1,6 @@
 package br.com.biopark.cpa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import br.com.biopark.cpa.models.Pergunta;
 import br.com.biopark.cpa.repository.PerguntaRepository;
@@ -26,8 +24,8 @@ public class PerguntaService {
         return perguntaCadastrada;
     }
 
-    public Page<Pergunta> listarPergunta(Pageable pergunta) {
-        return perguntaRepository.findAll(pergunta);
+    public Iterable<Pergunta> listarPergunta() {
+        return perguntaRepository.findAll();
     }
 
 }

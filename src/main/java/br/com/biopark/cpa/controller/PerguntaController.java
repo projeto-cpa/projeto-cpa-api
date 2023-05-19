@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import br.com.biopark.cpa.controller.dto.PerguntaDTO;
@@ -18,9 +17,7 @@ import br.com.biopark.cpa.models.Pergunta;
 import br.com.biopark.cpa.service.PerguntaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+
 @RestController
 @RequestMapping("/pergunta")
 @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
@@ -40,11 +37,7 @@ public class PerguntaController {
     }
 
     @GetMapping
-    public Page<Pergunta> listarPergunta(@RequestParam(required = false) String textoPergunta,
-            @RequestParam int pagina,
-            @RequestParam int qtd) {
-        Pageable paginacao = PageRequest.of(pagina, qtd);
-
-        return perguntaService.listarPergunta(paginacao);
+    public Iterable<Pergunta> listarPergunta() {
+        return perguntaService.listarPergunta();
     }
 }
