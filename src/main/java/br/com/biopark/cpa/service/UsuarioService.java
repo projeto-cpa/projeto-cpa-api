@@ -1,5 +1,6 @@
 package br.com.biopark.cpa.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,6 @@ public class UsuarioService {
             return usuarioRepository.save(usuario);
 
         } catch (Exception e) {
-
             throw new Exception("Erro ao cadastrar usuario " + e.getCause());
         }
     }
@@ -50,14 +50,14 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Usuario pegarUsuario(Long idUsuario) throws Exception {
-        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
-        try {
-            return usuario.get();
+    public Usuario buscarPorId(Long usuarioRespondenteId) {
+        Optional<Usuario> usuario = usuarioRepository.findById((usuarioRespondenteId));
 
-        } catch (Exception e) {
-            throw new Exception("Erro ao buscar usuário");
-        }
+            if (usuario.isPresent())
+                return usuario.get();
+            else
+                throw new EntityNotFoundException("Usuário não encontrado");
+
     }
 
     public Usuario atualizar(Long idUsuario, String senha) {

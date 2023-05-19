@@ -1,9 +1,12 @@
 package br.com.biopark.cpa.models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import br.com.biopark.cpa.models.enums.TipoPergunta;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +28,7 @@ public class Pergunta {
     private String texto;
 
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "eixo_id")
     private Eixo eixo;
 
@@ -32,20 +36,27 @@ public class Pergunta {
     @Enumerated(EnumType.STRING)
     private TipoPergunta tipo;
 
+    @ManyToMany(mappedBy = "perguntaList")
+    private List<Avaliacao> avaliacaoList = new ArrayList<>();
+
     @Column(name = "data_criacao")
     private Date dataCriacao;
 
     @Column(name = "data_atualizacao")
     private Date dataAtualizacao;
 
+    @OneToMany(mappedBy = "pergunta")
+    private List<Resposta> respostaList = new ArrayList<>();
+
     public Pergunta() {
         
     }
 
-    public Pergunta(String texto, TipoPergunta tipo, Boolean ativo) {
+    public Pergunta(String texto, TipoPergunta tipo, Boolean ativo, Eixo eixo) {
         this.texto = texto;
         this.tipo = tipo;
         this.ativo = ativo;
+        this.eixo = eixo;
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
     }
