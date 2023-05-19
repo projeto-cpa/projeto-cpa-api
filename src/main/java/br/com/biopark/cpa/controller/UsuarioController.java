@@ -94,7 +94,7 @@ public class UsuarioController {
     @Transactional
     public ResponseEntity<UsuarioDTO> detalhar(@RequestBody @Valid @RequestParam Long id,
             UriComponentsBuilder uriBuilder) throws Exception {
-        Usuario usuario = usuarioService.pegarUsuario(id);
+        Usuario usuario = usuarioService.buscarPorId(id);
 
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDTO(
