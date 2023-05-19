@@ -10,6 +10,7 @@ import java.util.List;
 @Data
 public class AvaliacaoDTO {
 
+    private long id;
     private String titulo;
     private Date dataExpiracao;
     private Date dataCriacao;
@@ -17,6 +18,7 @@ public class AvaliacaoDTO {
     private List<PerguntaDTO> perguntaDTO;
 
     public AvaliacaoDTO(Avaliacao avaliacao) {
+        this.id = avaliacao.getId();
         this.titulo = avaliacao.getTitulo();
         this.dataExpiracao = avaliacao.getDataExpiracao();
         this.dataCriacao = avaliacao.getDataCriacao();

@@ -2,6 +2,7 @@ package br.com.biopark.cpa.controller;
 
 import java.net.URI;
 
+import br.com.biopark.cpa.config.validation.ValidacaoException;
 import br.com.biopark.cpa.service.AvaliacaoService;
 import br.com.biopark.cpa.service.PerguntaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class RespostaController {
     }
 
     @PostMapping
-    public ResponseEntity<RespostaDTO> cadastrar(@RequestBody @Valid RespostaForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<RespostaDTO> cadastrar(@RequestBody @Valid RespostaForm form, UriComponentsBuilder uriBuilder) throws ValidacaoException {
 
         Resposta resposta = form.converter(perguntaService, avaliacaoService);
 
