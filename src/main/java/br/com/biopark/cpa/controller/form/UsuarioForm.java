@@ -35,8 +35,10 @@ public class UsuarioForm {
     @NotNull
     private Date dataNascimento;
 
+    private String imagem;
+
     public Usuario converter(CargoRepository cargoRepository){
-        return new Usuario(this.nome, this.sobrenome, senha, cargoRepository.findById(cargoId), dataNascimento, this.email);
+        return new Usuario(this.nome, this.sobrenome, senha, cargoRepository.findById(cargoId), dataNascimento, this.email, this.imagem);
     }
 
 }

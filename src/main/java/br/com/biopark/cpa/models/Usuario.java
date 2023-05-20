@@ -72,7 +72,7 @@ public class Usuario implements UserDetails {
 
     }
 
-    public Usuario(String nome, String sobrenome, String senha, Cargo cargo, Date dataNascimento, String email) {
+    public Usuario(String nome, String sobrenome, String senha, Cargo cargo, Date dataNascimento, String email, String imagem) {
         this.email = email;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -81,6 +81,7 @@ public class Usuario implements UserDetails {
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
         this.dataNascimento = dataNascimento;
+        this.imagem = imagem;
     }
 
 

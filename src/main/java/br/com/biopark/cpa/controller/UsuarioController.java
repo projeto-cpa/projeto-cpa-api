@@ -80,16 +80,6 @@ public class UsuarioController {
 
     }
 
-    // @GetMapping("/detalhar")
-    // public Usuario detalhar(@Valid @RequestBody UsuarioDTO usuarioDTO) throws
-    // Exception {
-    // Usuario usuario = usuarioService.pegarUsuario(usuarioDTO.getNome(),
-    // usuarioDTO.getSenha());
-    // URI uri =
-    // uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
-    // return ResponseEntity.created(uri).body(new AlterarSenhaDTO(usuario));
-    // }
-
     @GetMapping("/detalhar")
     @Transactional
     public ResponseEntity<UsuarioDTO> detalhar(@RequestBody @Valid @RequestParam Long id,
@@ -97,11 +87,7 @@ public class UsuarioController {
         Usuario usuario = usuarioService.buscarPorId(id);
 
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(id).toUri();
-        return ResponseEntity.created(uri).body(new UsuarioDTO(
-                usuario.getEmail(),
-                usuario.getNome(),
-                usuario.getSobrenome(),
-                usuario.getCargo().getNome()));
+        return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
 
     }
 
