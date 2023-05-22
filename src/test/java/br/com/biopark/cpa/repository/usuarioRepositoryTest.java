@@ -40,8 +40,7 @@ public class usuarioRepositoryTest {
         Cargo aluno = new Cargo("aluno", "aluno", false);
 
         entityManager.persist(aluno);
-        entityManager.flush();
-        entityManager.clear();
+
 
         Pageable pageable = PageRequest.of(0, 5);
         Cargo persistidoCargo = cargoRepository.findByNome(aluno.getNome(), pageable).getContent().get(0);
@@ -54,8 +53,7 @@ public class usuarioRepositoryTest {
                 "elielder@gmail.com");
 
         entityManager.persist(usuarioUm);
-        entityManager.flush();
-        entityManager.clear();
+
 
         Usuario persistidoUsuario = usuarioRepository.findByNome(usuarioUm.getNome());
 
@@ -68,5 +66,7 @@ public class usuarioRepositoryTest {
         Assert.assertEquals(persistidoUsuario.getSobrenome(), usuarioUm.getSobrenome());
         Assert.assertEquals(persistidoUsuario.getCargo(), usuarioUm.getCargo());
 
+        entityManager.flush();
+        entityManager.clear();
     }
 }
