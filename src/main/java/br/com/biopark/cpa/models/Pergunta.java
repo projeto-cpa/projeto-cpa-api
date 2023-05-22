@@ -42,10 +42,11 @@ public class Pergunta {
         
     }
 
-    public Pergunta(String texto, TipoPergunta tipo, Boolean ativo) {
+    public Pergunta(String texto, TipoPergunta tipo, Boolean ativo, Eixo eixo) {
         this.texto = texto;
         this.tipo = tipo;
         this.ativo = ativo;
+        this.eixo = eixo;
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
     }
