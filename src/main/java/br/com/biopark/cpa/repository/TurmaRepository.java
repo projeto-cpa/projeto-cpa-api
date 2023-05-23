@@ -11,5 +11,5 @@ import java.util.List;
 
 public interface TurmaRepository extends JpaRepository<Turma, Long> {
     List<Turma> findAllByIdIn(List<Long> listaTurmas);
-    public Page<Turma> findByNome(String nomeCargo, Pageable paginacao);
+    public Page<Turma> findByNome(String nomeTurma, Pageable paginacao);
 }

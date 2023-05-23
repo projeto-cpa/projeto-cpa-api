@@ -79,7 +79,7 @@ public class TurmaController {
     }
 
     @PutMapping("/ativacao")
-    public ResponseEntity<TurmaDTO> ativarDesativarCargo(@RequestBody @Valid AtivarTurmaForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<TurmaDTO> ativarDesativarTurma(@RequestBody @Valid AtivarTurmaForm form, UriComponentsBuilder uriBuilder) {
         Turma turma = turmaService.ativarDesativarTurma(form.getIdTurma());
         URI uri = uriBuilder.path("turma/{id}").buildAndExpand(turma.getId()).toUri();
         return ResponseEntity.created(uri).body(new TurmaDTO(turma));
