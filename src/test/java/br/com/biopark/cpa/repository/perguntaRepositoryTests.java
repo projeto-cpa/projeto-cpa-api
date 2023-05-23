@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import br.com.biopark.cpa.models.Pergunta;
+import br.com.biopark.cpa.models.Eixo;
 import br.com.biopark.cpa.models.enums.TipoPergunta;
 
 @RunWith(SpringRunner.class)
@@ -30,7 +31,10 @@ public class perguntaRepositoryTests {
     @Test
     public void testePersistenciaPerguntas() throws Exception {
         // cria, persiste e limpa
-        Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true);
+        Eixo eixo = new Eixo("Banco de dados", "Banco de dados ADS", true);
+        entityManager.persist(eixo);
+
+        Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true, eixo);
         entityManager.persist(perguntaUm);
         Pageable pageable = PageRequest.of(0, 5);
         Pergunta persistidoPergunta = perguntaRepository.findByTexto(perguntaUm.getTexto(), pageable).getContent()
