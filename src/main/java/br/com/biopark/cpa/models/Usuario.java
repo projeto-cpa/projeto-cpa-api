@@ -1,6 +1,7 @@
 package br.com.biopark.cpa.models;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
