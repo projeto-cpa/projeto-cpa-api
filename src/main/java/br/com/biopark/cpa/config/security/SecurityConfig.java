@@ -41,10 +41,6 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
-
-        // set Access-Control-Allow-Origin for http://localhost:3005, permit all requests from "/usuario/login" and permit the other routes if the user is authenticated by security filter
-
-
     }
 
     @Bean
