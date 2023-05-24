@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
 @RestControllerAdvice
-public class ErroDeValidacaoHandler {
+public class ExceptionsHandler {
 
     @Autowired
     private MessageSource messageSource; //Classe que auxilia na tradução de idiomas
@@ -41,6 +41,6 @@ public class ErroDeValidacaoHandler {
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ValidacaoException.class)
     public ErroDTO handleValidcaoException(ValidacaoException exception) {
-        return new ErroDTO(exception.getMessage(), exception.getStatus());
+        return new ErroDTO(exception.getMessage());
     }
 }
