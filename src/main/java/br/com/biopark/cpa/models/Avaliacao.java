@@ -58,6 +58,9 @@ public class Avaliacao {
     )
     private List<Usuario> usuarioList = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "avaliacoesRespondidas")
+    private List<Usuario> usuarioListRespondentes = new ArrayList<>();
+
     @OneToMany(mappedBy = "avaliacao")
     private List<Resposta> respostaList = new ArrayList<>();
 

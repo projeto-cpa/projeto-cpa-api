@@ -5,7 +5,7 @@ import java.net.URI;
 import br.com.biopark.cpa.config.validation.ValidacaoException;
 import br.com.biopark.cpa.service.AvaliacaoService;
 import br.com.biopark.cpa.service.PerguntaService;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.biopark.cpa.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.biopark.cpa.controller.dto.RespostaDTO;
 import br.com.biopark.cpa.controller.form.RespostaForm;
 import br.com.biopark.cpa.models.Resposta;
-import br.com.biopark.cpa.repository.PerguntaRepository;
 import br.com.biopark.cpa.service.RespostaService;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
@@ -30,22 +28,22 @@ public class RespostaController {
 
     private final RespostaService respostaService;
 
-    final
-    PerguntaService perguntaService;
+    private final PerguntaService perguntaService;
 
-    final
-    AvaliacaoService avaliacaoService;
+    private final AvaliacaoService avaliacaoService;
+    private final UsuarioService usuarioService;
 
-    public RespostaController(RespostaService respostaService, PerguntaService perguntaService, AvaliacaoService avaliacaoService) {
+    public RespostaController(RespostaService respostaService, PerguntaService perguntaService, AvaliacaoService avaliacaoService, UsuarioService usuarioService) {
         this.respostaService = respostaService;
         this.perguntaService = perguntaService;
         this.avaliacaoService = avaliacaoService;
+        this.usuarioService = usuarioService;
     }
 
     @PostMapping
     public ResponseEntity<RespostaDTO> cadastrar(@RequestBody @Valid RespostaForm form, UriComponentsBuilder uriBuilder) throws ValidacaoException {
 
-        Resposta resposta = form.converter(perguntaService, avaliacaoService);
+        Resposta resposta = form.converter(perguntaService, avaliacaoService, usuarioService);
 
         resposta = respostaService.cadastrar(resposta);
 

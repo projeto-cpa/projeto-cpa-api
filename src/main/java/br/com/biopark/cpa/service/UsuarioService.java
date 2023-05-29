@@ -68,4 +68,8 @@ public class UsuarioService {
 
     }
 
+    public Usuario atualizar(long id) {
+        Usuario usuario = buscarPorId(id);
+        return usuarioRepository.save(usuario);
+    }
 }

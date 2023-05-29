@@ -38,7 +38,7 @@ public class eixoRepositoryTests {
         Eixo eixo = new Eixo("Banco de dados", "Banco de dados ADS", true);
         entityManager.persist(eixo);
 
-        Pergunta pergunta = new Pergunta("Qual banco de dados nós usamos?", TipoPergunta.AVALIATIVA, true);
+        Pergunta pergunta = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true, eixo);
         entityManager.persist(pergunta);
  
         Pageable pageable = PageRequest.of(0, 5);

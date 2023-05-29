@@ -16,7 +16,7 @@ import br.com.biopark.cpa.models.Cargo;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class cargoRepositoryTests {
+public class CargoRepositoryTests {
 
     @Rule
     public ErrorCollector error = new ErrorCollector();

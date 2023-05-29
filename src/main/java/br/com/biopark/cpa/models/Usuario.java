@@ -56,11 +56,23 @@ public class Usuario implements UserDetails {
     @ManyToOne
     private Cargo cargo;
 
+    @OneToMany(mappedBy = "usuario")
+    private List<Resposta> respostaList = new ArrayList<>();
+
     @ManyToMany(mappedBy = "usuarioList")
     private List<Avaliacao> avaliacaoList = new ArrayList<>();
 
     @Column
     private String imagem;
+
+    @ManyToMany
+    @JoinTable(name = "usuario_avaliacoes_respondidas",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            foreignKey = @ForeignKey(name = "usuario_avaliacao_respondida_fk"),
+            inverseJoinColumns = @JoinColumn(name = "avaliacao_id"),
+            inverseForeignKey = @ForeignKey(name = "avaliacao_respondida_usuario_fk")
+    )
+    private List<Avaliacao> avaliacoesRespondidas = new ArrayList<>();
 
     @Column(name = "data_criacao")
     private Date dataCriacao;

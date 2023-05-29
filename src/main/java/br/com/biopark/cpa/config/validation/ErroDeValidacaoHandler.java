@@ -41,6 +41,6 @@ public class ErroDeValidacaoHandler {
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ValidacaoException.class)
     public ErroDTO handleValidcaoException(ValidacaoException exception) {
-        return new ErroDTO(exception.getMessage(), exception.getStatus());
+        return new ErroDTO(exception.getMessage());
     }
 }

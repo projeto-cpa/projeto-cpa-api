@@ -16,7 +16,7 @@ public class ErroDTO {
         this.erro = erro;
     }
 
-    public ErroDTO(String campo, HttpStatus status) {
+    public ErroDTO(String campo) {
         this.campo = campo;
         this.status = status;
     }

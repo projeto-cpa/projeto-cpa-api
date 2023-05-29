@@ -32,8 +32,7 @@ public class RespostaService {
 
     private void perguntaEstaNaAvaliacao(Resposta resposta) throws ValidacaoException {
         if (!resposta.getAvaliacao().getPerguntaList().contains(resposta.getPergunta())) {
-            throw new ValidacaoException("Pergunta que está sendo respondida não está nesta avaliação",
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ValidacaoException("Pergunta que está sendo respondida não está nesta avaliação");
         }
     }
 

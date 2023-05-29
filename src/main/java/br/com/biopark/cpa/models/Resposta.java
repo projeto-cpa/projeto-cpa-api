@@ -2,7 +2,6 @@ package br.com.biopark.cpa.models;
 
 import java.util.Date;
 
-import br.com.biopark.cpa.controller.form.RespostaForm;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -49,11 +48,12 @@ public class Resposta {
     @Column(name = "data_atualizacao")
     private Date dataAtualizacao;
 
-    public Resposta(String texto, Long nota, Pergunta pergunta, Avaliacao avaliacao) {
+    public Resposta(String texto, Long nota, Pergunta pergunta, Avaliacao avaliacao, Usuario usuario) {
         this.texto = texto;
         this.nota = nota;
         this.pergunta = pergunta;
         this.avaliacao = avaliacao;
+        this.usuario = usuario;
         this.dataAtualizacao = new Date();
         this.dataCriacao = new Date();
     }
