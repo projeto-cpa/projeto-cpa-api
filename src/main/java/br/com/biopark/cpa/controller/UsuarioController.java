@@ -91,17 +91,6 @@ public class UsuarioController {
 
     }
 
-    // @PutMapping
-    // public ResponseEntity<DetalharUsuarioDTO> atualizar(@RequestBody @Valid,
-    // AlterarUsuarioForm form,
-    // UriComponentsBuilder uriBuilder) {
-    // Usuario usuario = usuarioService.atualizar(form.getIdUsuario(),
-    // form.getSenha());
-    // URI uri =
-    // uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
-    // return ResponseEntity.created(uri).body(new DetalharUsuarioDTO(usuario));
-    // }
-
     @PutMapping
     @Transactional
     public ResponseEntity<AlterarSenhaDTO> atualizar(@RequestBody @Valid AlterarUsuarioForm form,
