@@ -18,6 +18,7 @@ public class EixoDTO {
     private String descricao;
     private Date createdAt;
     private Date updatedAt;
+    private boolean sucesso;
 
     public EixoDTO(Eixo eixo){
         this.id = eixo.getId();
@@ -25,6 +26,7 @@ public class EixoDTO {
         this.descricao = eixo.getDescricao();
         this.createdAt = eixo.getDataCriacao();
         this.updatedAt = eixo.getDataAtualizacao();
+        this.sucesso = true;
     }
 
     public static  Page<EixoDTO> converter(Page<Eixo> eixos) {

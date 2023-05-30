@@ -18,6 +18,7 @@ import jakarta.validation.Valid;
 
 @RequestMapping("/eixo")
 @RestController
+@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:3005"})
 public class EixoController {
 
     @Autowired
