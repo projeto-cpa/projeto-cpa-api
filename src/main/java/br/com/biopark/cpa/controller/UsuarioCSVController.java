@@ -8,7 +8,6 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.common.record.Record;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +20,6 @@ import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/importar")
-@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
 @Transactional
 public class UsuarioCSVController {
 

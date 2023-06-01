@@ -3,7 +3,6 @@ package br.com.biopark.cpa.config.security;
 import br.com.biopark.cpa.service.UsuarioService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,13 +55,6 @@ public class SecurityFilter extends OncePerRequestFilter {
                 throw new RuntimeException(e);
             }
         }
-
-        // set headers for the response
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3005");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS, HEAD");
-        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-
         filterChain.doFilter(request, response);
     }
 
