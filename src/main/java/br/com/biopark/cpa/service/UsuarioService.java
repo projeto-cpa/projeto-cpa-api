@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.biopark.cpa.controller.form.UsuarioForm;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.UsuarioRepository;
 
@@ -60,10 +61,18 @@ public class UsuarioService {
 
     }
 
-    public Usuario atualizar(Long idUsuario, String senha) {
-        Usuario usuario = usuarioRepository.findById(idUsuario).get();
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        usuario.setSenha(bCryptPasswordEncoder.encode(senha));
+    public Usuario atualizar(Long id, UsuarioForm usuarioForm) {
+        Usuario usuario = usuarioRepository.findById(id).get();
+
+        if (usuarioForm.getSenha() != null) {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            usuario.setSenha(bCryptPasswordEncoder.encode(usuarioForm.getSenha()));
+        }
+        
+        if(usuarioForm.getImagem() != null){
+            usuario.setImagem(usuarioForm.getImagem());
+        }
+       
         return usuarioRepository.save(usuario);
 
     }

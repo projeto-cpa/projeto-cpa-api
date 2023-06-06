@@ -36,7 +36,7 @@ public class perguntaRepositoryTests {
     public void testePersistenciaPerguntas() throws Exception {
         Eixo eixo = new Eixo("Banco de dados", "Banco de dados ADS", true);
         entityManager.persist(eixo);
-
+      
         // cria, persiste e limpa
         Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true, eixo);
         entityManager.persist(perguntaUm);

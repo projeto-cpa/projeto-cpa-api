@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 public class ValidacaoException extends Exception{
 
     private String message;
-    private HttpStatus status;
 
 }
 
