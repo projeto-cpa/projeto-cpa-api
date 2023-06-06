@@ -12,29 +12,33 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.biopark.cpa.controller.dto.EixoDTO;
 import br.com.biopark.cpa.controller.form.EixoForm;
+import br.com.biopark.cpa.controller.form.alteracao.AlterarEixoForm;
+import br.com.biopark.cpa.controller.form.ativacao.AtivarEixoForm;
+import br.com.biopark.cpa.controller.form.exclusao.excluirEixoForm;
 import br.com.biopark.cpa.models.Eixo;
 import br.com.biopark.cpa.service.EixoService;
 import jakarta.validation.Valid;
 
 @RequestMapping("/eixo")
 @RestController
+@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
 public class EixoController {
 
     @Autowired
     private EixoService eixoService;
 
     @PostMapping
-    public ResponseEntity<EixoDTO> cadastrar(@RequestBody @Valid EixoForm form, UriComponentsBuilder uriBuilder) throws Exception{
+    public ResponseEntity<EixoDTO> cadastrar(@RequestBody @Valid EixoForm form, UriComponentsBuilder uriBuilder)
+            throws Exception {
         Eixo eixo = new Eixo(form);
         eixoService.cadastrar(eixo);
-
         URI uri = uriBuilder.path("/eixo/{id}").buildAndExpand(eixo.getId()).toUri();
-		return ResponseEntity.created(uri).body(new EixoDTO(eixo));
+        return ResponseEntity.created(uri).body(new EixoDTO(eixo));
     }
 
     @GetMapping
-     public Page<EixoDTO> listar(@RequestParam(required = false) String nomeEixo, @RequestParam int pagina,
-                                 @RequestParam int qtd) {
+    public Page<EixoDTO> listar(@RequestParam(required = false) String nomeEixo, @RequestParam int pagina,
+            @RequestParam int qtd) {
 
         Pageable pageable = PageRequest.of(pagina, qtd);
 
@@ -47,13 +51,38 @@ public class EixoController {
         }
     }
 
+    @PutMapping
+    public ResponseEntity<EixoDTO> atualizarTemp(@RequestBody @Valid AlterarEixoForm form,
+            UriComponentsBuilder uriBuilder) {
+        Eixo eixo = eixoService.atualizarTemp(form.getIdEixo(), form.getNome(), form.getDescricao(), form.getAtivo());
+        URI uri = uriBuilder.path("cargo/{id}").buildAndExpand(eixo.getId()).toUri();
+        return ResponseEntity.created(uri).body(new EixoDTO(eixo));
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<EixoDTO> atualizar(@PathVariable long id, @RequestBody @Valid EixoForm form) throws Exception {
+    public ResponseEntity<EixoDTO> atualizar(@PathVariable long id, @RequestBody @Valid EixoForm form)
+            throws Exception {
         Eixo eixo = eixoService.buscarPorId(id);
 
         eixo = eixoService.atualizar(form.converterParaAtuaizacao(eixo));
 
         return ResponseEntity.ok(new EixoDTO(eixo));
     }
-    
+
+    @DeleteMapping
+    public ResponseEntity<EixoDTO> excluirEixo(@RequestBody @Valid excluirEixoForm form,
+            UriComponentsBuilder uriBuilder) {
+        Eixo eixo = eixoService.excluirEixo((form.getIdEixo()));
+        URI uri = uriBuilder.path("eixo/{id}").buildAndExpand(eixo.getId()).toUri();
+        return ResponseEntity.created(uri).body(new EixoDTO(eixo));
+    }
+
+    @PutMapping("/ativacao")
+    public ResponseEntity<EixoDTO> ativarDesativarEixo(@RequestBody @Valid AtivarEixoForm form,
+            UriComponentsBuilder uriBuilder) {
+        Eixo eixo = eixoService.ativarDesativarEixo(form.getIdEixo());
+        URI uri = uriBuilder.path("eixo/{id}").buildAndExpand(eixo.getId()).toUri();
+        return ResponseEntity.created(uri).body(new EixoDTO(eixo));
+    }
+
 }

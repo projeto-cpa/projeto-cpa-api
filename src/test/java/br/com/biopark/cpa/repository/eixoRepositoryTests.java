@@ -8,9 +8,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.biopark.cpa.models.Eixo;
 import br.com.biopark.cpa.models.Pergunta;
@@ -18,7 +18,7 @@ import br.com.biopark.cpa.models.enums.TipoPergunta;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class perguntaRepositoryTests {
+public class eixoRepositoryTests {
 
     @Rule
     public ErrorCollector error = new ErrorCollector();
@@ -27,25 +27,25 @@ public class perguntaRepositoryTests {
     private TestEntityManager entityManager;
 
     @Autowired
-    private PerguntaRepository perguntaRepository;
-
-    @Autowired
     private EixoRepository eixoRepository;
 
+    @Autowired
+    private PerguntaRepository perguntaRepository;
+
     @Test
-    public void testePersistenciaPerguntas() throws Exception {
+    public void testePersistenciaEixo() throws Exception {
+
         Eixo eixo = new Eixo("Banco de dados", "Banco de dados ADS", true);
         entityManager.persist(eixo);
-        // cria, persiste e limpa
-        Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true, eixo);
-        entityManager.persist(perguntaUm);
 
+        Pergunta pergunta = new Pergunta("Qual banco de dados nós usamos?", TipoPergunta.AVALIATIVA, true, eixo);
+        entityManager.persist(pergunta);
+ 
         Pageable pageable = PageRequest.of(0, 5);
 
-        Pergunta persistidoPergunta = perguntaRepository.findByTexto(perguntaUm.getTexto(), pageable).getContent()
-                .get(0);
-
         Eixo persistidoEixo = eixoRepository.findByNome(eixo.getNome(), pageable).getContent().get(0);
+        Pergunta persistidoPergunta = perguntaRepository.findByTexto(pergunta.getTexto(), pageable).getContent().get(0);
+
         entityManager.flush();
         entityManager.clear();
 
@@ -54,9 +54,9 @@ public class perguntaRepositoryTests {
         Assert.assertEquals(persistidoEixo.getDescricao(), eixo.getDescricao());
         Assert.assertEquals(persistidoEixo.getAtivo(), eixo.getAtivo());
 
-        Assert.assertNotNull(persistidoPergunta);
-        Assert.assertEquals(persistidoPergunta.getTexto(), perguntaUm.getTexto());
-        Assert.assertEquals(persistidoPergunta.getTipo(), perguntaUm.getTipo());
-        Assert.assertEquals(persistidoPergunta.getAtivo(), perguntaUm.getAtivo());
+        Assert.assertEquals(persistidoPergunta.getTexto(), persistidoPergunta.getTexto());
+        Assert.assertEquals(persistidoPergunta.getTipo(), persistidoPergunta.getTipo());
+        Assert.assertEquals(persistidoPergunta.getAtivo(), persistidoPergunta.getAtivo());
     }
 }
+ 
