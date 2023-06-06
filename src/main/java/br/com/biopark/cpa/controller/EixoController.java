@@ -32,7 +32,6 @@ public class EixoController {
             throws Exception {
         Eixo eixo = new Eixo(form);
         eixoService.cadastrar(eixo);
-
         URI uri = uriBuilder.path("/eixo/{id}").buildAndExpand(eixo.getId()).toUri();
         return ResponseEntity.created(uri).body(new EixoDTO(eixo));
     }

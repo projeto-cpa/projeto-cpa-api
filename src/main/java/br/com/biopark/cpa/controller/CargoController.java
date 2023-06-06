@@ -55,13 +55,14 @@ public class CargoController {
     public Page<CargoDTO> listar(@RequestParam(required = false) String nomeCargo, @RequestParam int pagina,
             @RequestParam int qtd) {
         Pageable paginacao = PageRequest.of(pagina, qtd);
+
+        Page<Cargo> cargos;
         if (nomeCargo == null) {
-            Page<Cargo> cargos = cargoService.listar(paginacao);
-            return CargoDTO.converter(cargos);
+            cargos = cargoService.listar(paginacao);
         } else {
-            Page<Cargo> cargos = cargoService.buscaPorNome(nomeCargo, paginacao);
-            return CargoDTO.converter(cargos);
+            cargos = cargoService.buscaPorNome(nomeCargo, paginacao);
         }
+        return CargoDTO.converter(cargos);
     }
 
     @DeleteMapping
