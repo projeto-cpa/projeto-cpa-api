@@ -44,7 +44,7 @@ public class TurmaController {
     public ResponseEntity<TurmaDTO> cadastrar(@RequestBody @Valid TurmaForm form, UriComponentsBuilder uriBuilder) {
         Curso curso = cursoService.buscarCurso(form.getIdCurso());
 
-        Turma turma = new Turma(form.getNome(), form.getDescricao(), curso);
+        Turma turma = new Turma(form.getNome(), form.getPeriodo(), curso);
         turma = turmaService.cadastrar(turma);
         URI uri = uriBuilder.path("turma/{id}").buildAndExpand(turma.getId()).toUri();
         return ResponseEntity.created(uri).body(new TurmaDTO(turma));

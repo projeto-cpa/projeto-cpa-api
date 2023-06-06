@@ -19,6 +19,8 @@ public class TurmaForm {
     @NotNull(message = "Nome não pode ser vazio")
     private String nome;
     private String descricao;
+    @NotBlank(message = "Periodo não pode ser vazio")
+    @NotNull(message = "Periodo não pode ser vazio")
     private String periodo;
     private Curso curso;
     private Boolean ativo;

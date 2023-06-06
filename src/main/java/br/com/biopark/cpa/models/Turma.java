@@ -32,6 +32,9 @@ public class Turma {
     @Column
     private String descricao;
 
+    @Column
+    private String periodo;
+
     @ManyToOne
     @JoinColumn(name = "id_curso")
     private Curso curso;
@@ -48,9 +51,9 @@ public class Turma {
     @Column(name = "data_atualizacao")
     private Date dataAtualizacao;
 
-    public Turma(String nome, String descricao, Curso curso) {
+    public Turma(String nome, String periodo, Curso curso) {
         this.nome = nome;
-        this.descricao = descricao;
+        this.periodo = periodo;
         this.curso = curso;
         this.ativo = true;
         this.dataCriacao = new Date();

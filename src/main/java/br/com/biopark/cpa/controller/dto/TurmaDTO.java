@@ -27,8 +27,10 @@ public class TurmaDTO {
     public TurmaDTO(Turma turma) {
         this.id = turma.getId();
         this.nome = turma.getNome();
+        this.periodo = turma.getPeriodo();
         this.descricao = turma.getDescricao();
-        this.ativo = turma.getAtivo(); 
+        this.ativo = turma.getAtivo();
+        this.curso = turma.getCurso().getNome(); 
         this.sucesso = true;
         this.dataCriacao = turma.getDataCriacao();
         this.dataAtualizacao = turma.getDataAtualizacao();
