@@ -34,7 +34,7 @@ public class perguntaRepositoryTests {
         Eixo eixo = new Eixo("Banco de dados", "Banco de dados ADS", true);
         entityManager.persist(eixo);
         // cria, persiste e limpa
-        Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true, null);
+        Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true, eixo);
         entityManager.persist(perguntaUm);
         Pageable pageable = PageRequest.of(0, 5);
         Pergunta persistidoPergunta = perguntaRepository.findByTexto(perguntaUm.getTexto(), pageable).getContent()
