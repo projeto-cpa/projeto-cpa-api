@@ -2,14 +2,15 @@ version: "3.7"
 services:
 
   mysql_db:
-      image: "mysql:5.7"
+      image: "mysql:8.0"
+      container_name: mysql_cpa
       deploy:
         restart_policy:
           condition: on-failure
           delay: 5s
           max_attempts: 3
       ports:
-        - "3307:3306"
+        - "3306:3306"
       environment:
         MYSQL_DATABASE: ${MYSQLDB_DATABASE}
         MYSQL_USER: ${MYSQLDB_USER}

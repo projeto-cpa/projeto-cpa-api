@@ -24,6 +24,5 @@ public class RespostaDTO {
         this.sucesso = true;
         this.dataCriacao = resposta.getDataCriacao();
         this.dataAtualizacao = resposta.getDataAtualizacao();
-        // adicionar Id_eixo, e tipo_resposta.
     }
 }

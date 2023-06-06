@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import br.com.biopark.cpa.models.Curso;
 import br.com.biopark.cpa.repository.CursoRepository;
 
+import java.util.Optional;
+
 @Service
 public class CursoService {
 
@@ -24,10 +26,18 @@ public class CursoService {
 
         return cursoCadastrado;
     }
-    
-    // implemente a listagem de cursos
+
     public Iterable<Curso> listarCursos() {
         return cursoRepository.findAll();
     }
-    
+
+    public Curso buscarCurso(Long idCurso) {
+        Optional<Curso> curso = cursoRepository.findById(idCurso);
+
+        if (curso.isPresent())
+            return curso.get();
+
+        return null;
+    }
+
 }

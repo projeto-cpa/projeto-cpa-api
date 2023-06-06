@@ -24,46 +24,33 @@ import lombok.Setter;
 @Entity
 @Table(name = "eixo")
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class Eixo {
         
     @Id
-    @Column(name = "id")
-    @Getter
-    @Setter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private long id;
 
     @Column
-    @Getter
-    @Setter
     private Boolean ativo;
 
     @NotNull
     @Column
-    @Getter
-    @Setter
     private String nome;
 
     @Column
-    @Getter
-    @Setter
     private String descricao;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_eixo")
-    @Getter
-    @Setter
-    private List<Pergunta> turmas = new ArrayList<>();
-
     @Column(name = "data_criacao")
-    @Getter
-    @Setter
     private Date dataCriacao;
 
     @Column(name = "data_atualizacao")
-    @Getter
-    @Setter
     private Date dataAtualizacao;
+
+    @OneToMany(mappedBy = "eixo")
+    private List<Pergunta> perguntaList;
 
     public Eixo(String nome, String descricao, Boolean ativo) {
         this.nome = nome;

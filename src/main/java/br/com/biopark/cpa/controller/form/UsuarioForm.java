@@ -9,7 +9,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class UsuarioForm {
     
     @NotBlank
@@ -20,18 +21,22 @@ public class UsuarioForm {
     @NotNull
     private String sobrenome;
 
+    private String senha;
+
     @NotNull
     @NotBlank
-    private String senha;
+    private String email;
     
-    @NotNull
+   @NotNull
     private long cargoId;
 
     @NotNull
     private Date dataNascimento;
 
+    private String imagem;
+
     public Usuario converter(CargoRepository cargoRepository){
-        return new Usuario(this.nome, this.sobrenome, senha, cargoRepository.findById(cargoId), dataNascimento);
+        return new Usuario(this.nome, this.sobrenome, senha, cargoRepository.findById(cargoId), dataNascimento, this.email, this.imagem);
     }
 
 }
