@@ -13,7 +13,7 @@ public interface CursoRepository extends JpaRepository<Curso, Long> {
 
     public Curso findByAtivo(boolean ativo);
 
-    //public Curso findByNome(String nome);
+    public Curso findByNome(String nome);
 
     public Page<Curso> findByNome(String nomeCurso, Pageable paginacao);
 }
