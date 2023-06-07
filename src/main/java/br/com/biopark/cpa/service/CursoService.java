@@ -1,8 +1,11 @@
 package br.com.biopark.cpa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import br.com.biopark.cpa.models.Cargo;
 import br.com.biopark.cpa.models.Curso;
 import br.com.biopark.cpa.repository.CursoRepository;
 
@@ -29,6 +32,14 @@ public class CursoService {
 
     public Iterable<Curso> listarCursos() {
         return cursoRepository.findAll();
+    }
+
+    public Page<Curso> listar(Pageable cursos) {
+        return cursoRepository.findAll(cursos);
+    }
+
+    public Page<Curso> buscaPorNome(String nomeCurso, Pageable curso) {
+        return cursoRepository.findByNome(nomeCurso, curso);
     }
 
     public Curso buscarCurso(Long idCurso) {
