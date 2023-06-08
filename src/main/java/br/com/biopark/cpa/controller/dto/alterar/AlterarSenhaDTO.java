@@ -18,8 +18,7 @@ public class AlterarSenhaDTO {
     }
 
     public AlterarSenhaDTO(Usuario usuario) {
-        // this.imagem =usuario.getImagem();
-        this.senha = getSenha();
+        this.senha = usuario.getSenha();
         this.sucesso = true;
     }
 
