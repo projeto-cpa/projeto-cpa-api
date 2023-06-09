@@ -1,0 +1,9 @@
+FROM maven:3.8.4-openjdk-17-slim AS build-env
+WORKDIR /app
+COPY . /app
+COPY pom.xml ./
+RUN mvn verify --fail-never
+FROM openjdk:17-jdk-slim
+COPY --from=build-env /app/target/ /app/
+EXPOSE 8080
+CMD ["mvn","spring-boot:run"]
