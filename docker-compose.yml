@@ -33,8 +33,6 @@ services:
       - mysql_db
     environment:
         SPRING_PROFILES_ACTIVE: docker
-    volumes:
-      - ./config:/config
     networks:
       - cpa-network
 

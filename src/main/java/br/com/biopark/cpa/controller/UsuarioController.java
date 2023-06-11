@@ -5,6 +5,7 @@ import java.net.URI;
 import br.com.biopark.cpa.controller.dto.LoginDTO;
 import br.com.biopark.cpa.controller.dto.TokenDTO;
 import br.com.biopark.cpa.config.security.TokenService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -49,6 +50,7 @@ public class UsuarioController {
 
     @PostMapping
     @Transactional
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder)
             throws Exception {
 
