@@ -63,22 +63,22 @@ public class UsuarioService {
 
     public Usuario atualizar(Long id, UsuarioForm usuarioForm) {
         Usuario usuario = usuarioRepository.findById(id).get();
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String testSenha = bCryptPasswordEncoder.encode("admin");
-        String testSenha2 = bCryptPasswordEncoder.encode("admin");
-        String senhaAtual = bCryptPasswordEncoder.encode(usuarioForm.getSenhaAtual());
-        String novaSenha = bCryptPasswordEncoder.encode(usuarioForm.getSenha());
 
-        if (bCryptPasswordEncoder.matches(usuarioForm.getSenhaAtual(), usuario.getSenha())) {
-            if (usuarioForm.getSenha() != null) {
-                usuario.setSenha(novaSenha);
-            }
+        if (usuarioForm.getSenha() != null && usuarioForm.getSenhaAtual() != null) {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            String novaSenha = bCryptPasswordEncoder.encode(usuarioForm.getSenha());
+            if (bCryptPasswordEncoder.matches(usuarioForm.getSenhaAtual(), usuario.getSenha())) {
+                if (usuarioForm.getSenha() != null) {
+                    usuario.setSenha(novaSenha);
+                }
 
-            if (usuarioForm.getImagem() != null) {
-                usuario.setImagem(usuarioForm.getImagem());
+            } else {
+                throw new IllegalArgumentException("Senha atual incorreta");
             }
-        } else {
-            throw new IllegalArgumentException("Senha atual incorreta");
+        }
+
+        if (usuarioForm.getImagem() != null) {
+            usuario.setImagem(usuarioForm.getImagem());
         }
 
         return usuarioRepository.save(usuario);
