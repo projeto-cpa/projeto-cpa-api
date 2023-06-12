@@ -5,6 +5,7 @@ import java.net.URI;
 import br.com.biopark.cpa.config.validation.ValidacaoException;
 import br.com.biopark.cpa.service.AvaliacaoService;
 import br.com.biopark.cpa.service.PerguntaService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +25,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/resposta")
+@SecurityRequirement(name = "bearer-key")
 @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
 
 public class RespostaController {
