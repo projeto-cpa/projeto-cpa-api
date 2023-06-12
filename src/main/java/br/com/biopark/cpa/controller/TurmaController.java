@@ -5,6 +5,7 @@ import br.com.biopark.cpa.controller.form.TurmaForm;
 import br.com.biopark.cpa.models.Turma;
 import br.com.biopark.cpa.service.CursoService;
 import br.com.biopark.cpa.service.TurmaService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/turma")
+@SecurityRequirement(name = "bearer-key")
 public class TurmaController {
 
 
