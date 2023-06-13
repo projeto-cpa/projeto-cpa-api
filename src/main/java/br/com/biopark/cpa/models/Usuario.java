@@ -60,7 +60,7 @@ public class Usuario implements UserDetails {
     private List<Avaliacao> avaliacaoList = new ArrayList<>();
 
     @Lob
-    @Column(length = 2048000)
+    @Column(length = 99999999)
     private String imagem;
 
     @Column(name = "data_criacao")

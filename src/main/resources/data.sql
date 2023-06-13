@@ -320,3 +320,74 @@ INSERT INTO usuario (
     'Schuch',
     '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
 );
+
+-- eixo
+INSERT INTO eixo (
+    ativo,
+    data_criacao,
+    data_atualizacao,
+    descricao,
+    nome
+) VALUES (
+    0,
+    current_date(),
+    current_date(),
+    'Eixo de desenvolvimento',
+    'Desenvolvimento'
+);
+
+INSERT INTO eixo (
+    ativo,
+    data_criacao,
+    data_atualizacao,
+    descricao,
+    nome
+) VALUES (
+    0,
+    current_date(),
+    current_date(),
+    'Eixo de infraestrutura',
+    'Infraestrutura'
+);
+
+INSERT INTO eixo (
+    ativo,
+    data_criacao,
+    data_atualizacao,
+    descricao,
+    nome
+) VALUES (
+    0,
+    current_date(),
+    current_date(),
+    'Eixo de gestão',
+    'Gestão'
+);
+
+INSERT INTO eixo(
+    ativo,
+    data_criacao,
+    data_atualizacao,
+    descricao,
+    nome
+) VALUES (
+    0,
+    current_date(),
+    current_date(),
+    'Eixo de negócios',
+    'Negócios'
+);
+
+INSERT INTO eixo (
+    ativo,
+    data_criacao,
+    data_atualizacao,
+    descricao,
+    nome
+) VALUES (
+    0,
+    current_date(),
+    current_date(),
+    'Eixo de produção cultural e design',
+    'Produção cultural e design'
+);

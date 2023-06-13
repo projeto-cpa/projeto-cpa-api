@@ -3,6 +3,7 @@ package br.com.biopark.cpa.controller;
 import java.net.URI;
 
 import br.com.biopark.cpa.service.EixoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/pergunta")
-@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
+@SecurityRequirement(name = "bearer-key")
 public class PerguntaController {
 
     private final PerguntaService perguntaService;

@@ -13,8 +13,6 @@ services:
         - "3306:3306"
       environment:
         MYSQL_DATABASE: ${MYSQLDB_DATABASE}
-        MYSQL_USER: ${MYSQLDB_USER}
-        MYSQL_PASSWORD: ${MYSQLDB_PASSWORD}
         MYSQL_ROOT_PASSWORD: ${MYSQLDB_PASSWORD}
       volumes:
         - ./data:/var/lib/mysql
@@ -33,8 +31,6 @@ services:
       - mysql_db
     environment:
         SPRING_PROFILES_ACTIVE: docker
-    volumes:
-      - ./config:/config
     networks:
       - cpa-network
 
