@@ -44,7 +44,7 @@ public class TurmaController {
     public ResponseEntity<TurmaDTO> cadastrar(@RequestBody @Valid TurmaForm form, UriComponentsBuilder uriBuilder) {
         Curso curso = cursoService.buscarCurso(form.getIdCurso());
 
-        Turma turma = new Turma(form.getNome(), form.getPeriodo(), curso);
+        Turma turma = new Turma(form.getNome(), form.getPeriodo(), curso, form.getDescricao());
         turma = turmaService.cadastrar(turma);
         URI uri = uriBuilder.path("turma/{id}").buildAndExpand(turma.getId()).toUri();
         return ResponseEntity.created(uri).body(new TurmaDTO(turma));
@@ -52,7 +52,7 @@ public class TurmaController {
 
     @PutMapping
     public ResponseEntity<TurmaDTO> atualizar(@RequestBody @Valid AlterarTurmaForm form,UriComponentsBuilder uriBuilder) {
-        Turma turma = turmaService.atualizar(form.getIdTurma(), form.getNome(), form.getDescricao(), form.getAtivo());
+        Turma turma = turmaService.atualizar(form.getIdTurma(), form.getNome(), form.getDescricao(), form.getAtivo(), form.getPeriodo());
         URI uri = uriBuilder.path("turma/{id}").buildAndExpand(turma.getId()).toUri();
         return ResponseEntity.created(uri).body(new TurmaDTO(turma));
     }

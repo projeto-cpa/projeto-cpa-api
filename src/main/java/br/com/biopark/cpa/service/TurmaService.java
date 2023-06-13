@@ -34,12 +34,13 @@ public class TurmaService {
         return turmaCadastrado;
     }
 
-    public Turma atualizar(Long id, String nome, String descricao, Boolean ativo) {
+    public Turma atualizar(Long id, String nome, String descricao, Boolean ativo, String periodo) {
         Turma turma = turmaRepository.findById(id).get();
         turma.setDataAtualizacao(new Date());
         turma.setNome(nome);
         turma.setDescricao(descricao);
         turma.setAtivo(ativo);
+        turma.setPeriodo(periodo);
         turmaRepository.save(turma);
         return turma;
     }

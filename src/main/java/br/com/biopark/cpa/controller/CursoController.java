@@ -37,7 +37,7 @@ public class CursoController {
     public ResponseEntity<CursoDTO> cadastrar(@RequestBody @Valid CursoForm form, UriComponentsBuilder uriBuilder) throws Exception {
         Curso curso = new Curso(form.getAtivo(), form.getNome(), form.getDescricao());
         curso = cursoService.cadastrar(curso);
-        URI uri = uriBuilder.path("/curso/{id}").buildAndExpand(curso.getId()).toUri();
+        URI uri = uriBuilder.path("curso/{id}").buildAndExpand(curso.getId()).toUri();
         return ResponseEntity.created(uri).body(new CursoDTO(curso));
     }
 

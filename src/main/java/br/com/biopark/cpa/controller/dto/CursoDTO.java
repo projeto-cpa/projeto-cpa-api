@@ -26,7 +26,7 @@ public class CursoDTO {
     private Date dataCriacao;
     private Date dataAtualizacao;
     private Boolean sucesso;
-    private List<Disciplina> disciplinas;
+    //private List<Disciplina> disciplinas;
 
     public CursoDTO(Curso curso) {
         this.id = curso.getId();
@@ -36,7 +36,7 @@ public class CursoDTO {
         this.sucesso = true;
         this.dataCriacao = curso.getDataCriacao();
         this.dataAtualizacao = curso.getDataAtualizacao();
-        this.disciplinas = curso.getDisciplinas();
+        //this.disciplinas = curso.getDisciplinas();
     }
 
     public static Page<CursoDTO> converter(Page<Curso> cursos){

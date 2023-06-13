@@ -51,10 +51,11 @@ public class Turma {
     @Column(name = "data_atualizacao")
     private Date dataAtualizacao;
 
-    public Turma(String nome, String periodo, Curso curso) {
+    public Turma(String nome, String periodo, Curso curso, String descricao) {
         this.nome = nome;
         this.periodo = periodo;
         this.curso = curso;
+        this.descricao = descricao;
         this.ativo = true;
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();

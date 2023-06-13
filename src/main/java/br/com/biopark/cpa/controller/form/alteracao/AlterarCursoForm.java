@@ -10,7 +10,6 @@ public class AlterarCursoForm {
 
     @NotNull
     private Long idCurso;
-    
     private String nome;
     private String descricao;
     private Boolean ativo;
