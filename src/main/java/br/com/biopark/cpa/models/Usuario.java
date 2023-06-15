@@ -63,6 +63,9 @@ public class Usuario implements UserDetails {
     @Column(length = 99999999)
     private String imagem;
 
+    @Column(name = "codigo_recuperacao")
+    private String codigoRecuperacao;
+
     @Column(name = "data_criacao")
     private Date dataCriacao;
 

@@ -25,6 +25,7 @@ import br.com.biopark.cpa.controller.dto.UsuarioDTO;
 import br.com.biopark.cpa.controller.dto.alterar.AlterarSenhaDTO;
 import br.com.biopark.cpa.controller.form.UsuarioForm;
 import br.com.biopark.cpa.controller.form.alteracao.AlterarUsuarioForm;
+import br.com.biopark.cpa.controller.form.recuperacao.RecuperarAcessoForm;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.CargoRepository;
 import br.com.biopark.cpa.service.UsuarioService;
@@ -91,7 +92,6 @@ public class UsuarioController {
 
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
-
     }
 
     @PutMapping("/{id}")
@@ -102,4 +102,17 @@ public class UsuarioController {
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
         return ResponseEntity.created(uri).body(new AlterarSenhaDTO(usuario));
     }
+
+    @PutMapping("/recuperar")
+    @Transactional
+    public ResponseEntity<String> recuperar(@RequestBody @Valid RecuperarAcessoForm form,
+            UriComponentsBuilder uriBuilder) {
+        Usuario usuario = usuarioService.recuperar(form);
+        URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+        return ResponseEntity.created(uri).body(usuario.getCodigoRecuperacao());
+       
+    }
+
+
+    
 }

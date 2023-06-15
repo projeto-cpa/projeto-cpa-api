@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.biopark.cpa.controller.form.UsuarioForm;
+import br.com.biopark.cpa.controller.form.recuperacao.RecuperarAcessoForm;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.UsuarioRepository;
 
@@ -83,6 +84,13 @@ public class UsuarioService {
 
         return usuarioRepository.save(usuario);
 
+    }
+
+    public Usuario recuperar(RecuperarAcessoForm form) {
+        Usuario usuario = usuarioRepository.findByEmail(form.getEmail());
+        String codigoRecuperacao = "codigolegal";
+        usuario.setCodigoRecuperacao(codigoRecuperacao);
+        return usuario;
     }
 
 }
