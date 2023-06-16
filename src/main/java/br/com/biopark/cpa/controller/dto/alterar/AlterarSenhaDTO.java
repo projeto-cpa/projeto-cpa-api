@@ -8,17 +8,15 @@ import lombok.Setter;
 @Setter
 public class AlterarSenhaDTO {
 
-    // private String imagem;
-
     private Boolean sucesso;
-    private String senha;
+    // private String senha;
 
     public AlterarSenhaDTO(String senha) {
-        this.senha = senha;
+        // this.senha = senha;
     }
 
     public AlterarSenhaDTO(Usuario usuario) {
-        this.senha = usuario.getSenha();
+        // this.senha = usuario.getSenha();
         this.sucesso = true;
     }
 

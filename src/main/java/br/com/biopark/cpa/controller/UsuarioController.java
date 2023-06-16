@@ -103,16 +103,14 @@ public class UsuarioController {
         return ResponseEntity.created(uri).body(new AlterarSenhaDTO(usuario));
     }
 
-    @PutMapping("/recuperar")
+    @PostMapping("/recuperar")
     @Transactional
-    public ResponseEntity<String> recuperar(@RequestBody @Valid RecuperarAcessoForm form,
+    public ResponseEntity<UsuarioDTO> recuperar(@RequestBody @Valid RecuperarAcessoForm form,
             UriComponentsBuilder uriBuilder) {
         Usuario usuario = usuarioService.recuperar(form);
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
-        return ResponseEntity.created(uri).body(usuario.getCodigoRecuperacao());
-       
+        return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
+
     }
 
-
-    
 }

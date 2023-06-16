@@ -18,6 +18,8 @@ public class UsuarioDTO {
     private Date dataNascimento;
     private String imagem;
 
+    private String codigoRecuperacao;
+
     public UsuarioDTO() {
 
     }
@@ -38,6 +40,7 @@ public class UsuarioDTO {
         this.nomeCargo = usuario.getCargo().getNome();
         this.dataNascimento = usuario.getDataNascimento();
         this.imagem = usuario.getImagem();
+        this.codigoRecuperacao = usuario.getCodigoRecuperacao();
     }
 
 }

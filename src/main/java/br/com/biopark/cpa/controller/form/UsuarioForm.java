@@ -25,6 +25,8 @@ public class UsuarioForm {
     
     private String senhaAtual;
 
+    private String codigoRecuperacao;
+
     @NotNull
     @NotBlank
     private String email;
