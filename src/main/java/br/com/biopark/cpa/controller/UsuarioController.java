@@ -6,6 +6,7 @@ import br.com.biopark.cpa.controller.dto.LoginDTO;
 import br.com.biopark.cpa.controller.dto.TokenDTO;
 import br.com.biopark.cpa.config.security.TokenService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -54,13 +55,9 @@ public class UsuarioController {
     @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder)
             throws Exception {
-
         Usuario usuario = form.converter(cargoRepository);
-
         usuarioService.cadastrar(usuario);
-
         URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
-
         return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
 
@@ -89,7 +86,6 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> detalhar(@RequestBody @Valid @RequestParam Long id,
             UriComponentsBuilder uriBuilder) throws Exception {
         Usuario usuario = usuarioService.buscarPorId(id);
-
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
@@ -106,7 +102,7 @@ public class UsuarioController {
     @PostMapping("/recuperar")
     @Transactional
     public ResponseEntity<UsuarioDTO> recuperar(@RequestBody @Valid RecuperarAcessoForm form,
-            UriComponentsBuilder uriBuilder) {
+            UriComponentsBuilder uriBuilder) throws MessagingException {
         Usuario usuario = usuarioService.recuperar(form);
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));

@@ -1,5 +1,7 @@
 package br.com.biopark.cpa.service;
 
+import br.com.biopark.cpa.config.email.EmailSender;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +19,9 @@ public class UsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private EmailSender emailSender;
 
     public Usuario cadastrar(Usuario usuario) throws Exception {
         try {
@@ -86,9 +91,10 @@ public class UsuarioService {
 
     }
 
-    public Usuario recuperar(RecuperarAcessoForm form) {
+    public Usuario recuperar(RecuperarAcessoForm form) throws MessagingException {
         Usuario usuario = usuarioRepository.findByEmail(form.getEmail());
         String codigoRecuperacao = "codigolegal";
+        emailSender.sendEmail(form.getEmail(), "Titulo bonito");
         usuario.setCodigoRecuperacao(codigoRecuperacao);
         return usuario;
     }
