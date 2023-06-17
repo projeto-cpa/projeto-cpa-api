@@ -18,16 +18,37 @@ public class UsuarioCSVService {
     private UsuarioCSVRepository usuarioCSVRepository;
 
     @Transactional
-    public List<UsuarioCSV> importarCSVUsuario (List <Record> parseAllRecords) {
+    public List<UsuarioCSV> importarCSVUsuario (List <Record> parseAllRecords) throws Exception {
         List<UsuarioCSV> usuarioCSV = new ArrayList<>();
-        
-        for (Record record : parseAllRecords) {
-            UsuarioCSV usuario = new UsuarioCSV();
-            usuario.setNome(record.getString("nome"));
-            usuario.setEmail(record.getString("email"));
-            usuarioCSV.add(usuario);
-        }
 
+        try {
+
+            // for (int i = 0; i < parseAllRecords.size(); i++) {
+            //     System.out.println("POSIÇÃOOOOOOOOOOOOO: " + parseAllRecords[i].getString());
+            // }
+
+            if (!parseAllRecords.equals("nome")) {
+                throw new Exception("Erro ao importar lista de usuários verificação if");
+            } 
+            if (!parseAllRecords.get(0).equals("nome") || !parseAllRecords.get(1).equals("email")) {
+                throw new Exception("Erro ao importar lista de usuários verificação else if");
+            }
+
+            for (Record record : parseAllRecords) { 
+
+                System.out.println("POSIÇÃOOOOOOOOOOOOO: " + parseAllRecords.get(1));
+                System.out.println("POSIÇÃOOOOOOOOOOOOO: " + parseAllRecords.get(1));
+                System.out.println("POSIÇÃOOOOOOOOOOOOO: " + parseAllRecords.get(1));
+                System.out.println("POSIÇÃOOOOOOOOOOOOO: " + parseAllRecords.get(1));
+                UsuarioCSV usuario = new UsuarioCSV();
+                usuario.setNome(record.getString("nome"));
+                usuario.setEmail(record.getString("email"));
+                usuarioCSV.add(usuario);
+            }
+
+        } catch (Exception e) {
+            throw new Exception("Erro ao importar lista de usuários catch: " + e.getMessage());
+        }
         return usuarioCSVRepository.saveAll(usuarioCSV);  
     }
 }

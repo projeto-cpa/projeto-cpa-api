@@ -1,7 +1,6 @@
 package br.com.biopark.cpa.controller;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.univocity.parsers.csv.CsvParserSettings;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.biopark.cpa.models.UsuarioCSV;
-import br.com.biopark.cpa.repository.UsuarioCSVRepository;
 import br.com.biopark.cpa.service.UsuarioCSVService;
 import jakarta.transaction.Transactional;
 
