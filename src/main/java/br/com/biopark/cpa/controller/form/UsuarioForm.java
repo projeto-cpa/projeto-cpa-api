@@ -29,7 +29,7 @@ public class UsuarioForm {
     @NotBlank
     private String email;
     
-   @NotNull
+    @NotNull
     private long cargoId;
 
     @NotNull

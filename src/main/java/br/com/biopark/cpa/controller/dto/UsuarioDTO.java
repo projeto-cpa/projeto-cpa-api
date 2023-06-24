@@ -18,7 +18,7 @@ public class UsuarioDTO {
     private String email;
     private String nome;
     private String sobrenome;
-    private String nomeCargo;
+    private long idCargo;
     private Date dataNascimento;
     private String imagem;
 
@@ -26,11 +26,11 @@ public class UsuarioDTO {
 
     }
 
-    public UsuarioDTO(String email, String nome, String sobrenome, String nomeCargo, String imagem) {
+    public UsuarioDTO(String email, String nome, String sobrenome, Long idCargo, String imagem) {
         this.email = email;
         this.nome = nome;
         this.sobrenome = sobrenome;
-        this.nomeCargo = nomeCargo;
+        this.idCargo = idCargo;
         this.imagem = imagem;
     }
 
@@ -38,7 +38,7 @@ public class UsuarioDTO {
         this.email = usuario.getEmail();
         this.nome = usuario.getNome();
         this.sobrenome = usuario.getSobrenome();
-        this.nomeCargo = usuario.getCargo().getNome();
+        this.idCargo = usuario.getCargo().getId();
         this.dataNascimento = usuario.getDataNascimento();
         this.imagem = usuario.getImagem();
     }

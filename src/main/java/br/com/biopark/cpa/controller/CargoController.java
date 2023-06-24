@@ -28,7 +28,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/cargo")
-@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
+// @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
 @Transactional
 public class CargoController {
 

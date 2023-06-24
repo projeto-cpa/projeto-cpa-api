@@ -25,14 +25,17 @@ import br.com.biopark.cpa.controller.dto.UsuarioDTO;
 import br.com.biopark.cpa.controller.dto.alterar.AlterarSenhaDTO;
 import br.com.biopark.cpa.controller.form.UsuarioForm;
 import br.com.biopark.cpa.controller.form.alteracao.AlterarUsuarioForm;
+import br.com.biopark.cpa.models.Cargo;
 import br.com.biopark.cpa.models.Usuario;
 // import br.com.biopark.cpa.models.UsuarioCSV;
 // import br.com.biopark.cpa.service.UsuarioCSVService;
 import br.com.biopark.cpa.repository.CargoRepository;
+import br.com.biopark.cpa.service.CargoService;
 import br.com.biopark.cpa.service.UsuarioService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 import com.univocity.parsers.csv.CsvParserSettings;
 import com.univocity.parsers.csv.CsvParser;
@@ -42,6 +45,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
+
+    Date data = new Date();
+
+    @Autowired
+    private CargoService cargoService;
 
     @Autowired
     private UsuarioService usuarioService;
@@ -99,18 +107,30 @@ public class UsuarioController {
         return importar;
     }
 
-    // @GetMapping("/detalhar")
-    // @Transactional
-    // public ResponseEntity<UsuarioDTO> detalhar(@RequestBody @Valid @RequestParam Long id,
-    // UriComponentsBuilder uriBuilder) throws Exception {
-    //     Usuario usuario = usuarioService.buscarPorId(id);
-    //     URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(id).toUri();
-    //     return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
-    // }
+    @PostMapping
+    public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder) {
+        // curso
+        Cargo cargo = cargoService.buscarCargo(form.getCargoId());
+
+        // turma
+        Usuario usuario = new Usuario(form.getNome(), form.getSobrenome(), form.getSenha(), cargo, data, form.getEmail(), form.getImagem());
+        usuario = usuarioService.cadastrar(turma);
+        URI uri = uriBuilder.path("turma/{id}").buildAndExpand(turma.getId()).toUri();
+        return ResponseEntity.created(uri).body(new TurmaDTO(turma));
+    }
+
+    @GetMapping("/detalhar")
+    @Transactional
+    public ResponseEntity<UsuarioDTO> detalhar(@RequestBody @Valid @RequestParam Long id,
+    UriComponentsBuilder uriBuilder) throws Exception {
+        Usuario usuario = usuarioService.buscarPorId(id);
+        URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(id).toUri();
+        return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
+    }
 
     @GetMapping
     @Transactional
-    public Page<UsuarioDTO> listarUsuariosImportados(@RequestParam int pagina, @RequestParam int qtd) {
+    public Page<UsuarioDTO> listar(@RequestParam int pagina, @RequestParam int qtd) {
         Pageable paginacao = PageRequest.of(pagina, qtd);
         Page<Usuario> usuario = usuarioService.listarTodosUsuarios(paginacao);
         return UsuarioDTO.converter(usuario);
@@ -120,7 +140,7 @@ public class UsuarioController {
     @Transactional
     public ResponseEntity<AlterarSenhaDTO> atualizar(@RequestBody @Valid AlterarUsuarioForm form,
     UriComponentsBuilder uriBuilder) {
-        Usuario usuario = usuarioService.atualizar(form.get(), form.getSenha());
+        Usuario usuario = usuarioService.atualizar(form.getIdUsuario(), form.getSenha());
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
         return ResponseEntity.created(uri).body(new AlterarSenhaDTO(usuario));
     }

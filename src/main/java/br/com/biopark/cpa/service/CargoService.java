@@ -2,6 +2,7 @@ package br.com.biopark.cpa.service;
 
 import java.util.Date;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,6 +51,14 @@ public class CargoService {
         Cargo cargo = cargoRepository.findById(id).get();
         cargoRepository.delete(cargo);
         return cargo;
+    }
+
+    public Cargo buscarCargo(Long idCargo) {
+        Optional<Cargo> cargo = cargoRepository.findById(idCargo);
+        if (cargo.isPresent())
+            return cargo.get();
+
+        return null;
     }
 
     // implemente o metodo para atualizar o cargo
