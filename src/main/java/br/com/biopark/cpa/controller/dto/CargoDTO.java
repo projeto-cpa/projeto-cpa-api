@@ -1,7 +1,8 @@
 package br.com.biopark.cpa.controller.dto;
 
-
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 
@@ -25,13 +26,17 @@ public class CargoDTO {
         this.id = cargo.getId();
         this.nome = cargo.getNome();
         this.descricao = cargo.getDescricao();
-        this.ativo = cargo.getAtivo(); 
+        this.ativo = cargo.getAtivo();
         this.sucesso = true;
         this.dataCriacao = cargo.getDataCriacao();
         this.dataAtualizacao = cargo.getDataAtualizacao();
     }
 
-    public static Page<CargoDTO> converter(Page<Cargo> cargos){
+    public static Page<CargoDTO> converter(Page<Cargo> cargos) {
         return cargos.map(CargoDTO::new);
+    }
+
+    public static List<CargoDTO> converterParaLista(List<Cargo> cargos) {
+        return cargos.stream().map(CargoDTO::new).collect(Collectors.toList());
     }
 }

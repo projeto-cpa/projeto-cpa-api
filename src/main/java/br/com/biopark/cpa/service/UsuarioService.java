@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import br.com.biopark.cpa.models.Cargo;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.UsuarioRepository;
 import java.util.ArrayList;
@@ -20,10 +22,14 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    public Usuario cadastrar(Usuario usuario) throws Exception{
+    public Usuario cadastrar(Usuario usuario) throws Exception {
         try {
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
             usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
+
+            System.out.println("TODOS USUARIOS: " + usuario.getEmail() + "--" + usuario.getNome() + "--"
+                    + usuario.getCargo().getId() + "--" + usuario.getSenha());
+
             return usuarioRepository.save(usuario);
         } catch (Exception e) {
             throw new Exception("Erro ao cadastrar usuario " + e.getCause());
@@ -56,10 +62,10 @@ public class UsuarioService {
 
     public Usuario buscarPorId(Long usuarioRespondenteId) {
         Optional<Usuario> usuario = usuarioRepository.findById((usuarioRespondenteId));
-            if (usuario.isPresent())
-                return usuario.get();
-            else
-                throw new EntityNotFoundException("Usuário não encontrado");
+        if (usuario.isPresent())
+            return usuario.get();
+        else
+            throw new EntityNotFoundException("Usuário não encontrado");
     }
 
     public Usuario atualizar(Long idUsuario, String senha) {
@@ -71,25 +77,27 @@ public class UsuarioService {
     }
 
     @Transactional
-    public List<Usuario> importarUsuario (List<Record> parseAllRecords) throws Exception {
+    public List<Usuario> importarUsuario(List<Record> parseAllRecords) throws Exception {
         List<Usuario> usuarios = new ArrayList<>();
         try {
-            if (!parseAllRecords.equals("nome")) {
-                throw new Exception("Erro ao importar lista de usuários verificação if");
-            } 
-            if (!parseAllRecords.get(0).equals("nome") || !parseAllRecords.get(1).equals("email")) {
-                throw new Exception("Erro ao importar lista de usuários verificação else if");
-            }
-            for (Record record : parseAllRecords) { 
+            for (Record record : parseAllRecords) {
                 Usuario usuario = new Usuario();
+
                 usuario.setNome(record.getString("nome"));
                 usuario.setEmail(record.getString("email"));
+                usuario.setSenha(record.getString("senha"));
+
+                int idCargo = record.getInt("id_cargo");
+                Cargo cargo = new Cargo("", "", true);
+                cargo.setId(idCargo);
+                usuario.setCargo(cargo);
+
                 usuarios.add(usuario);
 
                 usuarioRepository.save(usuario);
             }
         } catch (Exception e) {
-            throw new Exception("Erro ao importar lista de usuários catch: " + e.getMessage());
+            throw new Exception("Erro ao importar lista de usuários: " + e.getMessage());
         }
         return usuarios;
     }

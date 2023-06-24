@@ -63,13 +63,28 @@ public class UsuarioController {
     @Autowired
     private TokenService tokenService;
 
+    // @PostMapping
+    // @Transactional
+    // public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder)
+    // throws Exception {
+    //     Usuario usuario = form.converter(cargoRepository);
+    //     usuarioService.cadastrar(usuario);
+    //     URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+    //     return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
+    // }
+
+    // System.out.println("TA SENDO AQUI: " + cargo);
+
     @PostMapping
     @Transactional
-    public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder)
-    throws Exception {
-        Usuario usuario = form.converter(cargoRepository);
-        usuarioService.cadastrar(usuario);
-        URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+    public ResponseEntity<UsuarioDTO> cadastrarUsuario(@RequestBody @Valid UsuarioForm form, 
+    UriComponentsBuilder uriBuilder) throws Exception {
+        // antigo curso
+        Cargo cargo = cargoService.buscarCargo(form.getId_cargo());
+        // antiga turma
+        Usuario usuario = new Usuario(form.getNome(), form.getEmail(), form.getSenha(), cargo, form.getAtivo());
+        usuario = usuarioService.cadastrar(usuario);
+        URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
 
@@ -105,18 +120,6 @@ public class UsuarioController {
         List<Usuario> importar = usuarioService.importarUsuario(parseAllRecords);
 
         return importar;
-    }
-
-    @PostMapping
-    public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder) {
-        // curso
-        Cargo cargo = cargoService.buscarCargo(form.getCargoId());
-
-        // turma
-        Usuario usuario = new Usuario(form.getNome(), form.getSobrenome(), form.getSenha(), cargo, data, form.getEmail(), form.getImagem());
-        usuario = usuarioService.cadastrar(turma);
-        URI uri = uriBuilder.path("turma/{id}").buildAndExpand(turma.getId()).toUri();
-        return ResponseEntity.created(uri).body(new TurmaDTO(turma));
     }
 
     @GetMapping("/detalhar")

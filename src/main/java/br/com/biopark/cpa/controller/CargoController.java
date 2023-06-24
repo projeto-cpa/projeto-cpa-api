@@ -1,12 +1,13 @@
 package br.com.biopark.cpa.controller;
 
 import java.net.URI;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +29,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/cargo")
-// @CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
 @Transactional
 public class CargoController {
 
@@ -61,6 +61,17 @@ public class CargoController {
         } else {
             Page<Cargo> cargos = cargoService.buscaPorNome(nomeCargo, paginacao);
             return CargoDTO.converter(cargos);
+        }
+    }
+
+    @GetMapping(value="/listar")
+    public List<CargoDTO> listarParaCadastroDeCargos(@RequestParam(required = false) String nomeCargo) {
+        if (nomeCargo == null) {
+            List<Cargo> cargos = cargoService.listarParaCadastroDeCargos();
+            return CargoDTO.converterParaLista(cargos);
+        } else {
+            List<Cargo> cargos = cargoService.buscaPorNomeNaLista(nomeCargo);
+            return CargoDTO.converterParaLista(cargos);
         }
     }
 
