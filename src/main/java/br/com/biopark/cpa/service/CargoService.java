@@ -63,11 +63,13 @@ public class CargoService {
 
     // System.out.println("ID CARGO SERVICE: " + cargo.get()); 
 
-    public Cargo buscarCargo(Long idCargo) {
-        Optional<Cargo> cargo = cargoRepository.findById(idCargo);
+    public Cargo buscarCargo(Long id_cargo) {
+        Optional<Cargo> cargo = cargoRepository.findById(id_cargo);
         
-        if (cargo.isPresent())
+        if (cargo.isPresent()) {
+            System.out.println("RETORNOU O IDCARGO: " + cargo.get());
             return cargo.get();
+        }
 
         return null;
     }

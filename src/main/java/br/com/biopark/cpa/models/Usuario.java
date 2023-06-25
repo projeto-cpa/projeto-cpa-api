@@ -24,7 +24,6 @@ public class Usuario implements UserDetails {
     @Column(name = "id_usuario")
     private long id;
 
-    @NotNull
     @Column
     private Boolean ativo;
 
@@ -76,7 +75,6 @@ public class Usuario implements UserDetails {
         this.nome = nome;
         this.senha = senha;
         this.cargo = cargo;
-        this.setCargo(cargo);
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
         this.dataNascimento = dataNascimento;

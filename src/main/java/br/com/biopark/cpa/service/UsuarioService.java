@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.biopark.cpa.models.Cargo;
+import br.com.biopark.cpa.models.Turma;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.UsuarioRepository;
 import java.util.ArrayList;
@@ -76,6 +77,12 @@ public class UsuarioService {
 
     }
 
+    public Usuario excluirUsuario(Long id) {
+        Usuario usuario = usuarioRepository.findById(id).get();
+        usuarioRepository.delete(usuario);
+        return usuario;
+    }
+
     @Transactional
     public List<Usuario> importarUsuario(List<Record> parseAllRecords) throws Exception {
         List<Usuario> usuarios = new ArrayList<>();
@@ -87,7 +94,7 @@ public class UsuarioService {
                 usuario.setEmail(record.getString("email"));
                 usuario.setSenha(record.getString("senha"));
 
-                int idCargo = record.getInt("id_cargo");
+                int idCargo = record.getInt("idCargo");
                 Cargo cargo = new Cargo("", "", true);
                 cargo.setId(idCargo);
                 usuario.setCargo(cargo);

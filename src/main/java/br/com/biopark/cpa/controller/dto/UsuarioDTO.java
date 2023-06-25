@@ -14,12 +14,13 @@ import lombok.Setter;
 @Setter
 public class UsuarioDTO {
     
+    private Long id;
     private String email;
     private String nome;
     private Boolean ativo;
     private String sobrenome;
     private String cargo;
-    private long id_cargo;
+    private long idCargo;
     private Date dataNascimento;
     private String imagem;
     private String senha;
@@ -36,11 +37,12 @@ public class UsuarioDTO {
     //     this.imagem = imagem;
     // }
 
-    public UsuarioDTO(String nome, String email, String senha, Long id_cargo, Boolean ativo) {
+    public UsuarioDTO(String nome, String email, String senha, Long idCargo, Boolean ativo) {
+        this.id = id;
         this.email = email;
         this.nome = nome;
         this.senha = senha;
-        this.id_cargo = id_cargo;
+        this.idCargo = idCargo;
         this.ativo = ativo;
         this.sobrenome = sobrenome;
         this.dataNascimento = dataNascimento;
@@ -48,10 +50,11 @@ public class UsuarioDTO {
     }
 
     public UsuarioDTO(Usuario usuario) {
+        this.id = usuario.getId();
         this.email = usuario.getEmail();
         this.nome = usuario.getNome();
         this.cargo = usuario.getCargo().getNome();
-        this.id_cargo = usuario.getCargo().getId();
+        this.idCargo = usuario.getCargo().getId();
         this.senha = usuario.getSenha();
         this.ativo = usuario.getAtivo();
         this.sobrenome = usuario.getSobrenome();

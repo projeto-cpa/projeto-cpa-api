@@ -28,11 +28,10 @@ public class UsuarioForm {
     private String email;
     private Cargo cargo;
     @NotNull
-    private long id_cargo;
+    private long idCargo;
     // @NotNull
     private Date dataNascimento;
     private String imagem;
-    @NotNull
     private Boolean ativo;
 
     // public Usuario converter(CargoRepository cargoRepository){
@@ -40,7 +39,7 @@ public class UsuarioForm {
     // }
 
     public Usuario converter(CargoRepository cargoRepository){
-        return new Usuario(this.nome, this.email, this.senha, cargoRepository.findById(id_cargo), this.ativo);
+        return new Usuario(this.nome, this.email, this.senha, cargoRepository.findById(idCargo), this.ativo);
     }
 
 }
