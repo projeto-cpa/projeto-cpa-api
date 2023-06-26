@@ -30,7 +30,7 @@ public class Avaliacao {
 
     @NotNull
     @ManyToMany
-    @JoinTable(
+    @JoinTable( 
             name = "avaliacao_pergunta",
             joinColumns = @JoinColumn(name = "avaliacao_id"),
             foreignKey = @ForeignKey(name = "avaliacao_pergunta_fk"),
