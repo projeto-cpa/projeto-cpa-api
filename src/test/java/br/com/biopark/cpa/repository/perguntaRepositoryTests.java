@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 
 import br.com.biopark.cpa.models.Eixo;
 import br.com.biopark.cpa.models.Pergunta;
+import br.com.biopark.cpa.models.Eixo;
 import br.com.biopark.cpa.models.enums.TipoPergunta;
 
 @RunWith(SpringRunner.class)
@@ -38,6 +39,10 @@ public class perguntaRepositoryTests {
         entityManager.persist(eixo);
       
         // cria, persiste e limpa
+      
+        Eixo eixo = new Eixo("Banco de dados", "Banco de dados ADS", true);
+        entityManager.persist(eixo);
+      
         Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true, eixo);
         entityManager.persist(perguntaUm);
 
