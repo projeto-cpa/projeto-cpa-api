@@ -6,9 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import br.com.biopark.cpa.models.Cargo;
-import br.com.biopark.cpa.models.Turma;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.UsuarioRepository;
 import java.util.ArrayList;
@@ -27,10 +25,6 @@ public class UsuarioService {
         try {
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
             usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
-
-            System.out.println("TODOS USUARIOS: " + usuario.getEmail() + "--" + usuario.getNome() + "--"
-                    + usuario.getCargo().getId() + "--" + usuario.getSenha());
-
             return usuarioRepository.save(usuario);
         } catch (Exception e) {
             throw new Exception("Erro ao cadastrar usuario " + e.getCause());

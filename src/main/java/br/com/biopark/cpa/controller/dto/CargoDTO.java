@@ -1,11 +1,7 @@
 package br.com.biopark.cpa.controller.dto;
 
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.data.domain.Page;
-
 import br.com.biopark.cpa.models.Cargo;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,9 +30,5 @@ public class CargoDTO {
 
     public static Page<CargoDTO> converter(Page<Cargo> cargos) {
         return cargos.map(CargoDTO::new);
-    }
-
-    public static List<CargoDTO> converterParaLista(List<Cargo> cargos) {
-        return cargos.stream().map(CargoDTO::new).collect(Collectors.toList());
     }
 }

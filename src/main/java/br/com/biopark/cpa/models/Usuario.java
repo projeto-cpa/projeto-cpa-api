@@ -35,7 +35,6 @@ public class Usuario implements UserDetails {
     @Column
     private String nome;
 
-    // @NotNull
     @Column
     private String sobrenome;
 
@@ -83,18 +82,6 @@ public class Usuario implements UserDetails {
         this.ativo = ativo;
         // this.setCargo(cargo);
     }
-
-    // public Usuario(String nome, String sobrenome, String senha, Cargo cargo, Date dataNascimento, String email, String imagem) {
-    //     this.email = email;
-    //     this.nome = nome;
-    //     this.sobrenome = sobrenome;
-    //     this.senha = senha;
-    //     this.setCargo(cargo);
-    //     this.dataCriacao = new Date();
-    //     this.dataAtualizacao = new Date();
-    //     this.dataNascimento = dataNascimento;
-    //     this.imagem = imagem;
-    // }
 
 
     /**

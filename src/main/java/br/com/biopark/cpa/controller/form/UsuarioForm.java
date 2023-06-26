@@ -17,8 +17,6 @@ public class UsuarioForm {
     @NotBlank
     @NotNull
     private String nome;
-    // @NotBlank
-    // @NotNull
     private String sobrenome;
     @NotNull
     @NotBlank
@@ -29,14 +27,9 @@ public class UsuarioForm {
     private Cargo cargo;
     @NotNull
     private long idCargo;
-    // @NotNull
     private Date dataNascimento;
     private String imagem;
     private Boolean ativo;
-
-    // public Usuario converter(CargoRepository cargoRepository){
-    //     return new Usuario(this.nome, this.sobrenome, senha, cargoRepository.findById(cargoId), dataNascimento, this.email, this.imagem);
-    // }
 
     public Usuario converter(CargoRepository cargoRepository){
         return new Usuario(this.nome, this.email, this.senha, cargoRepository.findById(idCargo), this.ativo);

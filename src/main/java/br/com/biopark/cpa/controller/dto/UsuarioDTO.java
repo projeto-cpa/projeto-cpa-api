@@ -29,14 +29,6 @@ public class UsuarioDTO {
 
     }
 
-    // public UsuarioDTO(String email, String nome, String sobrenome, Long idCargo, String imagem) {
-    //     this.email = email;
-    //     this.nome = nome;
-    //     this.sobrenome = sobrenome;
-    //     this.idCargo = idCargo;
-    //     this.imagem = imagem;
-    // }
-
     public UsuarioDTO(String nome, String email, String senha, Long idCargo, Boolean ativo) {
         this.id = id;
         this.email = email;

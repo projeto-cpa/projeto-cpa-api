@@ -1,8 +1,6 @@
 package br.com.biopark.cpa.controller;
 
 import java.net.URI;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -61,17 +59,6 @@ public class CargoController {
         } else {
             Page<Cargo> cargos = cargoService.buscaPorNome(nomeCargo, paginacao);
             return CargoDTO.converter(cargos);
-        }
-    }
-
-    @GetMapping(value="/listar")
-    public List<CargoDTO> listarParaCadastroDeCargos(@RequestParam(required = false) String nomeCargo) {
-        if (nomeCargo == null) {
-            List<Cargo> cargos = cargoService.listarParaCadastroDeCargos();
-            return CargoDTO.converterParaLista(cargos);
-        } else {
-            List<Cargo> cargos = cargoService.buscaPorNomeNaLista(nomeCargo);
-            return CargoDTO.converterParaLista(cargos);
         }
     }
 

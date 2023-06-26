@@ -4,7 +4,6 @@ import java.net.URI;
 
 import br.com.biopark.cpa.controller.dto.LoginDTO;
 import br.com.biopark.cpa.controller.dto.TokenDTO;
-import br.com.biopark.cpa.controller.dto.TurmaDTO;
 import br.com.biopark.cpa.config.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,14 +26,9 @@ import br.com.biopark.cpa.controller.dto.UsuarioDTO;
 import br.com.biopark.cpa.controller.dto.alterar.AlterarSenhaDTO;
 import br.com.biopark.cpa.controller.form.UsuarioForm;
 import br.com.biopark.cpa.controller.form.alteracao.AlterarUsuarioForm;
-import br.com.biopark.cpa.controller.form.exclusao.excluirTurmaForm;
 import br.com.biopark.cpa.controller.form.exclusao.excluirUsuarioForm;
 import br.com.biopark.cpa.models.Cargo;
-import br.com.biopark.cpa.models.Turma;
 import br.com.biopark.cpa.models.Usuario;
-// import br.com.biopark.cpa.models.UsuarioCSV;
-// import br.com.biopark.cpa.service.UsuarioCSVService;
-import br.com.biopark.cpa.repository.CargoRepository;
 import br.com.biopark.cpa.service.CargoService;
 import br.com.biopark.cpa.service.UsuarioService;
 import jakarta.transaction.Transactional;
@@ -50,13 +44,6 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.common.record.Record;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-// import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.util.StreamUtils;
 
 @RestController
@@ -72,40 +59,16 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @Autowired
-    private CargoRepository cargoRepository;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
     private TokenService tokenService;
 
-    // @PostMapping
-    // @Transactional
-    // public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioForm
-    // form, UriComponentsBuilder uriBuilder)
-    // throws Exception {
-    // Usuario usuario = form.converter(cargoRepository);
-    // usuarioService.cadastrar(usuario);
-    // URI uri =
-    // uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
-    // return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
-    // }
-
-    // System.out.println("TA SENDO AQUI: " + cargo);
-
     @PostMapping
     @Transactional
     public ResponseEntity<UsuarioDTO> cadastrarUsuario(@RequestBody @Valid UsuarioForm form,
-            UriComponentsBuilder uriBuilder) throws Exception {
-        // antigo curso
-        System.out.println("TA AQUI 1: " + form.getEmail() + " - " + form.getNome() + " - " + form.getSenha() + " - "
-                + form.getIdCargo());
-        System.out.println("TA AQUI 1: " + form);
+        UriComponentsBuilder uriBuilder) throws Exception {
         Cargo cargo = cargoService.buscarCargo(form.getIdCargo());
-        System.out.println("TA SENDO AQUI 2: " + cargo);
-        System.out.println("TA SENDO AQUI 2: " + cargo);
-        // antiga turma
         Usuario usuario = new Usuario(form.getNome(), form.getEmail(), form.getSenha(), cargo, form.getAtivo());
         usuario = usuarioService.cadastrar(usuario);
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
@@ -115,10 +78,10 @@ public class UsuarioController {
     @PostMapping("/login")
     @Transactional
     public ResponseEntity<TokenDTO> login(@RequestBody @Valid LoginDTO login, UriComponentsBuilder uriBuilder)
-            throws Exception {
+    throws Exception {
         try {
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                    login.email(), login.senha());
+            login.email(), login.senha());
             Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
             var usuario = (Usuario) authentication.getPrincipal();
             var tokenDTO = new TokenDTO(tokenService.gerarToken(usuario), true, usuario.getId());
@@ -148,7 +111,6 @@ public class UsuarioController {
 
             return importar;
         } finally {
-            // Exclua o arquivo convertido após o uso, se necessário
             if (convertedFile != null && convertedFile.exists()) {
                 convertedFile.delete();
             }
@@ -166,7 +128,7 @@ public class UsuarioController {
     @GetMapping("/detalhar")
     @Transactional
     public ResponseEntity<UsuarioDTO> detalhar(@RequestBody @Valid @RequestParam Long id,
-            UriComponentsBuilder uriBuilder) throws Exception {
+        UriComponentsBuilder uriBuilder) throws Exception {
         Usuario usuario = usuarioService.buscarPorId(id);
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
@@ -196,16 +158,5 @@ public class UsuarioController {
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
-
-    // @PutMapping
-    // public ResponseEntity<DetalharUsuarioDTO> atualizar(@RequestBody @Valid,
-    // AlterarUsuarioForm form,
-    // UriComponentsBuilder uriBuilder) {
-    // Usuario usuario = usuarioService.atualizar(form.getIdUsuario(),
-    // form.getSenha());
-    // URI uri =
-    // uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
-    // return ResponseEntity.created(uri).body(new DetalharUsuarioDTO(usuario));
-    // }
 
 }
