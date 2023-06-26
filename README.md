@@ -4,7 +4,7 @@ Esta é a API para o projeto acadêmico do biopark para atender a demanda da CPA
 
 Este é um projeto Spring Boot que utiliza a versão 17 do Java e é executado dentro de contêineres Docker usando Docker Compose. Ele também inclui testes automatizados e unitários.
 
-## Requisitos
+## Requisitos :rocket:
 
 Antes de começar, certifique-se de ter instalado:
 
@@ -12,7 +12,7 @@ Antes de começar, certifique-se de ter instalado:
 - Docker
 - Docker Compose
 
-## Configuração
+## Configuração :gear:
 
 Para executar o projeto, siga os seguintes passos:
 
@@ -21,7 +21,7 @@ Para executar o projeto, siga os seguintes passos:
 3. Execute o comando `docker-compose up` para criar e executar os contêineres Docker ou `mvn spring-boot:run` para executar localmente
 4. O aplicativo estará disponível em `http://localhost:8080`.
 
-## Testes
+## Testes :telescope:
 
 Para executar os testes automatizados e unitários, execute o seguinte comando:
 
@@ -32,7 +32,7 @@ mvn clean test
 
 Isso executará todos os testes na pasta `src/test/java`.
 
-## Tecnologias
+## Tecnologias :computer:
 
 Este projeto utiliza as seguintes tecnologias:
 
@@ -42,7 +42,7 @@ Este projeto utiliza as seguintes tecnologias:
 - Docker Compose
 - Banco de dados MySql
 
-## Contribuição
+## Contribuição :handshake:
 
 Sinta-se à vontade para contribuir com este projeto. Basta seguir os seguintes passos:
 

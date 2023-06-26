@@ -1,7 +1,7 @@
 package br.com.biopark.cpa.controller.dto;
 
 import java.util.Date;
-import java.util.stream.Collectors;
+import java.util.List;
 
 import br.com.biopark.cpa.models.enums.TipoPergunta;
 import br.com.biopark.cpa.models.Pergunta;
@@ -35,5 +35,9 @@ public class PerguntaDTO {
 
     public static Page<PerguntaDTO> converter(Page<Pergunta> perguntas) {
         return perguntas.map(PerguntaDTO::new);
+    }
+
+    public static List<PerguntaDTO> converter(List<Pergunta> perguntas) {
+        return perguntas.stream().map(PerguntaDTO::new).toList();
     }
 }

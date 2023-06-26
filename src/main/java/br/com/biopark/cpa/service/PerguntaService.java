@@ -9,6 +9,7 @@ import br.com.biopark.cpa.models.Pergunta;
 import br.com.biopark.cpa.repository.PerguntaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PerguntaService {
@@ -55,5 +56,13 @@ public class PerguntaService {
         List<Pergunta> perguntaList = perguntaRepository.findAllByIdIn(listaPerguntas);
 
         return perguntaList;
+    }
+
+    public Pergunta buscarPorId(Long idPergunta) {
+
+        Optional<Pergunta> pergunta = perguntaRepository.findById(idPergunta);
+
+        return pergunta.orElse(null);
+
     }
 }

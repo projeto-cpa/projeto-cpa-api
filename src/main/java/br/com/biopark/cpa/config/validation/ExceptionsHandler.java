@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
 @RestControllerAdvice
-public class ErroDeValidacaoHandler {
+public class ExceptionsHandler {
 
     @Autowired
     private MessageSource messageSource; //Classe que auxilia na tradução de idiomas
@@ -23,18 +23,24 @@ public class ErroDeValidacaoHandler {
     //Função que é chamada para tratameto de exceptions
     @ResponseStatus(code = HttpStatus.BAD_REQUEST) //Devolve uma BAD REQUEST
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public List<ErroDeFormularioDTO> handle(MethodArgumentNotValidException exception) {
+    public List<ErroDTO> handle(MethodArgumentNotValidException exception) {
 
-        List<ErroDeFormularioDTO> dto = new ArrayList<>();
+        List<ErroDTO> dto = new ArrayList<>();
         List<FieldError> fielderros =  exception.getBindingResult().getFieldErrors();
 
         fielderros.forEach(e -> {
             String mensagem = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-            ErroDeFormularioDTO erro = new ErroDeFormularioDTO(e.getField(), mensagem);
+            ErroDTO erro = new ErroDTO(e.getField(), mensagem);
             dto.add(erro);
         });
 
         return dto;
 
+    }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ValidacaoException.class)
+    public ErroDTO handleValidcaoException(ValidacaoException exception) {
+        return new ErroDTO(exception.getMessage());
     }
 }

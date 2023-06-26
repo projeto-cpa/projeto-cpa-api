@@ -37,9 +37,8 @@ public class cargoRepositoryTests {
         entityManager.flush();
         entityManager.clear();
 
-        Pageable pageable = PageRequest.of(1, 5);
-
-        Cargo persistido = (Cargo) cargoRepository.findByNome(professor.getNome(), pageable);
+        Pageable pageable = PageRequest.of(0, 5);
+        Cargo persistido = cargoRepository.findByNome(professor.getNome(), pageable).getContent().get(0);
 
         // afirmacoes
         Assert.assertEquals(persistido.getNome(), professor.getNome());
