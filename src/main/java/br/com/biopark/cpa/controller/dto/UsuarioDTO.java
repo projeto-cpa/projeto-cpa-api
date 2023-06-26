@@ -10,6 +10,7 @@ import lombok.Setter;
 @Data
 public class UsuarioDTO {
     
+    private Long id;
     private String email;
     private String nome;
     private String sobrenome;
@@ -30,6 +31,7 @@ public class UsuarioDTO {
     }
 
     public UsuarioDTO(Usuario usuario) {
+        this.id = usuario.getId();
         this.email = usuario.getEmail();
         this.nome = usuario.getNome();
         this.sobrenome = usuario.getSobrenome();

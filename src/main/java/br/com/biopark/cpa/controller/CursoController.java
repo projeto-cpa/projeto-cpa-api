@@ -1,6 +1,8 @@
 package br.com.biopark.cpa.controller;
 
 import java.net.URI;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -28,6 +30,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/curso")
 @Transactional
+@SecurityRequirement(name = "bearer-key")
 public class CursoController {
 
     @Autowired

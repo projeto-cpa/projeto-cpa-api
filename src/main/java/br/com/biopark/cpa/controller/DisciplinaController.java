@@ -3,6 +3,7 @@ package br.com.biopark.cpa.controller;
 import java.net.URI;
 
 import br.com.biopark.cpa.service.CursoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +25,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/disciplina")
 @Transactional
+@SecurityRequirement(name = "bearer-key")
 public class DisciplinaController {
 
     @Autowired

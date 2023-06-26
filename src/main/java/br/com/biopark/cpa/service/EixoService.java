@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import java.util.Date;
 import br.com.biopark.cpa.models.Eixo;
 import br.com.biopark.cpa.repository.EixoRepository;
 
@@ -18,10 +18,10 @@ public class EixoService {
     private EixoRepository eixoRepository;
 
     @Transactional
-    public Eixo cadastrar(Eixo eixo) throws Exception{
+    public Eixo cadastrar(Eixo eixo) throws Exception {
 
         Eixo eixoCadastrado = new Eixo();
-        
+
         try {
             eixoCadastrado = eixoRepository.save(eixo);
         } catch (Exception e) {
@@ -55,13 +55,37 @@ public class EixoService {
             throw new Exception("Eixo não encontrado para atualização");
         }
 
-
         try {
             eixo = eixoRepository.save(eixo);
         } catch (Exception e) {
             throw new Exception(e.getCause());
         }
 
+        return eixo;
+    }
+
+    public Eixo ativarDesativarEixo(Long id) {
+        Eixo eixo = eixoRepository.findById(id).get();
+        Boolean ativo = eixo.getAtivo().equals(true) ? false : true;
+        eixo.setAtivo(ativo);
+        eixoRepository.save(eixo);
+        return eixo;
+    }
+
+    public Eixo excluirEixo(Long id) {
+        Eixo eixo = eixoRepository.findById(id).get();
+        eixoRepository.delete(eixo);
+        return eixo;
+    }
+
+    // implemente o metodo para atualizar o cargo
+    public Eixo atualizarTemp(Long id, String nome, String descricao, Boolean ativo) {
+        Eixo eixo = eixoRepository.findById(id).get();
+        eixo.setDataAtualizacao(new Date());
+        eixo.setNome(nome);
+        eixo.setDescricao(descricao);
+        eixo.setAtivo(ativo);
+        eixoRepository.save(eixo);
         return eixo;
     }
 }

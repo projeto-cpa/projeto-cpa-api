@@ -5,10 +5,12 @@ import java.net.URI;
 import br.com.biopark.cpa.controller.dto.LoginDTO;
 import br.com.biopark.cpa.controller.dto.TokenDTO;
 import br.com.biopark.cpa.config.security.TokenService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -48,6 +50,7 @@ public class UsuarioController {
 
     @PostMapping
     @Transactional
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder)
             throws Exception {
 
@@ -91,24 +94,12 @@ public class UsuarioController {
 
     }
 
-    // @PutMapping
-    // public ResponseEntity<DetalharUsuarioDTO> atualizar(@RequestBody @Valid,
-    // AlterarUsuarioForm form,
-    // UriComponentsBuilder uriBuilder) {
-    // Usuario usuario = usuarioService.atualizar(form.getIdUsuario(),
-    // form.getSenha());
-    // URI uri =
-    // uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
-    // return ResponseEntity.created(uri).body(new DetalharUsuarioDTO(usuario));
-    // }
-
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<AlterarSenhaDTO> atualizar(@RequestBody @Valid AlterarUsuarioForm form,
+    public ResponseEntity<AlterarSenhaDTO> atualizar(@PathVariable(name="id") long id, @RequestBody @Valid UsuarioForm form,
             UriComponentsBuilder uriBuilder) {
-        Usuario usuario = usuarioService.atualizar(form.getIdUsuario(), form.getSenha());
+        Usuario usuario = usuarioService.atualizar(id, form);
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
         return ResponseEntity.created(uri).body(new AlterarSenhaDTO(usuario));
     }
-
 }

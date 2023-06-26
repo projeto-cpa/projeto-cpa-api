@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.biopark.cpa.controller.form.UsuarioForm;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.UsuarioRepository;
 
@@ -16,7 +17,7 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    public Usuario cadastrar(Usuario usuario) throws Exception{
+    public Usuario cadastrar(Usuario usuario) throws Exception {
         try {
 
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -53,17 +54,33 @@ public class UsuarioService {
     public Usuario buscarPorId(Long usuarioRespondenteId) {
         Optional<Usuario> usuario = usuarioRepository.findById((usuarioRespondenteId));
 
-            if (usuario.isPresent())
-                return usuario.get();
-            else
-                throw new EntityNotFoundException("Usuário não encontrado");
+        if (usuario.isPresent())
+            return usuario.get();
+        else
+            throw new EntityNotFoundException("Usuário não encontrado");
 
     }
 
-    public Usuario atualizar(Long idUsuario, String senha) {
-        Usuario usuario = usuarioRepository.findById(idUsuario).get();
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        usuario.setSenha(bCryptPasswordEncoder.encode(senha));
+    public Usuario atualizar(Long id, UsuarioForm usuarioForm) {
+        Usuario usuario = usuarioRepository.findById(id).get();
+
+        if (usuarioForm.getSenha() != null && usuarioForm.getSenhaAtual() != null) {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            String novaSenha = bCryptPasswordEncoder.encode(usuarioForm.getSenha());
+            if (bCryptPasswordEncoder.matches(usuarioForm.getSenhaAtual(), usuario.getSenha())) {
+                if (usuarioForm.getSenha() != null) {
+                    usuario.setSenha(novaSenha);
+                }
+
+            } else {
+                throw new IllegalArgumentException("Senha atual incorreta");
+            }
+        }
+
+        if (usuarioForm.getImagem() != null) {
+            usuario.setImagem(usuarioForm.getImagem());
+        }
+
         return usuarioRepository.save(usuario);
 
     }

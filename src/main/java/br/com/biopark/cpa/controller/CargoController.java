@@ -1,6 +1,8 @@
 package br.com.biopark.cpa.controller;
 
 import java.net.URI;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,7 +30,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/cargo")
-@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3005" })
+@SecurityRequirement(name = "bearer-key")
 @Transactional
 public class CargoController {
 
@@ -55,13 +57,14 @@ public class CargoController {
     public Page<CargoDTO> listar(@RequestParam(required = false) String nomeCargo, @RequestParam int pagina,
             @RequestParam int qtd) {
         Pageable paginacao = PageRequest.of(pagina, qtd);
+
+        Page<Cargo> cargos;
         if (nomeCargo == null) {
-            Page<Cargo> cargos = cargoService.listar(paginacao);
-            return CargoDTO.converter(cargos);
+            cargos = cargoService.listar(paginacao);
         } else {
-            Page<Cargo> cargos = cargoService.buscaPorNome(nomeCargo, paginacao);
-            return CargoDTO.converter(cargos);
+            cargos = cargoService.buscaPorNome(nomeCargo, paginacao);
         }
+        return CargoDTO.converter(cargos);
     }
 
     @DeleteMapping
