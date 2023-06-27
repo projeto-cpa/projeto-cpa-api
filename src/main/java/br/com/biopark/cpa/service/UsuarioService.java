@@ -91,10 +91,31 @@ public class UsuarioService {
 
     }
 
+    public String gerarCodigoAleatorio(Long tamanho, Boolean letras) {
+        String codigo = "";
+
+        String[] caracteres = letras
+                ? new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" }
+                : new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
+
+        for (int i = 0; i < tamanho; i++) {
+            int posicao = (int) (Math.random() * caracteres.length);
+            codigo += caracteres[posicao];
+        }
+        
+        return codigo;
+    }
+
+    public String gerarCodigoRecuperacao() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String codigoEncoded = bCryptPasswordEncoder.encode(this.gerarCodigoAleatorio((long) 12, true));
+        return codigoEncoded;
+    }
+
     public Usuario recuperar(RecuperarAcessoForm form) throws MessagingException {
         Usuario usuario = usuarioRepository.findByEmail(form.getEmail());
-        String codigoRecuperacao = "codigolegal";
-        emailSender.sendEmail(form.getEmail(), "Titulo bonito");
+        String codigoRecuperacao = this.gerarCodigoRecuperacao();
+        emailSender.enviarCodigoRecuperacao(form.getEmail(), codigoRecuperacao);
         usuario.setCodigoRecuperacao(codigoRecuperacao);
         return usuario;
     }
