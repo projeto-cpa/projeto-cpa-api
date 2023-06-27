@@ -19,6 +19,7 @@ public class PerguntaDTO {
     private Boolean ativo;
     private Date dataCriacao;
     private Date dataAtualizacao;
+    private Long eixoId;
     private String nomeEixo;
     private Boolean sucesso;
 
@@ -27,6 +28,7 @@ public class PerguntaDTO {
         this.texto = pergunta.getTexto();
         this.tipo = pergunta.getTipo();
         this.ativo = pergunta.getAtivo();
+        this.eixoId = pergunta.getEixo().getId();
         this.nomeEixo = pergunta.getEixo().getNome();
         this.sucesso = true;
         this.dataCriacao = pergunta.getDataCriacao();

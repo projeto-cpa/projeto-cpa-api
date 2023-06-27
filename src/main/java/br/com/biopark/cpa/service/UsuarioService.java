@@ -41,6 +41,7 @@ public class UsuarioService {
 
     public Usuario buscarUsuarioPeloEmail(String email) throws Exception {
         try {
+            System.out.println(email + "teste log");
             return usuarioRepository.findByEmail(email);
         } catch (Exception e) {
             throw new Exception("Erro ao buscar usuário");
