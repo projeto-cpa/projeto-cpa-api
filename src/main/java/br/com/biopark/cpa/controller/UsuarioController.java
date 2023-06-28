@@ -98,8 +98,6 @@ public class UsuarioController {
 
     @PostMapping("/importar")
     public List<Usuario> importarUsuario(@RequestParam("file") MultipartFile file) throws Exception {
-        File convertedFile = convertMultipartFileToFile(file);
-
         try {
             InputStream inputStream = file.getInputStream();
             CsvParserSettings csvParserSettings = new CsvParserSettings();
@@ -110,19 +108,9 @@ public class UsuarioController {
             List<Usuario> importar = usuarioService.importarUsuario(parseAllRecords);
 
             return importar;
-        } finally {
-            if (convertedFile != null && convertedFile.exists()) {
-                convertedFile.delete();
-            }
+        } catch (Exception e) {
+            throw new Exception ("ERRO AO IMPORTAR USUARIO: " + e.getMessage());
         }
-    }
-
-    private File convertMultipartFileToFile(MultipartFile file) throws IOException {
-        File convertedFile = new File(file.getOriginalFilename());
-        try (FileOutputStream fos = new FileOutputStream(convertedFile)) {
-            StreamUtils.copy(file.getInputStream(), fos);
-        }
-        return convertedFile;
     }
 
     @GetMapping("/detalhar")

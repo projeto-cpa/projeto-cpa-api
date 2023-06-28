@@ -67,7 +67,7 @@ public class CargoService {
         Optional<Cargo> cargo = cargoRepository.findById(id_cargo);
         
         if (cargo.isPresent()) {
-            System.out.println("RETORNOU O IDCARGO: " + cargo.get());
+            System.out.println("RETORNOU O IDCARGO: " + cargo.get().getNome());
             return cargo.get();
         }
 
