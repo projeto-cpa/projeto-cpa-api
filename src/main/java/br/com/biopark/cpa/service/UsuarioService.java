@@ -107,9 +107,7 @@ public class UsuarioService {
     }
 
     public String gerarCodigoRecuperacao() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String codigoEncoded = bCryptPasswordEncoder.encode(this.gerarCodigoAleatorio((long) 12, true));
-        return codigoEncoded;
+        return this.gerarCodigoAleatorio((long) 32, true);
     }
 
     public Usuario recuperar(RecuperarAcessoForm form) throws MessagingException {

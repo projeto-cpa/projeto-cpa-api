@@ -47,12 +47,12 @@ public class EmailSender {
         // TODO: Colocar a variavel de ambiente para o endereço do cliente (front end)
 
         String urlClient = "http://localhost:3005";
-        String linkRecuperacao = urlClient.concat("/recuperar?codigo=").concat(codigoRecuperacao);
+        String linkRecuperacao = urlClient.concat("/recuperacao?codigo=").concat(codigoRecuperacao);
         LocalDate LT = LocalDate.now();
         String anoAtual = String.valueOf(LT.getYear());
 
-        emailTemplate.replaceAll("$ano_atual", anoAtual);
-        emailTemplate.replaceAll("$link_recuperacao", linkRecuperacao);
+        emailTemplate = emailTemplate.replace("${ano_atual}", anoAtual);
+        emailTemplate = emailTemplate.replace("${link_recuperacao}", linkRecuperacao);
 
         helper.setText(emailTemplate, true);
         message.setSubject("CPA: Código de recuperação");
