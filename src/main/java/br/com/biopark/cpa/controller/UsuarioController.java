@@ -131,16 +131,16 @@ public class UsuarioController {
 
     @PutMapping
     public ResponseEntity<UsuarioDTO> atualizarUsuario(@RequestBody @Valid AlterarUsuarioForm form,UriComponentsBuilder uriBuilder) {
-        Usuario usuario = usuarioService.atualizarUsuario(form.getIdUsuario(), form.getNome(), form.getEmail(), form.getSenha(), form.getAtivo());
-        URI uri = uriBuilder.path("turma/{id}").buildAndExpand(usuario.getId()).toUri();
+        Usuario usuario = usuarioService.atualizarUsuario(form.getIdUsuario(), form.getNome(), form.getEmail(), form.getSenha(),  form.getAtivo());
+        URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
 
     @PutMapping
-    public ResponseEntity<TurmaDTO> atualizar(@RequestBody @Valid AlterarTurmaForm form,UriComponentsBuilder uriBuilder) {
-        Turma turma = turmaService.atualizar(form.getIdTurma(), form.getNome(), form.getDescricao(), form.getAtivo(), form.getPeriodo());
-        URI uri = uriBuilder.path("turma/{id}").buildAndExpand(turma.getId()).toUri();
-        return ResponseEntity.created(uri).body(new TurmaDTO(turma));
+    public ResponseEntity<UsuarioDTO> atualizar(@RequestBody @Valid AlterarUsuarioForm form,UriComponentsBuilder uriBuilder) {
+        Usuario usuario = usuarioService.atualizar(form.getIdTurma(), form.getNome(), form.getDescricao(), form.getAtivo(), form.getPeriodo());
+        URI uri = uriBuilder.path("turma/{id}").buildAndExpand(usuario.getId()).toUri();
+        return ResponseEntity.created(uri).body(new TurmaDTO(usuario));
     }
 
     @PutMapping("/ativacao")

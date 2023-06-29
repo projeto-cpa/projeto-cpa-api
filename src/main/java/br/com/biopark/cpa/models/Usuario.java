@@ -72,14 +72,14 @@ public class Usuario implements UserDetails {
         this.email = email;
         this.nome = nome;
         this.senha = senha;
-        // this.cargo = cargo;
+        this.cargo = cargo;
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
         // this.dataNascimento = dataNascimento;
         // this.imagem = imagem;
         // this.sobrenome = sobrenome;
         this.ativo = ativo;
-        this.setCargo(cargo);
+        // this.setCargo(cargo);
     }
 
 

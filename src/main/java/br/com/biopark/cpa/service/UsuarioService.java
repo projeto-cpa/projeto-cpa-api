@@ -11,6 +11,7 @@ import br.com.biopark.cpa.models.Turma;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.UsuarioRepository;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import com.univocity.parsers.common.record.Record;
 import jakarta.transaction.Transactional;
@@ -81,6 +82,16 @@ public class UsuarioService {
     public Usuario ativarDesativarUsuario(Long id) {
         Usuario usuario = usuarioRepository.findById(id).get();
         Boolean ativo = usuario.getAtivo().equals(true) ? false : true;
+        usuario.setAtivo(ativo);
+        usuarioRepository.save(usuario);
+        return usuario;
+    }
+
+    public Usuario atualizarUsuario(Long id, String nome, String email, String senha, Boolean ativo) {
+        Usuario usuario = usuarioRepository.findById(id).get();
+        usuario.setNome(nome);
+        usuario.setEmail(email);
+        usuario.setSenha(senha);
         usuario.setAtivo(ativo);
         usuarioRepository.save(usuario);
         return usuario;
