@@ -33,10 +33,6 @@ import br.com.biopark.cpa.service.CargoService;
 import br.com.biopark.cpa.service.UsuarioService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +40,6 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.common.record.Record;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.util.StreamUtils;
 
 @RestController
 @RequestMapping("/usuario")
