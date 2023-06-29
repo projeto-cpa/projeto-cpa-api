@@ -4,6 +4,7 @@ import java.net.URI;
 
 import br.com.biopark.cpa.controller.dto.LoginDTO;
 import br.com.biopark.cpa.controller.dto.TokenDTO;
+import br.com.biopark.cpa.controller.dto.TurmaDTO;
 import br.com.biopark.cpa.config.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,9 +26,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.biopark.cpa.controller.dto.UsuarioDTO;
 import br.com.biopark.cpa.controller.dto.alterar.AlterarSenhaDTO;
 import br.com.biopark.cpa.controller.form.UsuarioForm;
+import br.com.biopark.cpa.controller.form.alteracao.AlterarTurmaForm;
 import br.com.biopark.cpa.controller.form.alteracao.AlterarUsuarioForm;
+import br.com.biopark.cpa.controller.form.ativacao.AtivarUsuarioForm;
 import br.com.biopark.cpa.controller.form.exclusao.excluirUsuarioForm;
 import br.com.biopark.cpa.models.Cargo;
+import br.com.biopark.cpa.models.Turma;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.service.CargoService;
 import br.com.biopark.cpa.service.UsuarioService;
@@ -126,12 +130,24 @@ public class UsuarioController {
     }
 
     @PutMapping
-    @Transactional
-    public ResponseEntity<AlterarSenhaDTO> atualizar(@RequestBody @Valid AlterarUsuarioForm form,
-            UriComponentsBuilder uriBuilder) {
-        Usuario usuario = usuarioService.atualizar(form.getIdUsuario(), form.getSenha());
+    public ResponseEntity<UsuarioDTO> atualizarUsuario(@RequestBody @Valid AlterarUsuarioForm form,UriComponentsBuilder uriBuilder) {
+        Usuario usuario = usuarioService.atualizarUsuario(form.getIdUsuario(), form.getNome(), form.getEmail(), form.getSenha(), form.getAtivo());
+        URI uri = uriBuilder.path("turma/{id}").buildAndExpand(usuario.getId()).toUri();
+        return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
+    }
+
+    @PutMapping
+    public ResponseEntity<TurmaDTO> atualizar(@RequestBody @Valid AlterarTurmaForm form,UriComponentsBuilder uriBuilder) {
+        Turma turma = turmaService.atualizar(form.getIdTurma(), form.getNome(), form.getDescricao(), form.getAtivo(), form.getPeriodo());
+        URI uri = uriBuilder.path("turma/{id}").buildAndExpand(turma.getId()).toUri();
+        return ResponseEntity.created(uri).body(new TurmaDTO(turma));
+    }
+
+    @PutMapping("/ativacao")
+    public ResponseEntity<UsuarioDTO> ativarDesativarUsuario(@RequestBody @Valid AtivarUsuarioForm form, UriComponentsBuilder uriBuilder) {
+        Usuario usuario = usuarioService.ativarDesativarUsuario(form.getIdUsuario());
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
-        return ResponseEntity.created(uri).body(new AlterarSenhaDTO(usuario));
+        return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
 
     @DeleteMapping
