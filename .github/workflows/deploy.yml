@@ -17,6 +17,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
+          docker stop cpa-api
           docker rm cpa-api
           docker pull joaopedrogama/cpa-api:latest
           docker run -d -p 8080:8080 --name cpa-api joaopedrogama/cpa-api:latest
