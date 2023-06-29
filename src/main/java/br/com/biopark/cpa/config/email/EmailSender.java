@@ -26,7 +26,7 @@ public class EmailSender {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
 
-        toEmail = "luka.pc.pc@gmail.com";
+        // toEmail = "luka.pc.pc@gmail.com";
 
         helper.setFrom("joaocletto@gmail.com");
         helper.setTo(toEmail);

@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.biopark.cpa.controller.form.RecuperarSenhaForm;
 import br.com.biopark.cpa.controller.form.UsuarioForm;
 import br.com.biopark.cpa.controller.form.recuperacao.RecuperarAcessoForm;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.UsuarioRepository;
 
+import java.util.Base64;
 import java.util.Optional;
 
 @Service
@@ -102,20 +104,36 @@ public class UsuarioService {
             int posicao = (int) (Math.random() * caracteres.length);
             codigo += caracteres[posicao];
         }
-        
+
         return codigo;
     }
 
-    public String gerarCodigoRecuperacao() {
-        return this.gerarCodigoAleatorio((long) 32, true);
+    public String gerarCodigoRecuperacao(String email) {
+        String originalInput = this.gerarCodigoAleatorio((long) 32, true).concat(",").concat(email);
+        String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
+        // encodedString = encodedString.replace("+/=", "._-");
+        return encodedString;
     }
 
     public Usuario recuperar(RecuperarAcessoForm form) throws MessagingException {
         Usuario usuario = usuarioRepository.findByEmail(form.getEmail());
-        String codigoRecuperacao = this.gerarCodigoRecuperacao();
+        String codigoRecuperacao = this.gerarCodigoRecuperacao(form.getEmail());
         emailSender.enviarCodigoRecuperacao(form.getEmail(), codigoRecuperacao);
         usuario.setCodigoRecuperacao(codigoRecuperacao);
-        return usuario;
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario recuperarAcesso(RecuperarSenhaForm form) {
+        Usuario usuario = usuarioRepository.findByEmail(form.getEmail());
+        if (form.getCodigo().equals(usuario.getCodigoRecuperacao())) {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            String novaSenha = bCryptPasswordEncoder.encode(form.getSenha());
+            usuario.setCodigoRecuperacao(null);
+            usuario.setSenha(novaSenha);
+        } else {
+            throw new RuntimeException("Código de Recuperação inválido!");
+        }
+        return usuarioRepository.save(usuario);
     }
 
 }
