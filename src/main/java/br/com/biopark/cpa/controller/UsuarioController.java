@@ -114,6 +114,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/importar")
+    @Transactional
     public List<Usuario> importarUsuario(@RequestParam("file") MultipartFile file) throws Exception {
         try {
             InputStream inputStream = file.getInputStream();
