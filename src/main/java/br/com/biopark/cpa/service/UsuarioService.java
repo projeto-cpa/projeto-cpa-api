@@ -1,16 +1,21 @@
 package br.com.biopark.cpa.service;
 
+import br.com.biopark.cpa.config.email.EmailSender;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import br.com.biopark.cpa.controller.form.RecuperarSenhaForm;
 import br.com.biopark.cpa.models.Cargo;
 import br.com.biopark.cpa.models.Turma;
 import br.com.biopark.cpa.controller.form.UsuarioForm;
+import br.com.biopark.cpa.controller.form.recuperacao.RecuperarAcessoForm;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.UsuarioRepository;
+import java.util.Base64;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +28,9 @@ public class UsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private EmailSender emailSender;
 
     public Usuario cadastrar(Usuario usuario) throws Exception {
         try {
@@ -91,6 +99,49 @@ public class UsuarioService {
 
     }
 
+    public String gerarCodigoAleatorio(Long tamanho, Boolean letras) {
+        String codigo = "";
+
+        String[] caracteres = letras
+                ? new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" }
+                : new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
+
+        for (int i = 0; i < tamanho; i++) {
+            int posicao = (int) (Math.random() * caracteres.length);
+            codigo += caracteres[posicao];
+        }
+
+        return codigo;
+    }
+
+    public String gerarCodigoRecuperacao(String email) {
+        String originalInput = this.gerarCodigoAleatorio((long) 32, true).concat(",").concat(email);
+        String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
+        // encodedString = encodedString.replace("+/=", "._-");
+        return encodedString;
+    }
+
+    public Usuario recuperar(RecuperarAcessoForm form) throws MessagingException {
+        Usuario usuario = usuarioRepository.findByEmail(form.getEmail());
+        String codigoRecuperacao = this.gerarCodigoRecuperacao(form.getEmail());
+        emailSender.enviarCodigoRecuperacao(form.getEmail(), codigoRecuperacao);
+        usuario.setCodigoRecuperacao(codigoRecuperacao);
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario recuperarAcesso(RecuperarSenhaForm form) {
+        Usuario usuario = usuarioRepository.findByEmail(form.getEmail());
+        if (form.getCodigo().equals(usuario.getCodigoRecuperacao())) {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            String novaSenha = bCryptPasswordEncoder.encode(form.getSenha());
+            usuario.setCodigoRecuperacao(null);
+            usuario.setSenha(novaSenha);
+        } else {
+            throw new RuntimeException("Código de Recuperação inválido!");
+        }
+        return usuarioRepository.save(usuario);
+    }
+  
     public Usuario excluirUsuario(Long id) {
         Usuario usuario = usuarioRepository.findById(id).get();
         usuarioRepository.delete(usuario);

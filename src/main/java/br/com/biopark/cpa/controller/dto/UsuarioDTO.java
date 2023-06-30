@@ -25,6 +25,8 @@ public class UsuarioDTO {
     private String imagem;
     private String senha;
 
+    private String codigoRecuperacao;
+
     public UsuarioDTO() {
 
     }
@@ -52,6 +54,7 @@ public class UsuarioDTO {
         this.sobrenome = usuario.getSobrenome();
         this.dataNascimento = usuario.getDataNascimento();
         this.imagem = usuario.getImagem();
+        this.codigoRecuperacao = usuario.getCodigoRecuperacao();
     }
 
     public static Page<UsuarioDTO> converter(Page<Usuario> usuarios){

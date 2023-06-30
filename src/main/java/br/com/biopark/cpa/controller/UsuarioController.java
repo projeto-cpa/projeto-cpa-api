@@ -1,12 +1,12 @@
 package br.com.biopark.cpa.controller;
-
 import java.net.URI;
-
 import br.com.biopark.cpa.controller.dto.LoginDTO;
+import br.com.biopark.cpa.controller.dto.RecuperarSenhaDTO;
 import br.com.biopark.cpa.controller.dto.TokenDTO;
 import br.com.biopark.cpa.controller.dto.TurmaDTO;
 import br.com.biopark.cpa.config.security.TokenService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,9 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import br.com.biopark.cpa.controller.dto.UsuarioDTO;
 import br.com.biopark.cpa.controller.dto.alterar.AlterarSenhaDTO;
+import br.com.biopark.cpa.controller.form.RecuperarSenhaForm;
 import br.com.biopark.cpa.controller.form.UsuarioForm;
 import br.com.biopark.cpa.controller.form.alteracao.AlterarTurmaForm;
 import br.com.biopark.cpa.controller.form.alteracao.AlterarUsuarioForm;
+import br.com.biopark.cpa.controller.form.recuperacao.RecuperarAcessoForm;
 import br.com.biopark.cpa.controller.form.ativacao.AtivarUsuarioForm;
 import br.com.biopark.cpa.controller.form.exclusao.excluirUsuarioForm;
 import br.com.biopark.cpa.models.Cargo;
@@ -96,8 +98,7 @@ public class UsuarioController {
     public ResponseEntity<TokenDTO> login(@RequestBody @Valid LoginDTO login, UriComponentsBuilder uriBuilder)
     throws Exception {
         try {
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-            login.email(), login.senha());
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(login.email(), login.senha());
             Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
             var usuario = (Usuario) authentication.getPrincipal();
             var tokenDTO = new TokenDTO(tokenService.gerarToken(usuario), true, usuario.getId());
@@ -176,4 +177,24 @@ public class UsuarioController {
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
+
+    @PostMapping("/recuperar")
+    @Transactional
+    public ResponseEntity<UsuarioDTO> recuperar(@RequestBody @Valid RecuperarAcessoForm form,
+            UriComponentsBuilder uriBuilder) throws MessagingException {
+        Usuario usuario = usuarioService.recuperar(form);
+        URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+        return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
+
+    }
+
+    @PutMapping("/recuperar/acesso")
+    @Transactional
+    public ResponseEntity<RecuperarSenhaDTO> recuperarSenha(@RequestBody @Valid RecuperarSenhaForm form,
+            UriComponentsBuilder uriBuilder) {
+        Usuario usuario = usuarioService.recuperarAcesso(form);
+        URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+        return ResponseEntity.created(uri).body(new RecuperarSenhaDTO(true));
+    }
+
 }
