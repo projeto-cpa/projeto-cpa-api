@@ -10,6 +10,7 @@ import br.com.biopark.cpa.models.Turma;
 import br.com.biopark.cpa.service.CursoService;
 import br.com.biopark.cpa.service.TurmaService;
 import jakarta.transaction.Transactional;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/turma")
 @Transactional
+@SecurityRequirement(name = "bearer-key")
 public class TurmaController {
 
     @Autowired

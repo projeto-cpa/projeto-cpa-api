@@ -221,7 +221,7 @@ INSERT INTO usuario (
     current_date(),
     'lucas@email.com',
     'Lucas',
-    '',
+    'Oliveira',
     '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
 );
 
@@ -245,7 +245,7 @@ INSERT INTO usuario (
     current_date(),
     'joao@email.com',
     'João',
-    '',
+    'Gama',
     '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
 );
 
@@ -269,7 +269,7 @@ INSERT INTO usuario (
     current_date(),
     'juliano@email.com',
     'Juliano',
-    '',
+    'Henrique',
     '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
 );
 
@@ -293,7 +293,7 @@ INSERT INTO usuario (
     current_date(),
     'jorge@email.com',
     'Jorge',
-    '',
+    'Wilchen',
     '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
 );
 
@@ -317,6 +317,77 @@ INSERT INTO usuario (
     current_date(),
     'matheus@email.com',
     'Matheus',
-    '',
+    'Schuch',
     '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
+);
+
+-- eixo
+INSERT INTO eixo (
+    ativo,
+    data_criacao,
+    data_atualizacao,
+    descricao,
+    nome
+) VALUES (
+    0,
+    current_date(),
+    current_date(),
+    'Eixo de desenvolvimento',
+    'Desenvolvimento'
+);
+
+INSERT INTO eixo (
+    ativo,
+    data_criacao,
+    data_atualizacao,
+    descricao,
+    nome
+) VALUES (
+    0,
+    current_date(),
+    current_date(),
+    'Eixo de infraestrutura',
+    'Infraestrutura'
+);
+
+INSERT INTO eixo (
+    ativo,
+    data_criacao,
+    data_atualizacao,
+    descricao,
+    nome
+) VALUES (
+    0,
+    current_date(),
+    current_date(),
+    'Eixo de gestão',
+    'Gestão'
+);
+
+INSERT INTO eixo(
+    ativo,
+    data_criacao,
+    data_atualizacao,
+    descricao,
+    nome
+) VALUES (
+    0,
+    current_date(),
+    current_date(),
+    'Eixo de negócios',
+    'Negócios'
+);
+
+INSERT INTO eixo (
+    ativo,
+    data_criacao,
+    data_atualizacao,
+    descricao,
+    nome
+) VALUES (
+    0,
+    current_date(),
+    current_date(),
+    'Eixo de produção cultural e design',
+    'Produção cultural e design'
 );

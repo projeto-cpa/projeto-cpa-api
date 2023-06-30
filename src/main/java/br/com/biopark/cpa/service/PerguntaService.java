@@ -6,8 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import br.com.biopark.cpa.models.Pergunta;
+import br.com.biopark.cpa.models.enums.TipoPergunta;
 import br.com.biopark.cpa.repository.PerguntaRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,9 +37,9 @@ public class PerguntaService {
         return perguntaRepository.findAll();
     }
 
-    public Page<Pergunta> buscarPorEixo(String nomeEixo, Pageable pageable) {
+    public Page<Pergunta> buscarPorPergunta(String textoPergunta, Pageable pageable) {
         try {
-            return perguntaRepository.findByEixoNome(nomeEixo, pageable);
+            return perguntaRepository.findByTexto(textoPergunta, pageable);
         } catch (RuntimeException e) {
             throw new RuntimeException("Nenhuma pergunta encontrada");
         }
@@ -65,4 +67,30 @@ public class PerguntaService {
         return pergunta.orElse(null);
 
     }
+
+    public Pergunta ativarDesativarPergunta(Long id) {
+        Pergunta pergunta = perguntaRepository.findById(id).get();
+        Boolean ativo = pergunta.getAtivo().equals(true) ? false : true;
+        pergunta.setAtivo(ativo);
+        perguntaRepository.save(pergunta);
+        return pergunta;
+    }
+
+    public Pergunta excluirPergunta(Long id) {
+        Pergunta pergunta = perguntaRepository.findById(id).get();
+        perguntaRepository.delete(pergunta);
+        return pergunta;
+    }
+
+    public Pergunta atualizar(Long idPergunta, String texto, String tipo, Long eixoId, Boolean ativo) {
+        TipoPergunta tipoPergunta = TipoPergunta.valueOf(tipo);
+        Pergunta pergunta = perguntaRepository.findById(idPergunta).get();
+        pergunta.setDataAtualizacao(new Date());
+        pergunta.setTexto(texto);
+        pergunta.setTipo(tipoPergunta);
+        pergunta.setAtivo(ativo);
+        perguntaRepository.save(pergunta);
+        return pergunta;
+    }
+
 }

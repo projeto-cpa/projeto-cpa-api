@@ -21,6 +21,7 @@ public class UsuarioForm {
     @NotNull
     @NotBlank
     private String senha;
+    private String senhaAtual;
     @NotNull
     @NotBlank
     private String email;

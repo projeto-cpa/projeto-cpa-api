@@ -6,6 +6,7 @@ import br.com.biopark.cpa.controller.dto.LoginDTO;
 import br.com.biopark.cpa.controller.dto.TokenDTO;
 import br.com.biopark.cpa.controller.dto.TurmaDTO;
 import br.com.biopark.cpa.config.security.TokenService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,6 +49,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/usuario")
+@SecurityRequirement(name = "bearer-key")
 public class UsuarioController {
 
     Date data = new Date();
@@ -72,6 +74,15 @@ public class UsuarioController {
         Usuario usuario = new Usuario(form.getNome(), form.getEmail(), form.getSenha(), cargo, form.getAtivo());
         usuario = usuarioService.cadastrar(usuario);
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+    }
+    
+    @PostMapping("/cadastro")
+    @Transactional
+    public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder)
+            throws Exception {
+        Usuario usuario = form.converter(cargoRepository);
+        usuarioService.cadastrar(usuario);
+        URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
 
@@ -137,15 +148,6 @@ public class UsuarioController {
         return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
 
-    // @PutMapping("/{id}")
-    // @Transactional
-    // public ResponseEntity<AlterarSenhaDTO> atualizar(@PathVariable(name="id") long id, @RequestBody @Valid UsuarioForm form,
-    //         UriComponentsBuilder uriBuilder) {
-    //     Usuario usuario = usuarioService.atualizar(id, form);
-    //     URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
-    //     return ResponseEntity.created(uri).body(new AlterarSenhaDTO(usuario));
-    // }
-
     @PutMapping("/ativacao")
     public ResponseEntity<UsuarioDTO> ativarDesativarUsuario(@RequestBody @Valid AtivarUsuarioForm form, UriComponentsBuilder uriBuilder) {
         Usuario usuario = usuarioService.ativarDesativarUsuario(form.getIdUsuario());
@@ -157,8 +159,14 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> excluir(@RequestBody @Valid excluirUsuarioForm form,
             UriComponentsBuilder uriBuilder) {
         Usuario usuario = usuarioService.excluirUsuario(form.getIdUsuario());
+    }
+  
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<AlterarSenhaDTO> atualizar(@PathVariable(name="id") long id, @RequestBody @Valid UsuarioForm form,
+            UriComponentsBuilder uriBuilder) {
+        Usuario usuario = usuarioService.atualizar(id, form);
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
-
 }

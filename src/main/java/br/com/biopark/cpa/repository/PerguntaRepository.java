@@ -16,10 +16,6 @@ public interface PerguntaRepository extends JpaRepository<Pergunta, Long> {
 
     Pergunta findByAtivo(boolean ativo);
 
-    Page<Pergunta> findByEixo(String nomeEixo, Pageable pageable);
-
-    Page<Pergunta> findByEixoNome(String nomeEixo, Pageable pageable);
-
     List<Pergunta> findAllByIdIn(List<Long> listaPerguntas);
   
     Page<Pergunta> findByTexto(String textoPergunta, Pageable paginacao);

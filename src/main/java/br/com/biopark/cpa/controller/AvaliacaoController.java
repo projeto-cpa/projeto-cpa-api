@@ -7,6 +7,7 @@ import br.com.biopark.cpa.models.Avaliacao;
 import br.com.biopark.cpa.service.AvaliacaoService;
 import br.com.biopark.cpa.service.PerguntaService;
 import br.com.biopark.cpa.service.TurmaService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/avaliacao")
+@SecurityRequirement(name = "bearer-key")
 public class AvaliacaoController {
 
     private final AvaliacaoService avaliacaoService;

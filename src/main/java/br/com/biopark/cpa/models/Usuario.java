@@ -57,7 +57,8 @@ public class Usuario implements UserDetails {
     @ManyToMany(mappedBy = "usuarioList")
     private List<Avaliacao> avaliacaoList = new ArrayList<>();
 
-    @Column
+    @Lob
+    @Column(length = 99999999)
     private String imagem;
 
     @Column(name = "data_criacao")

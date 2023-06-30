@@ -9,16 +9,14 @@ public class ErroDTO {
 
     private String campo;
     private String erro;
-    private HttpStatus status;
 
     public ErroDTO(String campo, String erro) {
         this.campo = campo;
         this.erro = erro;
     }
 
-    public ErroDTO(String campo, HttpStatus status) {
-        this.campo = campo;
-        this.status = status;
+    public ErroDTO(String erro) {
+        this.campo = erro;
     }
     
 }

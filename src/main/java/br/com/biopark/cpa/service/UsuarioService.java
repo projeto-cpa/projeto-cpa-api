@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import br.com.biopark.cpa.models.Cargo;
 import br.com.biopark.cpa.models.Turma;
+import br.com.biopark.cpa.controller.form.UsuarioForm;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.UsuarioRepository;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class UsuarioService {
 
     public Usuario buscarUsuarioPeloEmail(String email) throws Exception {
         try {
+            System.out.println(email + "teste log");
             return usuarioRepository.findByEmail(email);
         } catch (Exception e) {
             throw new Exception("Erro ao buscar usuário");
@@ -65,10 +67,26 @@ public class UsuarioService {
             throw new EntityNotFoundException("Usuário não encontrado");
     }
 
-    public Usuario atualizar(Long idUsuario, String senha) {
-        Usuario usuario = usuarioRepository.findById(idUsuario).get();
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        usuario.setSenha(bCryptPasswordEncoder.encode(senha));
+    public Usuario atualizar(Long id, UsuarioForm usuarioForm) {
+        Usuario usuario = usuarioRepository.findById(id).get();
+
+        if (usuarioForm.getSenha() != null && usuarioForm.getSenhaAtual() != null) {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            String novaSenha = bCryptPasswordEncoder.encode(usuarioForm.getSenha());
+            if (bCryptPasswordEncoder.matches(usuarioForm.getSenhaAtual(), usuario.getSenha())) {
+                if (usuarioForm.getSenha() != null) {
+                    usuario.setSenha(novaSenha);
+                }
+
+            } else {
+                throw new IllegalArgumentException("Senha atual incorreta");
+            }
+        }
+
+        if (usuarioForm.getImagem() != null) {
+            usuario.setImagem(usuarioForm.getImagem());
+        }
+
         return usuarioRepository.save(usuario);
 
     }
