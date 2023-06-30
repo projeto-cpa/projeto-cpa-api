@@ -13,6 +13,8 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Turma {
 
     @Id
@@ -30,6 +32,9 @@ public class Turma {
     @Column
     private String descricao;
 
+    @Column
+    private String periodo;
+
     @ManyToOne
     @JoinColumn(name = "id_curso")
     private Curso curso;
@@ -46,18 +51,11 @@ public class Turma {
     @Column(name = "data_atualizacao")
     private Date dataAtualizacao;
 
-    public Turma(String nome, String descricao, Boolean ativo) {
+    public Turma(String nome, String periodo, Curso curso, String descricao) {
         this.nome = nome;
-        this.descricao = descricao;
-        this.ativo = ativo;
-        this.dataCriacao = new Date();
-        this.dataAtualizacao = new Date();
-    }
-
-    public Turma(String nome, String descricao, Curso curso) {
-        this.nome = nome;
-        this.descricao = descricao;
+        this.periodo = periodo;
         this.curso = curso;
+        this.descricao = descricao;
         this.ativo = true;
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();

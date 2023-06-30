@@ -50,9 +50,7 @@ public class Curso {
     @Column(name = "data_atualizacao")
     private Date dataAtualizacao;
 
-    public Curso() {
-
-    }
+    public Curso() {}
 
     public Curso(Boolean ativo, String nome, String descricao) {
         this.ativo = ativo;

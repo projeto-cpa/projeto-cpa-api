@@ -46,6 +46,8 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/usuario/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/usuario/recuperar").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/usuario/recuperar/acesso").permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -1,20 +1,18 @@
 package br.com.biopark.cpa.controller.form.alteracao;
 
-import br.com.biopark.cpa.models.Cargo;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AlterarUsuarioForm {
+public class AlterarCursoForm {
 
     @NotNull
-    private Long idUsuario;
-    private String senha;
+    private Long idCurso;
     private String nome;
-    private String email;
+    private String descricao;
     private Boolean ativo;
-    private Cargo cargo;
 
 }
+

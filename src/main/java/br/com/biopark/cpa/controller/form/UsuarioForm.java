@@ -2,6 +2,7 @@ package br.com.biopark.cpa.controller.form;
 
 import java.util.Date;
 
+import br.com.biopark.cpa.models.Cargo;
 import br.com.biopark.cpa.models.Usuario;
 import br.com.biopark.cpa.repository.CargoRepository;
 import jakarta.validation.constraints.NotBlank;
@@ -16,29 +17,24 @@ public class UsuarioForm {
     @NotBlank
     @NotNull
     private String nome;
-
-    @NotBlank
-    @NotNull
     private String sobrenome;
-
+    @NotNull
+    @NotBlank
     private String senha;
-    
     private String senhaAtual;
-
+    private String codigoRecuperacao;
     @NotNull
     @NotBlank
     private String email;
-    
-   @NotNull
-    private long cargoId;
-
+    private Cargo cargo;
     @NotNull
+    private long idCargo;
     private Date dataNascimento;
-
     private String imagem;
+    private Boolean ativo;
 
     public Usuario converter(CargoRepository cargoRepository){
-        return new Usuario(this.nome, this.sobrenome, senha, cargoRepository.findById(cargoId), dataNascimento, this.email, this.imagem);
+        return new Usuario(this.nome, this.email, this.senha, cargoRepository.findById(idCargo), this.ativo);
     }
 
 }

@@ -321,6 +321,54 @@ INSERT INTO usuario (
     '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
 );
 
+INSERT INTO usuario (
+	id_cargo,
+    id_turma,
+	ativo,
+    data_criacao,
+    data_atualizacao,
+    data_nascimento,
+    email,
+    nome,
+    sobrenome,
+    senha
+) VALUES (
+	1,
+	1,
+	0,
+    current_date(),
+    current_date(),
+    current_date(),
+    'luka.pc.pc@gmail.com',
+    'Lucas',
+    'Gmail',
+    '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
+);
+
+INSERT INTO usuario (
+	id_cargo,
+    id_turma,
+	ativo,
+    data_criacao,
+    data_atualizacao,
+    data_nascimento,
+    email,
+    nome,
+    sobrenome,
+    senha
+) VALUES (
+	1,
+	1,
+	0,
+    current_date(),
+    current_date(),
+    current_date(),
+    'joaocletto@gmail.com',
+    'João',
+    'Gmail',
+    '$2a$12$T6WLxhXK7TiSWuRMnP/mKOasLde2GPJcbzqDn69SSRv0P/gM5vWGK'
+);
+
 -- eixo
 INSERT INTO eixo (
     ativo,

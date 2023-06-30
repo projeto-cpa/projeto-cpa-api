@@ -4,6 +4,8 @@ package br.com.biopark.cpa.controller.dto;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import br.com.biopark.cpa.models.Curso;
 import br.com.biopark.cpa.models.Disciplina;
 import jakarta.validation.constraints.NotBlank;
@@ -24,7 +26,7 @@ public class CursoDTO {
     private Date dataCriacao;
     private Date dataAtualizacao;
     private Boolean sucesso;
-    private List<Disciplina> disciplinas;
+    //private List<Disciplina> disciplinas;
 
     public CursoDTO(Curso curso) {
         this.id = curso.getId();
@@ -34,6 +36,11 @@ public class CursoDTO {
         this.sucesso = true;
         this.dataCriacao = curso.getDataCriacao();
         this.dataAtualizacao = curso.getDataAtualizacao();
-        this.disciplinas = curso.getDisciplinas();
+        //this.disciplinas = curso.getDisciplinas();
     }
+
+    public static Page<CursoDTO> converter(Page<Curso> cursos){
+        return cursos.map(CursoDTO::new);
+    }
+    
 }
