@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import br.com.biopark.cpa.controller.form.RecuperarSenhaForm;
 import br.com.biopark.cpa.models.Cargo;
-import br.com.biopark.cpa.models.Turma;
 import br.com.biopark.cpa.controller.form.UsuarioForm;
 import br.com.biopark.cpa.controller.form.recuperacao.RecuperarAcessoForm;
 import br.com.biopark.cpa.models.Usuario;
@@ -28,6 +27,9 @@ public class UsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    CargoService cargoService;
 
     @Autowired
     private EmailSender emailSender;
@@ -176,10 +178,11 @@ public class UsuarioService {
                 usuario.setNome(record.getString("nome"));
                 usuario.setEmail(record.getString("email"));
                 usuario.setSenha(record.getString("senha"));
+                usuario.setDataNascimento(new Date());
+                usuario.setSobrenome("gama");
 
                 int idCargo = record.getInt("idCargo");
-                Cargo cargo = new Cargo("", "", true);
-                cargo.setId(idCargo);
+                Cargo cargo = cargoService.buscarCargo((long) idCargo);
                 usuario.setCargo(cargo);
 
                 usuarios.add(usuario);
