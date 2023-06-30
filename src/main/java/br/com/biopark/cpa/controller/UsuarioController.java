@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -136,12 +137,14 @@ public class UsuarioController {
         return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
 
-    @PutMapping
-    public ResponseEntity<UsuarioDTO> atualizar(@RequestBody @Valid AlterarUsuarioForm form,UriComponentsBuilder uriBuilder) {
-        Usuario usuario = usuarioService.atualizar(form.getIdTurma(), form.getNome(), form.getDescricao(), form.getAtivo(), form.getPeriodo());
-        URI uri = uriBuilder.path("turma/{id}").buildAndExpand(usuario.getId()).toUri();
-        return ResponseEntity.created(uri).body(new TurmaDTO(usuario));
-    }
+    // @PutMapping("/{id}")
+    // @Transactional
+    // public ResponseEntity<AlterarSenhaDTO> atualizar(@PathVariable(name="id") long id, @RequestBody @Valid UsuarioForm form,
+    //         UriComponentsBuilder uriBuilder) {
+    //     Usuario usuario = usuarioService.atualizar(id, form);
+    //     URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+    //     return ResponseEntity.created(uri).body(new AlterarSenhaDTO(usuario));
+    // }
 
     @PutMapping("/ativacao")
     public ResponseEntity<UsuarioDTO> ativarDesativarUsuario(@RequestBody @Valid AtivarUsuarioForm form, UriComponentsBuilder uriBuilder) {
