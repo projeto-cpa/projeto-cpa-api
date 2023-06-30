@@ -35,6 +35,7 @@ import br.com.biopark.cpa.controller.form.exclusao.excluirUsuarioForm;
 import br.com.biopark.cpa.models.Cargo;
 import br.com.biopark.cpa.models.Turma;
 import br.com.biopark.cpa.models.Usuario;
+import br.com.biopark.cpa.repository.CargoRepository;
 import br.com.biopark.cpa.service.CargoService;
 import br.com.biopark.cpa.service.UsuarioService;
 import jakarta.transaction.Transactional;
@@ -53,6 +54,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class UsuarioController {
 
     Date data = new Date();
+
+    @Autowired
+    private CargoRepository cargoRepository;
 
     @Autowired
     private CargoService cargoService;
@@ -74,6 +78,7 @@ public class UsuarioController {
         Usuario usuario = new Usuario(form.getNome(), form.getEmail(), form.getSenha(), cargo, form.getAtivo());
         usuario = usuarioService.cadastrar(usuario);
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+        return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
     
     @PostMapping("/cadastro")
@@ -159,11 +164,13 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> excluir(@RequestBody @Valid excluirUsuarioForm form,
             UriComponentsBuilder uriBuilder) {
         Usuario usuario = usuarioService.excluirUsuario(form.getIdUsuario());
+        URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+        return ResponseEntity.created(uri).body(new UsuarioDTO(usuario));
     }
   
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<AlterarSenhaDTO> atualizar(@PathVariable(name="id") long id, @RequestBody @Valid UsuarioForm form,
+    public ResponseEntity<UsuarioDTO> atualizar(@PathVariable(name="id") long id, @RequestBody @Valid UsuarioForm form,
             UriComponentsBuilder uriBuilder) {
         Usuario usuario = usuarioService.atualizar(id, form);
         URI uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
