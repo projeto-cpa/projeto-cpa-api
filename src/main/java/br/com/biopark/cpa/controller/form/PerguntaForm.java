@@ -22,6 +22,8 @@ public class PerguntaForm {
     @NotNull
     private Boolean ativo;
 
+    private Long idPergunta;
+
     public Pergunta converter(PerguntaForm form, EixoService eixoService) throws EnumConstantNotPresentException {
 
         TipoPergunta tipoPergunta;

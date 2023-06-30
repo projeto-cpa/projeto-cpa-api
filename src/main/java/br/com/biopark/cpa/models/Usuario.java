@@ -35,7 +35,6 @@ public class Usuario implements UserDetails {
     @Column
     private String nome;
 
-    @NotNull
     @Column
     private String sobrenome;
 
@@ -47,7 +46,6 @@ public class Usuario implements UserDetails {
     @JoinColumn(name = "id_turma")
     private Turma turma;
 
-    @NotNull
     @Column(name = "data_nascimento")
     private Date dataNascimento;
 
@@ -72,20 +70,20 @@ public class Usuario implements UserDetails {
     @Column(name = "data_atualizacao")
     private Date dataAtualizacao;
 
-    public Usuario() {
+    public Usuario () {}
 
-    }
-
-    public Usuario(String nome, String sobrenome, String senha, Cargo cargo, Date dataNascimento, String email, String imagem) {
+    public Usuario(String nome, String email, String senha, Cargo cargo, Boolean ativo) {
         this.email = email;
         this.nome = nome;
-        this.sobrenome = sobrenome;
         this.senha = senha;
-        this.setCargo(cargo);
+        this.cargo = cargo;
         this.dataCriacao = new Date();
         this.dataAtualizacao = new Date();
-        this.dataNascimento = dataNascimento;
-        this.imagem = imagem;
+        // this.dataNascimento = dataNascimento;
+        // this.imagem = imagem;
+        // this.sobrenome = sobrenome;
+        this.ativo = ativo;
+        // this.setCargo(cargo);
     }
 
 

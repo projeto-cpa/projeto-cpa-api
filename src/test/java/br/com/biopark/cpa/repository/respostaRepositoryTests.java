@@ -3,7 +3,6 @@ package br.com.biopark.cpa.repository;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.h2.store.Data;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,15 +15,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import br.com.biopark.cpa.models.Avaliacao;
+import br.com.biopark.cpa.models.Curso;
 import br.com.biopark.cpa.models.Eixo;
 import br.com.biopark.cpa.models.Pergunta;
 import br.com.biopark.cpa.models.Resposta;
 import br.com.biopark.cpa.models.Turma;
 import br.com.biopark.cpa.models.enums.TipoPergunta;
-import ch.qos.logback.core.read.ListAppender;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -42,15 +40,15 @@ public class respostaRepositoryTests {
     @Autowired
     private RespostaRepository respostaRepository;
 
-    @Autowired
-    private EixoRepository eixoRepository;
-
     @Test
     public void testePersistenciaRespostas() throws Exception {
         Eixo eixo = new Eixo("Banco de dados", "Banco de dados ADS", true);
         entityManager.persist(eixo);
 
-        Turma turmaUm = new Turma("Turma Um", "Teste de turma", true);
+         Curso curso = new Curso(true, "Eixo 1", "true");
+        entityManager.persist(curso);
+
+        Turma turmaUm = new Turma("Turma Um", "Matutino", curso, "turma teste denovo");
         entityManager.persist(turmaUm);
 
         Pergunta perguntaUm = new Pergunta("Como foi seu dia?", TipoPergunta.DESCRITIVA, true, eixo);
