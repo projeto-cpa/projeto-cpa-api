@@ -1,7 +1,8 @@
 package br.com.biopark.cpa.service;
 
 import java.util.Date;
-
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,8 +34,16 @@ public class CargoService {
         return cargoRepository.findAll(cargos);
     }
 
+    public List<Cargo> listarParaCadastroDeCargos() {
+        return cargoRepository.findAll();
+    }
+
     public Page<Cargo> buscaPorNome(String nomeCargo, Pageable cargos) {
         return cargoRepository.findByNome(nomeCargo, cargos);
+    }
+
+    public List<Cargo> buscaPorNomeNaLista(String nomeCargo) {
+        return cargoRepository.findAllByNome(nomeCargo);
     }
 
     // implemente o motodo de ativar ou desativar um cargo pelo id
@@ -50,6 +59,19 @@ public class CargoService {
         Cargo cargo = cargoRepository.findById(id).get();
         cargoRepository.delete(cargo);
         return cargo;
+    }
+
+    // System.out.println("ID CARGO SERVICE: " + cargo.get()); 
+
+    public Cargo buscarCargo(Long id_cargo) {
+        Optional<Cargo> cargo = cargoRepository.findById(id_cargo);
+        
+        if (cargo.isPresent()) {
+            System.out.println("RETORNOU O IDCARGO: " + cargo.get().getNome());
+            return cargo.get();
+        }
+
+        return null;
     }
 
     // implemente o metodo para atualizar o cargo
