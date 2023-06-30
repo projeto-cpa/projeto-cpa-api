@@ -14,9 +14,13 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 
 @Service
 public class EmailSender {
+
+    @Value("${application.client.url}")
+    private String clientURL;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -41,13 +45,12 @@ public class EmailSender {
             in.close();
         } catch (IOException e) {
         }
-        String content = new String(contentBuilder.toString().getBytes() ,StandardCharsets.UTF_8);
+        String content = new String(contentBuilder.toString().getBytes(), StandardCharsets.UTF_8);
 
         String emailTemplate = content;
         // TODO: Colocar a variavel de ambiente para o endereço do cliente (front end)
 
-        String urlClient = "http://localhost:3005";
-        String linkRecuperacao = urlClient.concat("/recuperacao?codigo=").concat(codigoRecuperacao);
+        String linkRecuperacao = clientURL.concat("/recuperacao?codigo=").concat(codigoRecuperacao);
         LocalDate LT = LocalDate.now();
         String anoAtual = String.valueOf(LT.getYear());
 
@@ -55,7 +58,7 @@ public class EmailSender {
         emailTemplate = emailTemplate.replace("${link_recuperacao}", linkRecuperacao);
 
         helper.setText(emailTemplate, true);
-        message.setSubject("CPA: Código de recuperação");
+        message.setSubject("CPA: Recuperação de acesso");
         javaMailSender.send(message);
 
         System.out.println("Email enviado com sucesso para: " + toEmail);

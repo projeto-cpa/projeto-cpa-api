@@ -117,7 +117,7 @@ public class UsuarioService {
     public String gerarCodigoRecuperacao(String email) {
         String originalInput = this.gerarCodigoAleatorio((long) 32, true).concat(",").concat(email);
         String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
-        // encodedString = encodedString.replace("+/=", "._-");
+        encodedString = encodedString.replace("=", "");
         return encodedString;
     }
 
