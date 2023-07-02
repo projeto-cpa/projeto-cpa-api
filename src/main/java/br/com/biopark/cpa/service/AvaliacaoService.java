@@ -25,7 +25,7 @@ public class AvaliacaoService {
         try {
             return avaliacaoRepository.save(avaliacao);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Não foi possível cadastrar a avaliação: " + e.getMessage());
+            throw new RuntimeException("Não foi possível cadastrar a avaliação da Cpa: " + e.getMessage());
         }
     }
 
