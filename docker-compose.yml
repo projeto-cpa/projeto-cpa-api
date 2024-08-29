@@ -30,7 +30,7 @@ services:
     depends_on:
       - mysql_db
     environment:
-        SPRING_PROFILES_ACTIVE: docker
+        SPRING_PROFILES_ACTIVE: local
     networks:
       - cpa-network
 
